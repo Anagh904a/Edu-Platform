@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved UI</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<style>
+
+/* Task Manager Styles */
+.task-manager {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.task-form {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.task-form input, .task-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    flex: 1 1 200px;
+    margin-bottom: 10px;
+}
+
+.task-form button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 1 1 100px;
+    transition: background-color 0.3s;
+}
+
+.task-form button:hover {
+    background-color: #218838;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+}
+
+.task-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    transition: background-color 0.3s;
+}
+
+.task-item:hover {
+    background-color: #e9ecef; /* Light gray on hover */
+}
+
+.task-item.completed {
+    text-decoration: line-through;
+    background-color: #d4edda;
+}
+
+.task-item button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.complete-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Filter Bar Styles */
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-bar select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex: 1 1 200px;
+    margin-bottom: 10px;
+}
+
+#about-website {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-info {
+    background-color: #007BFF; /* Bubble background color */
+    color: white; /* Text color */
+    padding: 15px;
+    margin: 10px 0; /* Space between bubbles */
+    border-radius: 20px; /* Rounded corners */
+    position: relative; /* Positioning for the pseudo-element */
+    transition: transform 0.3s; /* Animation for hover effect */
+}
+
+.about-info:hover {
+    transform: scale(1.05); /* Slightly enlarge the bubble on hover */
+}
+
+.about-info::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -10px; /* Adjust for position */
+    width: 10px;
+    height: 10px;
+    background-color: #007BFF; /* Bubble color */
+    border-radius: 50%; /* Circle */
+    transform: translateY(-50%); /* Center vertically */
+}
+
+.about-info h3 {
+    margin: 0 0 5px; /* Margin for heading */
+}
+
+.about-info p {
+    margin: 0; /* Remove default margin */
+}
+
+/* Worksheet, Quiz Generator, and Tech Updates Styles */
+.feature-section {
+    display: none;
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-section form label {
+    margin: 10px 0 5px;
+}
+
+.feature-section form input, 
+.feature-section form select, 
+.feature-section form button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.feature-section form button {
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.feature-section form button:hover {
+    background-color: #0056b3;
+}
+
+/* Quiz Styles */
+.quiz-question {
+    margin-bottom: 20px;
+}
+
+.quiz-options label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.quiz-submit {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.quiz-submit:hover {
+    background-color: #218838;
+}
+
+/* Generated Content Styles */
+#generatedWorksheet, 
+#quizArea, 
+#updateMessage {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+ 
+/* Login/Register Styles */
+.auth-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background-color: #ffffff; /* Original background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px; /* Adjust font size as needed */
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0; /* Added margin */
+}
+
+
+.auth-container form input[type="password"],
+.auth-container form input[type="email"] {
+    padding: 10px;
+    border: 1px solid var(--color-light-gray); /* Use the specified variable */
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 14px; /* Font size adjustment */
+}
+
+.auth-container form button {
+    padding: 10px;
+    background-color: rgb(95, 95, 173); /* Use the specified variable */
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s; /* Transition effect */
+}
+
+.auth-container form button:hover {
+    background-color: rgb(0, 0, 236) /* Use the specified variable */
+}
+
+.forgot-password {
+    color: rgb(91, 91, 207);
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.register-prompt {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register-link {
+    color: rgb(67, 67, 245);
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: var(--text-error);
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.toggle-link {
+    text-align: center;
+    margin-top: 10px;
+    color: #007BFF; /* Original link color */
+    cursor: pointer;
+}
+
+.toggle-link:hover {
+    text-decoration: underline;
+}
+
+</style>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+  
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBnxKoEbh-xOHn_ogIHAt68HSTR5EOcSuU",
+    authDomain: "listvista-5ce07.firebaseapp.com",
+    projectId: "listvista-5ce07",
+    storageBucket: "listvista-5ce07.firebasestorage.app",
+    messagingSenderId: "516531579392",
+    appId: "1:516531579392:web:e9bbc06c93072808ae86e5",
+    measurementId: "G-Q36NJ1B4G0"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+  const user = auth.currentuser;
+  
+  // Authentication Functions
+  const authContainer = document.getElementById('auth-container');
+        const authForm = document.getElementById('auth-form');
+        const authTitle = document.getElementById('auth-title');
+        const authButton = document.getElementById('auth-button');
+        const toggleLink = document.getElementById('toggle-link');
+        const closeButton = document.getElementById('close-button');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        let isLogin = true; // Track whether the user is logging in or registering
+
+        // Check if there's a logged-in user in local storage
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser) {
+            closeButton.style.display = 'block'; // Show the close button if a user is stored
+        }
+
+        // Check for the current user and update UI
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is logged in
+                localStorage.setItem('user', JSON.stringify({ uid: user.uid, email: user.email }));
+                closeButton.style.display = 'block'; // Show the close button if a user is store
+            } else {
+                // User is logged out
+                localStorage.removeItem('user');
+                authContainer.style.display = 'block'; // Show the auth container
+                closeButton.style.display = 'none'; // Hide the close button
+            }
+        });
+
+        // Toggle between Login and Register modes
+        toggleLink.addEventListener('click', () => {
+            isLogin = !isLogin;
+            authTitle.textContent = isLogin ? 'Login' : 'Register';
+            authButton.textContent = isLogin ? 'Login' : 'Register';
+            toggleLink.textContent = isLogin ? "Don't have an account? Register here." : "Already have an account? Login here.";
+        });
+
+        // Validate email format
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Handle form submission for login or registration
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            // Input validation
+            if (!isValidEmail(email) || password.length < 6) {
+                alert('Please enter a valid email and ensure the password is at least 6 characters long.');
+                return;
+            }
+
+            loadingIndicator.style.display = 'block'; // Show loading indicator
+
+            // Determine whether to log in or register
+            const authAction = isLogin ? signInWithEmailAndPassword(auth, email, password) : createUserWithEmailAndPassword(auth, email, password);
+
+            authAction
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log('User:', user);
+                    if (isLogin) {
+                        // Store user in local storage
+                        localStorage.setItem('user', JSON.stringify({ uid: user.uid, email: user.email }));
+                        alert('Logged in successfully!'); // Alert for successful login
+                        authContainer.style.display = 'none'; // Hide the auth container
+                        closeButton.style.display = 'block'; // Show close button
+                    } else {
+                        alert('Registration successful! You can now log in.');
+                        toggleLink.click(); // Switch to login mode
+                    }
+                })
+                .catch((error) => {
+                    handleAuthError(error); // Enhanced error handling
+                })
+                .finally(() => {
+                    loadingIndicator.style.display = 'none'; // Hide loading indicator
+                });
+        });
+
+        // Close button functionality
+        closeButton.addEventListener('click', () => {
+            // Hide the auth container
+            authContainer.style.display = 'none';
+        });
+
+        // Error handling function
+        function handleAuthError(error) {
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    alert('No user found with this email.');
+                    break;
+                case 'auth/wrong-password':
+                    alert('Incorrect password. Please try again.');
+                    break;
+                case 'auth/email-already-in-use':
+                    alert('This email is already registered.');
+                    break;
+                case 'auth/invalid-email':
+                    alert('Please enter a valid email address.');
+                    break;
+                    case '(auth/invalid-credential':
+                      alert('Invalid Email or Password else this account doest not exist')
+                default:
+                    alert('Error: ' + error.message);
+            }
+        }
+
+        // Show the main app after login
+        function showApp() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+
+            if (sidebar && mainContent) {
+                sidebar.style.display = 'block'; // Show sidebar
+                mainContent.style.display = 'block'; // Show main content
+            } else {
+                console.error('Sidebar or main content elements not found.');
+            }
+        }
+
+        // Handle click event for the close button when no user is stored
+        if (!storedUser) {
+            closeButton.style.display = 'none'; // Ensure the close button is hidden
+            authForm.addEventListener('submit', (e) => {
+                if (!storedUser) {
+                    alert('Please log in or register to access exclusive features and become a pro user for free and access messenger.');
+                }
+            });
+        }
+
+        //Show Auth Form Funtion
+        function showAuthForm() {
+    const authContainer = document.getElementById('auth-container');
+    authContainer.style.display = 'block'; // Show the auth container
+}
+        </script>
+
+ <!-- Top Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">EduPlatform</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#home" onclick="showSection('home')">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#quiz" onclick="showSection('quiz-generator')">Quiz</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#worksheet" onclick="showSection('worksheet-generator')">Worksheet Generator</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#notes" onclick="showSection('my-notes')">My Notes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#about" onclick="showSection('about-website')">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#task-manager" onclick="showSection('task-manager')">Task Manger</a>
+          </li>
+          </ul>
+    </div>
+</nav>
+
+<script>
+
+function winload() {
+function showAuthForm() {
+    const authContainer = document.getElementById('auth-container');
+    authContainer.style.display = 'block'; // Show the auth container
+}
+}
+</script>
+
+<!-- Homepage Section -->
+<div id="home" class="container mt-5 feature-section">
+    <h1>Welcome to EduPlatform</h1>
+    <p>Your one-stop solution for quizzes, worksheets, notes, and so on!</p>
+    <button class="btn btn-primary" onclick="showSection('quiz-generator')">Start Quiz</button>
+    <button class="btn btn-secondary" onclick="showSection('worksheet-generator')">Generate Worksheet</button>
+    <button class="btn btn-info" onclick="showSection('my-notes')">View My Notes</button>
+    <button class="btn btn-primary" onclick="showAuthForm()">Login</button>
+    
+    <!-- Authentication Container -->
+<div id="auth-container" class="auth-container">
+  <h2 id="auth-title">Login</h2>
+  <form id="auth-form">
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit" id="auth-button">Login</button>
+    <button type="button" id="close-button" style="display:none;">Close</button>
+  </form>
+  <div class="toggle-link" id="toggle-link">Don't have an account? Register here.</div>
+  <div id="loading-indicator" style="display:none;">Loading... </div>
+ </div>
+</div>
+
+<!-- Task Manager Feature -->
+<div id="task-manager" class="feature-section">
+  <h2>Task Manager</h2>
+  <div class="task-manager">
+    <h3>Manage Your Tasks</h3>
+    <!-- Task Form -->
+    <div class="task-form">
+      <input type="text" id="taskName" placeholder="Task Name" required>
+      <input type="text" id="taskDesc" placeholder="Task Description">
+      <select id="taskPriority">
+        <option value="low">Low Priority</option>
+        <option value="medium">Medium Priority</option>
+        <option value="high">High Priority</option>
+      </select>
+      <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <select id="filterStatus" onchange="filterTasks()">
+        <option value="all">All Tasks</option>
+        <option value="completed">Completed Tasks</option>
+        <option value="incomplete">Incomplete Tasks</option>
+      </select>
+      <select id="filterPriority" onchange="filterTasks()">
+        <option value="all">All Priorities</option>
+        <option value="low">Low Priority</option>
+        <option value="medium">Medium Priority</option>
+        <option value="high">High Priority</option>
+      </select>
+    </div>
+
+    <!-- Task List -->
+    <ul id="taskList" class="task-list">
+      <!-- Task Items will appear here -->
+    </ul>
+  </div>
+</div>
+
+<!-- Worksheet Generator Section -->
+<div id="worksheet-generator" class="feature-section">
+  <h2>Worksheet Generator</h2>
+  <p>Select your preferences and generate a worksheet with random questions:</p>
+  
+  <form id="worksheetForm">
+    <label for="subject">Choose Subject:</label>
+    <select id="subject" name="subject" required>
+      <option value="math">Math</option>
+      <option value="science">Science</option>
+    </select>
+    
+    <label for="numQuestions">Number of Questions:</label>
+    <input type="number" id="numQuestions" name="numQuestions" min="5" max="50" required>
+    
+    <label for="difficulty">Difficulty Level:</label>
+    <select id="difficulty" name="difficulty" required>
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+
+    <label for="questionType">Question Type:</label>
+    <select id="questionType" name="questionType" required>
+      <option value="mcq">Multiple Choice</option>
+      <option value="shortAnswer">Short Answer</option>
+      <option value="longAnswer">Long Answer</option>
+    </select>
+    
+    <button type="button" onclick="generateWorksheet()">Generate Worksheet</button>
+  </form>
+
+  <div id="generatedWorksheet"></div>
+</div>
+
+<!-- Quiz Generator Section -->
+<div id="quiz-generator" class="feature-section">
+  <h2>Quiz Generator</h2>
+  <p>Select your preferences and take a quiz:</p>
+  
+  <form id="quizForm">
+    <label for="quizSubject">Choose Subject:</label>
+    <select id="quizSubject" name="quizSubject" required>
+      <option value="math">Math</option>
+      <option value="science">Science</option>
+    </select>
+    
+    <label for="quizNumQuestions">Number of Questions:</label>
+    <input type="number" id="quizNumQuestions" name="quizNumQuestions" min="5" max="20" required>
+
+    <button type="button" onclick="startQuiz()">Start Quiz</button>
+  </form>
+
+  <div id="quizArea"></div>
+</div>
+
+<!-- About Website Section -->
+<div id="about-website" class="feature-section">
+  <h2>About This Website</h2>
+  <div class="about-info">
+    <strong>Developer:</strong> Anagh Manglick
+</div>
+<div class="about-info">
+    <strong>Class:</strong> 7
+</div>
+<div class="about-info">
+    <strong>Website Server:</strong> Yes
+</div>
+<div class="about-info">
+    <strong>Version:</strong> 1.0(-beta3)
+</div>
+</div>
+
+<!-- My Notes Section --> 
+<div id="my-notes" class="feature-section">
+  <h2>My Notes</h2>
+  <input type="text" id="noteName" placeholder="Note Title" style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: calc(100% - 22px); margin-bottom: 10px;">
+  <textarea id="noteContent" placeholder="Write your note here..." style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: calc(100% - 22px); height: 100px;"></textarea>
+  <button onclick="addNote()" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Save Note</button>
+  <ul id="notesList" style="margin-top: 20px; list-style-type: none;"></ul>
+</div>
+
+<div class="divider"></div>  
+
+
+
+<!-- Footer -->
+<footer class="text-center mt-5">
+    <p>&copy; 2023 EduPlatform. All rights reserved.</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.feature-section');
+        sections.forEach(section => section.style.display = 'none');
+        document.getElementById(sectionId).style.display = 'block';
+    }
+
+    
+  
+  // Notes Functionality
+let notes = [];
+
+// Load notes from localStorage
+function loadNotes() {
+  const loggedInUser  = JSON.parse(localStorage.getItem('loggedInUser '));
+  if (loggedInUser ) {
+      notes = JSON.parse(localStorage.getItem(`${loggedInUser .username}_notes`)) || [];
+  }
+}
+
+// Save notes to localStorage
+function saveNotes() {
+  const loggedInUser  = JSON.parse(localStorage.getItem('loggedInUser '));
+  if (loggedInUser ) {
+      localStorage.setItem(`${loggedInUser .username}_notes`, JSON.stringify(notes));
+  }
+}
+
+// Add Note
+function addNote() {
+    const noteName = document.getElementById('noteName').value.trim();
+    const noteContent = document.getElementById('noteContent').value.trim();
+
+    if (noteName && noteContent) {
+        const note = {
+            name: noteName,
+            content: noteContent
+        };
+        notes.push(note);
+        saveNotes();
+        renderNotes();
+        document.getElementById('noteName').value = ''; // Clear input
+        document.getElementById('noteContent').value = ''; // Clear textarea
+    } else {
+        alert('Both note title and content are required.');
+    }
+}
+// Render Notes
+function renderNotes() {
+  const notesList = document.getElementById('notesList');
+  notesList.innerHTML = '';
+
+  notes.forEach(note => {
+      const noteItem = document.createElement('li');
+      noteItem.innerHTML = `<strong>${sanitize(note.name)}</strong>: ${sanitize(note.content)}`;
+      notesList.appendChild(noteItem);
+  });
+}
+
+// Show Notes on Load
+function initNotes() {
+  loadNotes();
+  renderNotes();
+}
+
+// Initialize notes on page load
+window.onload = initNotes;
+
+ 
+
+  
+
+  // =======================
+  // Task Manager Functions
+  // =======================
+  let tasks = [];
+
+  // Load tasks from localStorage
+  function loadTasks() {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+      const userTasks = JSON.parse(localStorage.getItem(`${loggedInUser.username}_tasks`)) || [];
+      tasks = userTasks;
+    }
+  }
+
+  // Save tasks to localStorage
+  function saveTasks() {
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if (loggedInUser) {
+      localStorage.setItem(`${loggedInUser.username}_tasks`, JSON.stringify(tasks));
+    }
+  }
+
+  function addTask() {
+    const taskName = document.getElementById('taskName').value.trim();
+    const taskDesc = document.getElementById('taskDesc').value.trim();
+    const taskPriority = document.getElementById('taskPriority').value;
+
+    if (taskName) {
+      const task = {
+        name: taskName,
+        desc: taskDesc,
+        priority: taskPriority,
+        completed: false
+      };
+      tasks.push(task);
+      saveTasks();
+      renderTasks();
+      document.getElementById('taskName').value = '';
+      document.getElementById('taskDesc').value = '';
+    } else {
+      alert('Task name is required.');
+    }
+  }
+
+  function renderTasks() {
+    const taskList = document.getElementById('taskList');
+    taskList.innerHTML = '';
+
+    const filterStatus = document.getElementById('filterStatus').value;
+    const filterPriority = document.getElementById('filterPriority').value;
+
+    const filteredTasks = tasks.filter(task => {
+      const statusMatch = filterStatus === 'all' ||
+        (filterStatus === 'completed' && task.completed) ||
+        (filterStatus === 'incomplete' && !task.completed);
+      const priorityMatch = filterPriority === 'all' || task.priority === filterPriority;
+      return statusMatch && priorityMatch;
+    });
+
+    filteredTasks.forEach((task, index) => {
+      const taskItem = document.createElement('li');
+      taskItem.classList.add('task-item');
+      if (task.completed) {
+        taskItem.classList.add('completed');
+      }
+      taskItem.innerHTML = `
+        <div>
+          <strong>${sanitize(task.name)}</strong> - ${sanitize(task.desc)} - <em>${sanitize(task.priority)}</em>
+        </div>
+        <div>
+          <button class="complete-btn" onclick="toggleTaskComplete(${index})">${task.completed ? 'Undo' : 'Complete'}</button>
+          <button class="delete-btn" onclick="deleteTask(${index})">Delete</button>
+        </div>
+      `;
+      taskList.appendChild(taskItem);
+    });
+  }
+
+  function toggleTaskComplete(index) {
+    tasks[index].completed = !tasks[index].completed;
+    saveTasks();
+    renderTasks();
+  }
+
+  function deleteTask(index) {
+    if (confirm('Are you sure you want to delete this task?')) {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    }
+  }
+
+  function filterTasks() {
+    renderTasks();
+  }
+
+  function sanitize(input) {
+    const div = document.createElement('div');
+    div.textContent = input;
+    return div.innerHTML;
+  }
+
+  // Initialize Task Manager
+  function initTaskManager() {
+    loadTasks();
+    renderTasks();
+  }
+
+  // ================================
+  // Worksheet Generator Functions
+  // ================================
+  const questionBank = {
+    math: {
+      easy: [
+        "What is 2 + 2?",
+        "What is 5 - 3?",
+        "What is 3 × 4?",
+        "What is 10 ÷ 2?",
+        "What is the square of 3?"
+      ],
+      medium: [
+        "Solve for x: 2x + 5 = 13.",
+        "What is the area of a triangle with base 5 and height 10?",
+        "Simplify: (3²) + (4²).",
+        "What is the perimeter of a rectangle with length 8 and width 5?",
+        "Find the value of 15% of 200."
+      ],
+      hard: [
+        "Integrate the function f(x) = 3x².",
+        "Solve the equation: x³ - 6x² + 11x - 6 = 0.",
+        "What is the derivative of sin(x)?",
+        "Calculate the limit: lim(x→0) (sin(x)/x).",
+        "What is the solution to the differential equation dy/dx = 2x?"
+      ]
+    },
+    science: {
+      easy: [
+        "What is the chemical symbol for water?",
+        "What planet is known as the Red Planet?",
+        "What gas do plants absorb from the atmosphere?",
+        "What is H₂O commonly known as?",
+        "What force keeps us grounded on Earth?"
+      ],
+      medium: [
+        "What is the powerhouse of the cell?",
+        "What is the chemical formula for table salt?",
+        "Define Newton's Second Law of Motion.",
+        "What is the process by which plants make their food?",
+        "Name the three states of matter."
+      ],
+      hard: [
+        "Explain the theory of relativity.",
+        "What is the Heisenberg Uncertainty Principle?",
+        "Describe the process of nuclear fusion.",
+        "What is the significance of the Pauli Exclusion Principle?",
+        "Define Schrödinger's Cat paradox."
+      ]
+    }
+  };
+
+  function generateWorksheet() {
+    const subject = document.getElementById('subject').value;
+    const numQuestions = parseInt(document.getElementById('numQuestions').value);
+    const difficulty = document.getElementById('difficulty').value;
+    const questionType = document.getElementById('questionType').value;
+
+    const availableQuestions = questionBank[subject][difficulty];
+    if (!availableQuestions) {
+      alert('No questions available for the selected options.');
+      return;
+    }
+
+    if (numQuestions > availableQuestions.length) {
+      alert(`Only ${availableQuestions.length} questions available for ${subject} (${difficulty} difficulty).`);
+      return;
+    }
+
+    const selectedQuestions = shuffleArray(availableQuestions).slice(0, numQuestions);
+    let worksheetContent = `<h3>Generated Worksheet for ${capitalize(subject)}</h3><ol>`;
+    
+    selectedQuestions.forEach((q, index) => {
+      worksheetContent += `<li>${q}</li>`;
+    });
+    worksheetContent += `</ol>`;
+
+    document.getElementById('generatedWorksheet').innerHTML = worksheetContent;
+  }
+
+  // Utility function to shuffle an array
+  function shuffleArray(array) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+  }
+
+  // Capitalize first letter
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  // ==========================
+  // Quiz Generator Functions
+  // ==========================
+  let currentQuiz = [];
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let userAnswers = [];
+
+  // Define correct answers for each question
+  const correctAnswers = {
+    math: {
+      easy: {
+        "What is 2 + 2?": "4",
+        "What is 5 - 3?": "2",
+        "What is 3 × 4?": "12",
+        "What is 10 ÷ 2?": "5",
+        "What is the square of 3?": "9"
+      },
+      medium: {
+        "Solve for x: 2x + 5 = 13.": "4",
+        "What is the area of a triangle with base 5 and height 10?": "25",
+        "Simplify: (3²) + (4²).": "25",
+        "What is the perimeter of a rectangle with length 8 and width 5?": "26",
+        "Find the value of 15% of 200.": "30"
+      },
+      hard: {
+        "Integrate the function f(x) = 3x².": "x³ + C",
+        "Solve the equation: x³ - 6x² + 11x - 6 = 0.": "1, 2, 3",
+        "What is the derivative of sin(x)?": "cos(x)",
+        "Calculate the limit: lim(x→0) (sin(x)/x).": "1",
+        "What is the solution to the differential equation dy/dx = 2x?": "y = x² + C"
+      }
+    },
+    science: {
+      easy: {
+        "What is the chemical symbol for water?": "H₂O",
+        "What planet is known as the Red Planet?": "Mars",
+        "What gas do plants absorb from the atmosphere?": "Carbon Dioxide",
+        "What is H₂O commonly known as?": "Water",
+        "What force keeps us grounded on Earth?": "Gravity"
+      },
+      medium: {
+        "What is the powerhouse of the cell?": "Mitochondria",
+        "What is the chemical formula for table salt?": "NaCl",
+        "Define Newton's Second Law of Motion.": "Force equals mass times acceleration (F=ma)",
+        "What is the process by which plants make their food?": "Photosynthesis",
+        "Name the three states of matter.": "Solid, Liquid, Gas"
+      },
+      hard: {
+        "Explain the theory of relativity.": "A theory by Einstein that describes the laws of physics in the presence of gravitational fields and high velocities.",
+        "What is the Heisenberg Uncertainty Principle?": "It states that the position and momentum of a particle cannot both be precisely determined simultaneously.",
+        "Describe the process of nuclear fusion.": "Combining two light atomic nuclei to form a heavier nucleus, releasing energy.",
+        "What is the significance of the Pauli Exclusion Principle?": "No two fermions can occupy the same quantum state simultaneously.",
+        "Define Schrödinger's Cat paradox.": "A thought experiment that illustrates the concept of superposition in quantum mechanics."
+      }
+    }
+  };
+
+  function startQuiz() {
+    const subject = document.getElementById('quizSubject').value;
+    const numQuestions = parseInt(document.getElementById('quizNumQuestions').value);
+
+    const difficulty = 'medium'; // Fixed difficulty for quizzes; can be made dynamic if desired
+    const availableQuestions = Object.keys(correctAnswers[subject][difficulty]);
+    if (!availableQuestions) {
+      alert('No questions available for the selected options.');
+      return;
+    }
+
+    if (numQuestions > availableQuestions.length) {
+      alert(`Only ${availableQuestions.length} questions available for ${subject} (medium difficulty).`);
+      return;
+    }
+
+    currentQuiz = shuffleArray(availableQuestions).slice(0, numQuestions);
+    currentQuestionIndex = 0;
+    score = 0;
+    userAnswers = [];
+    document.getElementById('quizArea').innerHTML = '';
+    displayQuizQuestion();
+  }
+
+  function displayQuizQuestion() {
+    if (currentQuestionIndex < currentQuiz.length) {
+      const question = currentQuiz[currentQuestionIndex];
+      const quizArea = document.getElementById('quizArea');
+
+      // Generate multiple choice options if question type is MCQ
+      const isMCQ = question.includes("What") || question.includes("Define") || question.includes("Explain");
+      let optionsHTML = '';
+      let correctAnswer = correctAnswers[getCurrentQuizSubject()][getCurrentQuizDifficulty()][question];
+      let options = [];
+
+      if (isMCQ) {
+        // Generate random options
+        options = generateMCQOptions(correctAnswer);
+        optionsHTML = options.map((opt, idx) => `
+          <input type="radio" id="option${idx+1}" name="answer" value="${opt}">
+          <label for="option${idx+1}">${opt}</label>
+        `).join('');
+      } else {
+        // Short or long answer
+        optionsHTML = `<input type="text" id="answerInput" placeholder="Type your answer here">`;
+      }
+
+      quizArea.innerHTML = `
+        <div class="quiz-question">
+          <strong>Question ${currentQuestionIndex + 1}:</strong> ${sanitize(question)}
+        </div>
+        <div class="quiz-options">
+          ${optionsHTML}
+        </div>
+        <button class="quiz-submit" onclick="submitQuizAnswer()">Submit Answer</button>
+      `;
+    } else {
+      displayQuizResult();
+    }
+  }
+
+  function generateMCQOptions(correctAnswer) {
+    const dummyOptions = generateDummyOptions(correctAnswer);
+    dummyOptions.push(correctAnswer);
+    return shuffleArray(dummyOptions).slice(0, 4);
+  }
+
+  function generateDummyOptions(correctAnswer) {
+    let options = [];
+    for (let i = 0; i < 3; i++) {
+      let option;
+      do {
+        option = generateRandomOption(correctAnswer);
+      } while (options.includes(option) || option === correctAnswer);
+      options.push(option);
+    }
+    return options;
+  }
+
+  function generateRandomOption(correctAnswer) {
+    // Simple random option generator; can be improved based on subject and type
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    return randomNumber.toString();
+  }
+
+  function submitQuizAnswer() {
+    const subject = getCurrentQuizSubject();
+    const difficulty = getCurrentQuizDifficulty();
+    const question = currentQuiz[currentQuestionIndex];
+    const correctAnswer = correctAnswers[subject][difficulty][question];
+
+    let userAnswer = '';
+    const selectedOption = document.querySelector('input[name="answer"]:checked');
+    if (selectedOption) {
+      userAnswer = selectedOption.value.trim();
+    } else {
+      const textInput = document.getElementById('answerInput');
+      if (textInput) {
+        userAnswer = textInput.value.trim();
+      }
+    }
+
+    if (userAnswer === '') {
+      alert('Please provide an answer.');
+      return;
+    }
+
+    userAnswers.push(userAnswer);
+
+    // Normalize answers for comparison
+    const normalizedUserAnswer = userAnswer.toLowerCase();
+    const normalizedCorrectAnswer = correctAnswer.toLowerCase();
+
+    if (normalizedUserAnswer === normalizedCorrectAnswer) {
+      score += 1;
+    }
+
+    currentQuestionIndex += 1;
+    displayQuizQuestion();
+  }
+
+  function displayQuizResult() {
+    const quizArea = document.getElementById('quizArea');
+    quizArea.innerHTML = `
+      <h3>Quiz Completed!</h3>
+      <p>Your Score: ${score} out of ${currentQuiz.length}</p>
+      <button onclick="reviewQuiz()">Review Answers</button>
+    `;
+  }
+
+  function reviewQuiz() {
+    const quizArea = document.getElementById('quizArea');
+    let reviewContent = `<h3>Quiz Review</h3><ol>`;
+    for (let i = 0; i < currentQuiz.length; i++) {
+      const question = currentQuiz[i];
+      const userAnswer = userAnswers[i];
+      const correctAnswer = correctAnswers[getCurrentQuizSubject()][getCurrentQuizDifficulty()][question];
+      reviewContent += `
+        <li>
+          <strong>${sanitize(question)}</strong><br>
+          Your Answer: ${sanitize(userAnswer)}<br>
+          Correct Answer: ${sanitize(correctAnswer)}<br>
+          ${userAnswer.toLowerCase() === correctAnswer.toLowerCase() ? '<span style="color:green;">Correct</span>' : '<span style="color:red;">Incorrect</span>'}
+        </li>
+      `;
+    }
+    reviewContent += `</ol>`;
+    quizArea.innerHTML = reviewContent;
+  }
+
+  function getCurrentQuizSubject() {
+    return document.getElementById('quizSubject').value;
+  }
+
+  function getCurrentQuizDifficulty() {
+    return 'medium'; // Fixed difficulty; modify if needed
+  }
+</script>
+
+</body>
+</html>
