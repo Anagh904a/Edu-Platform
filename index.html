@@ -1,13 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edu Tools Platform</title>
+    <title>Edu Platform</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap" rel="stylesheet"> <!-- Add this line -->
+    <style>
+        body {
+            font-family: 'Mulish', sans-serif; /* Apply the Mulish font */
+        }
+    </style>
 </head>
 <body>
 <style>
+
+
 
 /* Task Manager Styles */
 .task-manager {
@@ -315,6 +324,66 @@
     text-decoration: underline;
 }
 
+.home-section {
+    /* Center the home section in a box */
+    
+            height: 100vh; /* Full viewport height */
+            display: flex; /* Use flexbox for centering */
+            flex-direction: column; /* Stack children vertically */
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+            text-align: center; /* Center text */
+            background-color: #4a90e2; /* Solid background color */
+            color: white; /* Text color */
+}
+
+/* Basic styles for the navbar */
+.navbar {
+    background-color: #f8f9fa; /* Light background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Styles for nav links */
+.navbar-nav .nav-link {
+    position: relative; /* Position relative for the pseudo-element */
+    color: #007bff; /* Default link color */
+    padding: 10px 15px; /* Padding for links */
+    transition: color 0.3s ease; /* Transition for color */
+}
+
+/* Pseudo-element for underline effect */
+.navbar-nav .nav-link::after {
+    content: ''; /* Empty content for the pseudo-element */
+    position: absolute; /* Position it absolutely */
+    left: 50%; /* Center it horizontally */
+    bottom: 0; /* Position it at the bottom */
+    width: 0; /* Initial width */
+    height: 2px; /* Height of the underline */
+    background-color: #007bff; /* Color of the underline */
+    transition: width 0.3s ease, left 0.3s ease; /* Transition for width and position */
+}
+
+/* Hover effect for nav links */
+.navbar-nav .nav-link:hover {
+    color: #0056b3; /* Darker color on hover */
+}
+
+/* On hover, expand the underline */
+.navbar-nav .nav-link:hover::after {
+    width: 100%; /* Expand to full width */
+    left: 0; /* Align to the left */
+}
+
+/* Current section effect */
+.navbar-nav .nav-link.active {
+    color: #007bff; /* Active link color */
+    width: 100%; /* Full width for active underline */
+    left: 0; /* Align to the left */
+    background-color: #007bff; /* Underline color for active link */
+}
+
+
+
 </style>
 <script type="module">
   // Import the functions you need from the SDKs you need
@@ -450,9 +519,10 @@
                 case 'auth/invalid-email':
                     alert('Please enter a valid email address.');
                     break;
-                    case '(auth/invalid-credential':
+                    case 'auth/invalid-credential':
                       alert('Invalid Email or Password else this account doest not exist')
-                default:
+                      break;
+                      default:
                     alert('Error: ' + error.message);
             }
         }
@@ -489,32 +559,32 @@
 
  <!-- Top Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">EduPlatform</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="#home" onclick="showSection('home')">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#quiz" onclick="showSection('quiz-generator')">Quiz</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#worksheet" onclick="showSection('worksheet-generator')">Worksheet Generator</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#notes" onclick="showSection('my-notes')">My Notes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#about" onclick="showSection('about-website')">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#task-manager" onclick="showSection('task-manager')">Task Manger</a>
+  <a class="navbar-brand" href="#">EduPlatform</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+          <li class="nav-item">
+              <a class="nav-link" href="#home" onclick="showSection('home-section')">Home</a>
           </li>
-          </ul>
-    </div>
+          <li class="nav-item">
+              <a class="nav-link" href="#quiz" onclick="showSection('quiz-generator')">Quiz</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="#worksheet" onclick="showSection('worksheet-generator')">Worksheet Generator</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="#notes" onclick="showSection('my-notes')">My Notes</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="#about" onclick="showSection('about-website')">About</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="#task-manager" onclick="showSection('task-manager')">Task Manager</a>
+          </li>
+      </ul>
+  </div>
 </nav>
 
 <script>
@@ -528,7 +598,7 @@ function showAuthForm() {
 </script>
 
 <!-- Homepage Section -->
-<div id="home" class="container mt-5 feature-section">
+<div id="home-section" class="container mt-5 feature-section">
     <h1>Welcome to EduPlatform</h1>
     <p>Your one-stop solution for quizzes, worksheets, notes, and so on!</p>
     <button class="btn btn-primary" onclick="showSection('quiz-generator')">Start Quiz</button>
@@ -658,7 +728,7 @@ function showAuthForm() {
     <strong>Website Server:</strong> Yes
 </div>
 <div class="about-info">
-    <strong>Version:</strong> 1.0(-beta3)
+    <strong>Version:</strong> 1.0(public-release2)
 </div>
 </div>
 
@@ -692,23 +762,23 @@ function showAuthForm() {
 
     
   
-  // Notes Functionality
+    // Notes Functionality
 let notes = [];
 
 // Load notes from localStorage
 function loadNotes() {
-  const loggedInUser  = JSON.parse(localStorage.getItem('loggedInUser '));
-  if (loggedInUser ) {
-      notes = JSON.parse(localStorage.getItem(`${loggedInUser .username}_notes`)) || [];
-  }
+    const loggedInUser  = JSON.parse(localStorage.getItem('loggedInUser '));
+    if (loggedInUser ) {
+        notes = JSON.parse(localStorage.getItem(`${loggedInUser .username}_notes`)) || [];
+    }
 }
 
 // Save notes to localStorage
 function saveNotes() {
-  const loggedInUser  = JSON.parse(localStorage.getItem('loggedInUser '));
-  if (loggedInUser ) {
-      localStorage.setItem(`${loggedInUser .username}_notes`, JSON.stringify(notes));
-  }
+    const loggedInUser  = JSON.parse(localStorage.getItem('loggedInUser '));
+    if (loggedInUser ) {
+        localStorage.setItem(`${loggedInUser .username}_notes`, JSON.stringify(notes));
+    }
 }
 
 // Add Note
@@ -717,40 +787,37 @@ function addNote() {
     const noteContent = document.getElementById('noteContent').value.trim();
 
     if (noteName && noteContent) {
-        const note = {
-            name: noteName,
-            content: noteContent
-        };
+        const note = { name: noteName, content: noteContent };
         notes.push(note);
         saveNotes();
         renderNotes();
-        document.getElementById('noteName').value = ''; // Clear input
-        document.getElementById('noteContent').value = ''; // Clear textarea
+        document.getElementById('noteName').value = '';
+        document.getElementById('noteContent').value = '';
     } else {
-        alert('Both note title and content are required.');
+        alert('Both fields are required.');
     }
 }
+
 // Render Notes
 function renderNotes() {
-  const notesList = document.getElementById('notesList');
-  notesList.innerHTML = '';
+    const notesList = document.getElementById('notesList');
+    notesList.innerHTML = '';
 
-  notes.forEach(note => {
-      const noteItem = document.createElement('li');
-      noteItem.innerHTML = `<strong>${sanitize(note.name)}</strong>: ${sanitize(note.content)}`;
-      notesList.appendChild(noteItem);
-  });
+    notes.forEach(note => {
+        const noteItem = document.createElement('li');
+        noteItem.innerHTML = `<strong>${sanitize(note.name)}</strong>: ${sanitize(note.content)}`;
+        notesList.appendChild(noteItem);
+    });
 }
 
 // Show Notes on Load
 function initNotes() {
-  loadNotes();
-  renderNotes();
+    loadNotes();
+    renderNotes();
 }
 
 // Initialize notes on page load
 window.onload = initNotes;
-
  
 
   
@@ -762,20 +829,18 @@ window.onload = initNotes;
 
   // Load tasks from localStorage
   function loadTasks() {
-    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-    if (loggedInUser) {
-      const userTasks = JSON.parse(localStorage.getItem(`${loggedInUser.username}_tasks`)) || [];
-      tasks = userTasks;
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+        tasks = JSON.parse(storedTasks);
     }
-  }
+}
+  
 
   // Save tasks to localStorage
   function saveTasks() {
-    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-    if (loggedInUser) {
-      localStorage.setItem(`${loggedInUser.username}_tasks`, JSON.stringify(tasks));
-    }
-  }
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+  
 
   function addTask() {
     const taskName = document.getElementById('taskName').value.trim();
@@ -1038,7 +1103,7 @@ window.onload = initNotes;
     }
 
     if (numQuestions > availableQuestions.length) {
-      alert(`Only ${availableQuestions.length} questions available for ${subject} (medium difficulty).`);
+      alert(`Only ${availableQuestions.length} questions available for ${subject}`);
       return;
     }
 
