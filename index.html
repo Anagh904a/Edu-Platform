@@ -313,6 +313,97 @@
     margin-bottom: 10px;
 }
 
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1px 1px;
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.cell:hover {
+    background-color: #d1e7dd;
+    transform: scale(1.05);
+}
+
+.cell.taken {
+    pointer-events: none; /* Prevent clicking on already taken cells */
+    background-color: #f8d7da; /* Light red for taken cells */
+}
+
+.reset-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reset-button:hover {
+    background-color: #0056b3;
+}
+
+.game-status {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #28a745; /* Green color for status */
+}
+
+.resultModal {
+    display: flex; /* Use flexbox for centering */
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px; /* Width of the modal */
+    text-align: center; /* Center text */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .toggle-link {
     text-align: center;
     margin-top: 10px;
@@ -583,7 +674,13 @@
           <li class="nav-item">
               <a class="nav-link" href="#task-manager" onclick="showSection('task-manager')">Task Manager</a>
           </li>
-      </ul>
+          <li class="nav-item">
+            <a class="nav-link" href="#worksheet-creation" onclick="showSection('worksheet-creation')">Custom Worksheet Generator</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#tic-tac-toe" onclick="showSection('tic-tac-toe')">Tic Tac Toe</a>
+        </li>
+        </ul>
   </div>
 </nav>
 
@@ -694,6 +791,29 @@ function showAuthForm() {
   <div id="generatedWorksheet"></div>
 </div>
 
+<!--Custom Worksheet Generator-->
+<div id="worksheet-creation" class="feature-section">
+    <h2>Create Your Own Worksheet</h2>
+    <form id="worksheetCreationForm">
+      <form id="worksheetCreationForm">
+        <label for="questionType">Choose Question Type:</label>
+        <select id="questionType" onchange="updateQuestionFields()">
+            <option value="shortAnswer">Short Answer</option>
+            <p>More Coming Soon...</p>
+            </select>
+    
+        <div id="questionFields">
+            <input type="text" id="worksheetQuestion" placeholder="Enter your question" required>
+            
+          
+         
+            <button type="button" onclick="addWorksheetQuestion()">Add Question</button>
+        <button type="button" onclick="downloadWorksheet()">Dowload Worksheet (.txt)</button>
+          </div>
+    </form>
+    <ul id="worksheetQuestionsList"></ul>
+</div>
+
 <!-- Quiz Generator Section -->
 <div id="quiz-generator" class="feature-section">
   <h2>Quiz Generator</h2>
@@ -704,6 +824,12 @@ function showAuthForm() {
     <select id="quizSubject" name="quizSubject" required>
       <option value="math">Math</option>
       <option value="science">Science</option>
+    </select>
+    <label for="quizTimerSelect">Select Timer For The Quiz(Coming soon...)</label>
+    <select id="quizTimerSelect">
+        <option value="30">30 seconds</option>
+        <option value="60">1 minute</option>
+        <option value="300">5 minutes</option>
     </select>
     
     <label for="quizNumQuestions">Number of Questions:</label>
@@ -732,6 +858,31 @@ function showAuthForm() {
 </div>
 </div>
 
+<!--Tic Tac Toe-->
+<div id="tic-tac-toe" class="feature-section">
+    <h2>Tic Tac Toe</h2>
+    <div id="ticTacToeBoard" class="board">
+        <div class="cell" onclick="makeMove(0)"></div>
+        <div class="cell" onclick="makeMove(1)"></div>
+        <div class="cell" onclick="makeMove(2)"></div>
+        <div class="cell" onclick="makeMove(3)"></div>
+        <div class="cell" onclick="makeMove(4)"></div>
+        <div class="cell" onclick="makeMove(5)"></div>
+        <div class="cell" onclick="makeMove(6)"></div>
+        <div class="cell" onclick="makeMove(7)"></div>
+        <div class="cell" onclick="makeMove(8)"></div>
+    </div>
+   <!-- Result Modal -->
+<div id="resultModal" class="modal" style="display: none;">
+  <div class="modal-content">
+      <span class="close" onclick="closePopUp()">&times;</span>
+      <p id="resultMessage"></p>
+      <button onclick="resetGame()">Play Again</button>
+  </div>
+</div>
+    <div id="gameStatus"></div>
+</div>
+
 <!-- My Notes Section --> 
 <div id="my-notes" class="feature-section">
   <h2>My Notes</h2>
@@ -753,6 +904,129 @@ function showAuthForm() {
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+
+//Custom Worksheet Generator
+let worksheetQuestions = [];
+
+function addWorksheetQuestion() {
+    const question = document.getElementById('worksheetQuestion').value.trim();
+    
+    if (question) {
+        worksheetQuestions.push(question);
+        document.getElementById('worksheetQuestionsList').innerHTML += `<li>${question}</li>`;
+        document.getElementById('worksheetQuestion').value = '';
+    } else {
+        alert('Question field is required.');
+    }
+}
+
+function downloadWorksheet() {
+    if (worksheetQuestions.length === 0) {
+        alert('No questions to download.');
+        return;
+    }
+
+    let worksheetContent = worksheetQuestions.join('\n');
+    const blob = new Blob([worksheetContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'worksheet.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function updateQuestionFields() {
+    const questionType = document.getElementById('questionType').value;
+    const mcqOptions = document.getElementById('mcqOptions');
+    const trueFalseOptions = document.getElementById('trueFalseOptions');
+    const fillInTheBlankOptions = document.getElementById('fillInTheBlankOptions');
+
+    // Hide all options initially
+    mcqOptions.style.display = 'none';
+    trueFalseOptions.style.display = 'none';
+    fillInTheBlankOptions.style.display = 'none';
+
+    // Show fields based on selected question type
+    if (questionType === 'multipleChoice') {
+        mcqOptions.style.display = 'block';
+    } else if (questionType === 'trueFalse') {
+        trueFalseOptions.style.display = 'block';
+    } else if (questionType === 'fillInTheBlank') {
+        fillInTheBlankOptions.style.display = 'block';
+    }
+}
+
+//Close Pop Up
+function closePopUp() {
+    document.getElementById('resultModal').style.display = 'none'; // Hide the modal
+}
+
+//Tic Tac Toe
+let currentPlayer = 'X'; // Start with player X
+let board = ['', '', '', '', '', '', '', '', '']; // Initialize the board
+let gameActive = true; // To check if the game is still ongoing
+
+function makeMove(index) {
+    if (board[index] !== '' || !gameActive) return; // Ignore if cell is taken or game is over
+
+    board[index] = currentPlayer; // Mark the cell
+    document.getElementById('ticTacToeBoard').children[index].innerText = currentPlayer; // Update UI
+    document.getElementById('ticTacToeBoard').children[index].classList.add('taken'); // Add taken class
+    checkWinner(); // Check for a winner
+}
+
+function checkWinner() {
+    const winningConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    for (let condition of winningConditions) {
+        const [a, b, c] = condition;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          const winnerMessage = `Player ${currentPlayer} wins!`;
+            document.getElementById('resultMessage').innerText = winnerMessage;
+            document.getElementById('resultModal').style.display = 'flex'; // Show modal
+            gameActive = false; // End the game
+            return;
+        }
+    }
+
+    if (!board.includes('')) {
+        document.getElementById('resultMessage').innerText = "It's a draw!";
+        document.getElementById('resultModal').style.display = 'flex'; // Show modal
+        gameActive = false; // End the game
+    }
+
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; // Switch player
+}
+
+function resetGame() {
+    board = ['', '', '', '', '', '', '', '', '']; // Reset the board
+    gameActive = true; // Reset game status
+    currentPlayer = 'X'; // Reset to player X
+    document.getElementById('gameStatus').innerText = ''; // Clear the status message
+
+    const cells = document.getElementById('ticTacToeBoard').children;
+    for (let cell of cells) {
+        cell.innerText = ''; // Clear the UI
+        cell.classList.remove('taken'); // Remove taken class
+    }
+
+    closePopUp();
+
+  }
+
+</script>
 <script>
     function showSection(sectionId) {
         const sections = document.querySelectorAll('.feature-section');
