@@ -16,14 +16,17 @@
 <body>
 <style>
 
+body {
 
-
+  color: #ffffff;
+  background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+}
 /* Task Manager Styles */
 .task-manager {
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #ffffff;
+    
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
@@ -65,7 +68,7 @@
 }
 
 .task-item {
-    background-color: #f9f9f9;
+    
     padding: 15px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
@@ -83,7 +86,7 @@
 
 .task-item.completed {
     text-decoration: line-through;
-    background-color: #d4edda;
+    
 }
 
 .task-item button {
@@ -123,13 +126,13 @@
 
 #about-website {
     padding: 20px;
-    background-color: #f8f9fa;
+    
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .about-info {
-    background-color: #007BFF; /* Bubble background color */
+    background-color: #a0b8d3; /* Bubble background color */
     color: white; /* Text color */
     padding: 15px;
     margin: 10px 0; /* Space between bubbles */
@@ -167,7 +170,7 @@
     display: none;
     margin-top: 50px;
     padding: 20px;
-    background-color: #f8f9fa;
+    color: #aaa;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
@@ -232,7 +235,7 @@
 #updateMessage {
     margin-top: 20px;
     padding: 20px;
-    background-color: #ffffff;
+   
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -242,7 +245,7 @@
     max-width: 400px;
     margin: 100px auto;
     padding: 30px;
-    background-color: #ffffff; /* Original background */
+    
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -271,7 +274,7 @@
 
 .auth-container form button {
     padding: 10px;
-    background-color: rgb(95, 95, 173); /* Use the specified variable */
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */ /* Use the specified variable */
     color: rgb(255, 255, 255);
     border: none;
     border-radius: 4px;
@@ -378,11 +381,11 @@
     top: 0;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
-    background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+    /* Black background with transparency */
 }
 
 .modal-content {
-    background-color: #fefefe;
+    
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
@@ -416,23 +419,27 @@
 }
 
 .home-section {
-    /* Center the home section in a box */
-    
+            
             height: 100vh; /* Full viewport height */
-            display: flex; /* Use flexbox for centering */
-            flex-direction: column; /* Stack children vertically */
-            justify-content: center; /* Center vertically */
-            align-items: center; /* Center horizontally */
-            text-align: center; /* Center text */
-            background-color: #4a90e2; /* Solid background color */
+            display: flex; /* Use Flexbox */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
             color: white; /* Text color */
-}
+            text-align: center; /* Center text */
+            margin: 0; /* Remove default margin */
+        }
 
+        .content {
+            padding: 20px; /* Add some padding */
+            background: linear-gradient(to right, #7700ff, #a79ac4); /* Gradient background */
+            border-radius: 10px; /* Optional: rounded corners */
+        }
 /* Basic styles for the navbar */
 .navbar {
-    background-color: #f8f9fa; /* Light background color */
+  
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
+    color: #d1e7dd;
+  }
 
 /* Styles for nav links */
 .navbar-nav .nav-link {
@@ -440,6 +447,10 @@
     color: #007bff; /* Default link color */
     padding: 10px 15px; /* Padding for links */
     transition: color 0.3s ease; /* Transition for color */
+}
+
+.navbar a {
+  color: #ffffff;
 }
 
 /* Pseudo-element for underline effect */
@@ -473,7 +484,170 @@
     background-color: #007bff; /* Underline color for active link */
 }
 
+/* Change the color of headings and paragraphs in sections */
+h1, h2, h3, h4, h5, h6 {
+    color: white; /* Change heading colors to white */
+}
 
+p {
+    color: white; /* Change paragraph text color to white */
+}
+
+/* Define theme styles */
+body {
+    transition: background 0.5s, color 0.5s; /* Smooth transition for background and text color */
+}
+
+.default-theme {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: black; /* Default text color */
+}
+
+.ocean-theme {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: black; /* Text color for ocean theme */
+}
+
+.sunset-theme {
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: black; /* Text color for sunset theme */
+}
+
+.teal-theme {
+    background: linear-gradient(to right, #008080, #004d4d);
+    color: white; /* Text color for teal theme */
+}
+
+.purple-theme {
+    background: linear-gradient(to right, #a06ab6, #f5a623);
+    color: black; /* Text color for purple theme */
+}
+
+.coral-theme {
+    background: linear-gradient(to right, #ff6a6a, #ffb6b6);
+    color: black; /* Text color for coral theme */
+}
+
+.forest-theme {
+    background: linear-gradient(to right, #3a6073, #3a3d3d);
+    color: white; /* Text color for forest theme */
+}
+
+.dark-theme {
+    background: linear-gradient(to right, #1a1a1a, #2c3e50);
+    color: white; /* Text color for dark theme */
+
+  }
+
+ /* Add this to your CSS */
+.dark-theme #navbarNav {
+    
+    color: white; /* White text color for better contrast */
+}
+
+.dark-theme #navbarNav a {
+    color: white; /* White text color for links in dark theme */
+}
+
+.dark-theme #navbarNav a:hover {
+    color: #cccccc; /* Lighter color for links on hover */
+}
+
+.light-theme {
+    background: linear-gradient(to right, #f0f8ff, #e6f7ff);
+    color: black; /* Text color for light theme */
+}
+
+#theme-section {
+    display: block; /* Show it in the desired area */
+    margin: 20px; /* Space around the theme switcher */
+    padding: 10px; /* Padding inside the theme section */
+    background-color: rgba(255, 255, 255, 0.1); /* Light background for the theme section */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.membership-info {
+   
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.membership-options {
+    display: flex;
+    justify-content: space-around; /* Space between the boxes */
+    margin-top: 20px;
+}
+
+.membership-option {
+    
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px;
+    margin: 10px;
+    
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 45%; /* Set width for each box */
+    transition: transform 0.3s; /* Add transition for hover effect */
+}
+
+.membership-option:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.membership-option h3 {
+    color: #007bff;
+}
+
+.membership-option button {
+    
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+
+
+/* Modal Styles */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.modal-content {
+    
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 </style>
 <script type="module">
@@ -642,14 +816,15 @@
         }
 
         //Show Auth Form Funtion
-        function showAuthForm() {
-    const authContainer = document.getElementById('auth-container');
-    authContainer.style.display = 'block'; // Show the auth container
-}
+        // Define the showAuthForm function
+    function showAuthForm() {
+        const authContainer = document.getElementById('auth-container');
+        authContainer.style.display = 'block'; // Show the auth container
+    }
         </script>
 
  <!-- Top Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav id="navbarNav" class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">EduPlatform</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -657,7 +832,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
           <li class="nav-item">
-              <a class="nav-link" href="#home" onclick="showSection('home-section')">Home</a>
+              <a class="nav-link" href="#home-section" onclick="showSection('home-section')">Home</a>
           </li>
           <li class="nav-item">
               <a class="nav-link" href="#quiz" onclick="showSection('quiz-generator')">Quiz</a>
@@ -680,7 +855,13 @@
         <li class="nav-item">
             <a class="nav-link" href="#tic-tac-toe" onclick="showSection('tic-tac-toe')">Tic Tac Toe</a>
         </li>
-        </ul>
+        <li class="nav-item">
+          <a class="nav-link" href="#theme-section" onclick="showSection('theme-section')">Themes</a>
+      </li>  
+      <li class="nav-item">
+        <a class="nav-link" href="#membership-section" onclick="showSection('membership-section')">Membership Plans</a>
+    </li>  
+      </ul>
   </div>
 </nav>
 
@@ -696,13 +877,12 @@ function showAuthForm() {
 
 <!-- Homepage Section -->
 <div id="home-section" class="container mt-5 feature-section">
-    <h1>Welcome to EduPlatform</h1>
-    <p>Your one-stop solution for quizzes, worksheets, notes, and so on!</p>
-    <button class="btn btn-primary" onclick="showSection('quiz-generator')">Start Quiz</button>
-    <button class="btn btn-secondary" onclick="showSection('worksheet-generator')">Generate Worksheet</button>
-    <button class="btn btn-info" onclick="showSection('my-notes')">View My Notes</button>
-    <button class="btn btn-primary" onclick="showAuthForm()">Login</button>
-
+  <h1>Welcome to EduPlatform</h1>
+  <p>Your one-stop solution for quizzes, worksheets, notes, and so on!</p>
+  <button class="btn btn-primary" onclick="showSection('quiz-generator')">Start Quiz</button>
+  <button class="btn btn-secondary" onclick="showSection('worksheet-generator')">Generate Worksheet</button>
+  <button class="btn btn-info" onclick="showSection('my-notes')">View My Notes</button>
+  <button class="btn btn-primary" onclick="showAuthForm()">Login</button>
     
     <!-- Authentication Container -->
 <div id="auth-container" class="auth-container">
@@ -792,6 +972,73 @@ function showAuthForm() {
   <div id="generatedWorksheet"></div>
 </div>
 
+
+<!-- Membership Section -->
+<div id="membership-section" class="feature-section">
+    <h2>Membership Plans</h2>
+    <div id="membership-info" class="membership-info">
+        <h3>Current Membership</h3>
+        <p id="membership-type">Membership Type: <strong>None</strong></p>
+        <p id="membership-date">Membership Purchased On: <strong>N/A</strong></p>
+    </div>
+    <div id="membership-options" class="membership-options">
+        <div class="membership-option pro">
+            <h3>Pro Plan</h3>
+            <p>Price: <strong>0 Rupees</strong></p>
+            <ul>
+                <li>✔️ All themes unlocked</li>
+                <li>✔️ Custom worksheet generator templates unlocked</li>
+                <li>✔️ Messages limit: 210 messages per week</li>
+                <li>✔️ Messages limit: 30 messages per day</li>
+            </ul>
+            <button onclick="handlePurchase('Pro')">Get Pro Membership</button>
+        </div>
+        <div class="membership-option ultra-pro">
+            <h3>Luxury Plan</h3>
+            <p>Price: <strong>0 Rupees</strong></p>
+            <ul>
+                <li>✔️ All themes unlocked</li>
+                <li>✔️ Advanced task manager</li>
+                <li>✔️ My Notes unlocked with local storage</li>
+                <li>✔️ Custom worksheet generator templates unlocked</li>
+                <li>✔️ Messages limit: 560 messages per week</li>
+                <li>✔️ Messages limit: 80 messages per day</li>
+            </ul>
+            <button onclick="handlePurchase('Ultra Pro')">Get Ultra Pro Membership</button>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Popup -->
+<div id="upgrade-popup" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <p id="upgrade-message"></p>
+        <button onclick="confirmUpgrade(true)">Yes</button>
+        <button onclick="confirmUpgrade(false)">No</button>
+    </div>
+</div>
+
+
+
+<!-- Theme Section -->
+<div id="theme-section" class="feature-section" style="margin: 20px; padding: 10px;">
+  <h2>Select a Theme</h2>
+  <label for="theme-select">Choose a theme:</label>
+      <select id="theme-select">
+          <option value="default">Default (Blue-Purple)</option>
+          <option value="ocean">Ocean Blue</option>
+          <option value="sunset">Sunset</option>
+          <option value="teal">Teal Blue</option>
+          <option value="purple">Purple Dream</option>
+          <option value="coral">Coral</option>
+          <option value="forest">Forest</option>
+          <option value="dark">Dark Theme(NOT RECOMMED)</option>
+          <option value="light">Light Theme(NOT RECOMMED)</option>
+      </select>
+  </div>
+</div>
+
 <!--Custom Worksheet Generator-->
 <div id="worksheet-creation" class="feature-section">
     <h2>Create Your Own Worksheet</h2>
@@ -826,7 +1073,7 @@ function showAuthForm() {
       <option value="math">Math</option>
       <option value="science">Science</option>
     </select>
-    <label for="quizTimerSelect">Select Timer For The Quiz(Coming soon...)</label>
+    <label for="quizTimerSelect">Select Timer For The Quiz</label>
     <select id="quizTimerSelect">
         <option value="30">30 seconds</option>
         <option value="60">1 minute</option>
@@ -1026,6 +1273,132 @@ function resetGame() {
     closePopUp();
 
   }
+
+  //Themes Functionallity
+  const themeSelect = document.getElementById('theme-select');
+
+themeSelect.addEventListener('change', (event) => {
+    switch (event.target.value) {
+        case 'default':
+            setTheme('linear-gradient(to right, #6a11cb, #2575fc)');
+            break;
+        case 'ocean':
+            setTheme('linear-gradient(to right, #00c6ff, #0072ff)');
+            break;
+        case 'sunset':
+            setTheme('linear-gradient(to right, #ff7e5f, #feb47b)');
+            break;
+        case 'teal':
+            setTheme('linear-gradient(to right, #008080, #004d4d)');
+            break;
+        case 'purple':
+            setTheme('linear-gradient(to right, #a06ab6, #f5a623)');
+            break;
+        case 'coral':
+            setTheme('linear-gradient(to right, #ff6a6a, #ffb6b6)');
+            break;
+        case 'forest':
+            setTheme('linear-gradient(to right, #3a6073, #3a3d3d)');
+            break;
+        case 'dark':
+            setTheme('linear-gradient(to right, #1a1a1a, #2c3e50)');
+            break;
+        case 'light':
+            setTheme('linear-gradient(to right, #f0f8ff, #e6f7ff)'); // Customize this as needed
+            break;
+    }
+});
+
+function setTheme(gradient) { 
+    document.body.style.background = gradient; 
+    document.querySelector('.navbar').style.background = gradient; 
+    const body = document.body;
+
+    // Set text color based on theme
+    if (gradient.includes('#1a1a1a') || gradient.includes('#2c3e50')) { // Dark theme colors
+        document.body.style.color = 'white'; // Change body text color to white
+        document.querySelector('.navbar').style.color = 'white'; // Change navbar text color to white
+    } else if (gradient.includes('#f0f8ff') || gradient.includes('#e6f7ff')) { // Light theme colors
+        document.body.style.color = 'black'; // Change body text color to black
+    } else {
+        document.body.style.color = ''; // Reset to default for other themes
+        document.querySelector('.navbar').style.color = ''; // Reset to default for navbar
+    }
+
+    
+
+    const authContainer = document.getElementById('auth-container'); 
+    authContainer.style.background = 'rgba(0, 0, 0, 0.5)'; // Optional: Keep auth container dark for readability 
+    const closeButton = document.getElementById('close-button'); 
+    closeButton.style.background = gradient; // Change close button background if needed 
+}
+
+//MemberShip Section
+// Initialize current membership from local storage
+let currentMembership = {
+    type: localStorage.getItem('membershipType') || null,
+    purchaseDate: localStorage.getItem('membershipPurchaseDate') || null
+};
+
+// Function to handle membership purchase
+function handlePurchase(plan) {
+    if (currentMembership.type) {
+        if (plan === 'Ultra Pro' && currentMembership.type === 'Pro') {
+            document.getElementById('upgrade-message').innerText = 'Do you want to upgrade your membership plan to Ultra Pro?';
+            document.getElementById('upgrade-popup').style.display = 'flex';
+        } else {
+            alert(`You are already a ${currentMembership.type} user.`);
+        }
+    } else {
+        // Set the membership type and purchase date
+        currentMembership.type = plan;
+        currentMembership.purchaseDate = new Date().toLocaleDateString();
+        
+        // Save to local storage
+        localStorage.setItem('membershipType', currentMembership.type);
+        localStorage.setItem('membershipPurchaseDate', currentMembership.purchaseDate);
+        
+        updateMembershipInfo();
+        alert(`${plan} membership purchased successfully!`);
+    }
+}
+
+// Function to update membership info display
+function updateMembershipInfo() {
+    document.getElementById('membership-type').innerHTML = `Membership Type: <strong>${currentMembership.type}</strong>`;
+    document.getElementById('membership-date').innerHTML = `Membership Purchased On: <strong>${currentMembership.purchaseDate}</strong>`;
+}
+
+// Function to confirm membership upgrade
+function confirmUpgrade(isConfirmed) {
+    if (isConfirmed) {
+        currentMembership.type = 'Ultra Pro';
+        currentMembership.purchaseDate = new Date().toLocaleDateString();
+        
+        // Update local storage
+        localStorage.setItem('membershipType', currentMembership.type);
+        localStorage.setItem('membershipPurchaseDate', currentMembership.purchaseDate);
+        
+        updateMembershipInfo();
+        alert('Membership upgraded to Ultra Pro successfully!');
+    }
+    closePopup();
+}
+
+// Function to close the upgrade confirmation popup
+function closePopup() {
+    document.getElementById('upgrade-popup').style.display = 'none';
+}
+
+// Function to initialize membership info on page load
+function initMembership() {
+    if (currentMembership.type) {
+        updateMembershipInfo();
+    }
+}
+
+// Call initMembership on page load
+window.onload = initMembership;
 
 </script>
 <script>
