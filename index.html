@@ -258,7 +258,8 @@
 
 
 .auth-container form input[type="password"],
-.auth-container form input[type="email"] {
+.auth-container form input[type="email"],
+ .auth-container form input[type="text"] {
     padding: 10px;
     border: 1px solid #000000;
     border-radius: 4px;
@@ -879,18 +880,15 @@ function showAuthForm() {
 <div id="auth-container" class="auth-container">
   <h2 id="auth-title">Login</h2>
   <form id="auth-form">
-    <div class="input-box">
-      <input type="password" placeholder="Enter Your Name" required>
-    </div>
-    <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <div class="input-box">
-        <input type="password" placeholder="Confirm password" required>
-      </div>
-      <div class="policy">
-        <input type="checkbox">
-        <h3>I accept all terms & condition</h3>
-      </div>
+  <input type="text" id="name" placeholder="Enter Your Name" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
+  <input type="email" id="email" placeholder="Email" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
+  <input type="password" id="password" placeholder="Password" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
+  <input type="password" id="confirmPassword" placeholder="Confirm password" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
+  
+  <div class="policy" style="display: flex; align-items: center;">
+      <input type="checkbox" required>
+      <h3 style="margin-left: 5px;">I accept all terms & conditions</h3>
+  </div>
         <button type="submit" id="auth-button">Login</button>
       <button type="button" id="close-button" style="display:none;">Close</button>
   </form>
@@ -1039,6 +1037,71 @@ function showAuthForm() {
       </select>
   </div>
 </div>
+
+<script>
+
+ //Themes Functionallity
+ const themeSelect = document.getElementById('theme-select');
+
+themeSelect.addEventListener('change', (event) => {
+    switch (event.target.value) {
+        case 'default':
+            setTheme('linear-gradient(to right, #6a11cb, #2575fc)');
+            break;
+        case 'ocean':
+            setTheme('linear-gradient(to right, #00c6ff, #0072ff)');
+            break;
+        case 'sunset':
+            setTheme('linear-gradient(to right, #ff7e5f, #feb47b)');
+            break;
+        case 'teal':
+            setTheme('linear-gradient(to right, #008080, #004d4d)');
+            break;
+        case 'purple':
+            setTheme('linear-gradient(to right, #a06ab6, #f5a623)');
+            break;
+        case 'coral':
+            setTheme('linear-gradient(to right, #ff6a6a, #ffb6b6)');
+            break;
+        case 'forest':
+            setTheme('linear-gradient(to right, #3a6073, #3a3d3d)');
+            break;
+        case 'dark':
+            setTheme('linear-gradient(to right, #1a1a1a, #2c3e50)');
+            break;
+        case 'light':
+            setTheme('linear-gradient(to right, #f0f8ff, #e6f7ff)'); // Customize this as needed
+            break;
+    }
+});
+
+function setTheme(gradient) { 
+    document.body.style.background = gradient; 
+    document.querySelector('.navbar').style.background = gradient; 
+    const body = document.body;
+
+    // Set text color based on theme
+    if (gradient.includes('#1a1a1a') || gradient.includes('#2c3e50')) { // Dark theme colors
+        document.body.style.color = 'white'; // Change body text color to white
+        document.querySelector('.navbar').style.color = 'white'; // Change navbar text color to white
+    } else if (gradient.includes('#f0f8ff') || gradient.includes('#e6f7ff')) { // Light theme colors
+        document.body.style.color = 'black'; // Change body text color to black
+    } else {
+        document.body.style.color = ''; // Reset to default for other themes
+        document.querySelector('.navbar').style.color = ''; // Reset to default for navbar
+    }
+
+    
+
+    const authContainer = document.getElementById('auth-container'); 
+    authContainer.style.background = 'rgba(0, 0, 0, 0.5)'; // Optional: Keep auth container dark for readability 
+    const closeButton = document.getElementById('close-button'); 
+    closeButton.style.background = gradient; // Change close button background if needed 
+    const authButton = document.getElementById('auth-button'); 
+    authButton.style.background = gradient;
+  }
+
+</script>
 
 <!--Custom Worksheet Generator-->
 <div id="worksheet-creation" class="feature-section">
@@ -1279,66 +1342,65 @@ function resetGame() {
 
   }
 
-  //Themes Functionallity
-  const themeSelect = document.getElementById('theme-select');
+  // Assuming you have a form with id 'authForm'
+const authForm = document.getElementById('authForm');
 
-themeSelect.addEventListener('change', (event) => {
-    switch (event.target.value) {
-        case 'default':
-            setTheme('linear-gradient(to right, #6a11cb, #2575fc)');
-            break;
-        case 'ocean':
-            setTheme('linear-gradient(to right, #00c6ff, #0072ff)');
-            break;
-        case 'sunset':
-            setTheme('linear-gradient(to right, #ff7e5f, #feb47b)');
-            break;
-        case 'teal':
-            setTheme('linear-gradient(to right, #008080, #004d4d)');
-            break;
-        case 'purple':
-            setTheme('linear-gradient(to right, #a06ab6, #f5a623)');
-            break;
-        case 'coral':
-            setTheme('linear-gradient(to right, #ff6a6a, #ffb6b6)');
-            break;
-        case 'forest':
-            setTheme('linear-gradient(to right, #3a6073, #3a3d3d)');
-            break;
-        case 'dark':
-            setTheme('linear-gradient(to right, #1a1a1a, #2c3e50)');
-            break;
-        case 'light':
-            setTheme('linear-gradient(to right, #f0f8ff, #e6f7ff)'); // Customize this as needed
-            break;
+authForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent form submission
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+    // Input validation
+    if (!isValidEmail(email)) {
+        alert('Please enter a valid email.');
+        return;
     }
+
+    if (password.length < 6) {
+        alert('Password must be at least 6 characters long.');
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert('Passwords do not match. Please try again.');
+        return;
+    }
+
+    // Proceed with authentication (login/register)
+    loadingIndicator.style.display = 'block'; // Show loading indicator
+
+    const authAction = isLogin ? signInWithEmailAndPassword(auth, email, password) : createUser WithEmailAndPassword(auth, email, password);
+
+    authAction
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log('User :', user);
+            if (isLogin) {
+                localStorage.setItem('user', JSON.stringify({ uid: user.uid, email: user.email }));
+                alert('Logged in successfully!');
+                authContainer.style.display = 'none'; // Hide the auth container
+                closeButton.style.display = 'block'; // Show close button
+            } else {
+                alert('Registration successful! You can now log in.');
+                toggleLink.click(); // Switch to login mode
+            }
+        })
+        .catch((error) => {
+            handleAuthError(error); // Enhanced error handling
+        })
+        .finally(() => {
+            loadingIndicator.style.display = 'none'; // Hide loading indicator
+        });
 });
 
-function setTheme(gradient) { 
-    document.body.style.background = gradient; 
-    document.querySelector('.navbar').style.background = gradient; 
-    const body = document.body;
-
-    // Set text color based on theme
-    if (gradient.includes('#1a1a1a') || gradient.includes('#2c3e50')) { // Dark theme colors
-        document.body.style.color = 'white'; // Change body text color to white
-        document.querySelector('.navbar').style.color = 'white'; // Change navbar text color to white
-    } else if (gradient.includes('#f0f8ff') || gradient.includes('#e6f7ff')) { // Light theme colors
-        document.body.style.color = 'black'; // Change body text color to black
-    } else {
-        document.body.style.color = ''; // Reset to default for other themes
-        document.querySelector('.navbar').style.color = ''; // Reset to default for navbar
-    }
-
-    
-
-    const authContainer = document.getElementById('auth-container'); 
-    authContainer.style.background = 'rgba(0, 0, 0, 0.5)'; // Optional: Keep auth container dark for readability 
-    const closeButton = document.getElementById('close-button'); 
-    closeButton.style.background = gradient; // Change close button background if needed 
-    const authButton = document.getElementById('auth-button'); 
-    authButton.style.background = gradient;
-  }
+// Function to validate email format
+function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for email validation
+    return re.test(String(email).toLowerCase());
+}
+ 
 
 //MemberShip Section
 // Initialize current membership from local storage
