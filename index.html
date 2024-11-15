@@ -987,7 +987,7 @@ function showAuthForm() {
             </ul>
             <button onclick="handlePurchase('Pro')">Get Pro Membership</button>
         </div>
-        <div class="membership-option ultra-pro">
+        <div class="membership-option Luxury">
             <h3>Luxury Plan</h3>
             <p>Price: <strong>FREE!(0 Rupees)</strong></p>
             <ul>
@@ -1101,6 +1101,7 @@ function showAuthForm() {
 <div class="about-info">
   <strong>Listvista Account Link:</strong> Yes
 </div>
+</div>
 
 <!--Tic Tac Toe-->
 <div id="tic-tac-toe" class="feature-section">
@@ -1125,6 +1126,7 @@ function showAuthForm() {
   </div>
 </div>
     <div id="gameStatus"></div>
+</div>
 </div>
 
 <!-- My Notes Section --> 
@@ -1340,7 +1342,7 @@ let currentMembership = {
 function handlePurchase(plan) {
     if (currentMembership.type) {
         if (plan === 'Ultra Pro' && currentMembership.type === 'Pro') {
-            document.getElementById('upgrade-message').innerText = 'Do you want to upgrade your membership plan to Ultra Pro?';
+            document.getElementById('upgrade-message').innerText = 'Do you want to upgrade your membership plan to Luxury?';
             document.getElementById('upgrade-popup').style.display = 'flex';
         } else {
             alert(`You are already a ${currentMembership.type} user.`);
@@ -1368,7 +1370,7 @@ function updateMembershipInfo() {
 // Function to confirm membership upgrade
 function confirmUpgrade(isConfirmed) {
     if (isConfirmed) {
-        currentMembership.type = 'Ultra Pro';
+        currentMembership.type = 'Luxury';
         currentMembership.purchaseDate = new Date().toLocaleDateString();
         
         // Update local storage
@@ -1376,7 +1378,7 @@ function confirmUpgrade(isConfirmed) {
         localStorage.setItem('membershipPurchaseDate', currentMembership.purchaseDate);
         
         updateMembershipInfo();
-        alert('Membership upgraded to Ultra Pro successfully!');
+        alert('Membership upgraded to Luxury Plan successfully!');
     }
     closePopup();
 }
