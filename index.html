@@ -1205,17 +1205,7 @@ function setTheme(gradient) {
     <div class="cell" onclick="makeMove(8)"></div>
 </div>
 
-<!-- 2048 Game Section -->
-<div id="2048-game" class="feature-section" style="display:none;">
-  <h2>2048 Game</h2>
-  <div id="game-container">
-      <div id="grid-container"></div>
-      <div id="score-container">Score: <span id="score">0</span></div>
-  </div>
-  <button onclick="startGame()">New Game</button>
-</div>
-
- <!-- Result Modal -->
+<!-- Result Modal -->
 <div id="resultModal" class="modal" style="display: none;">
   <div class="modal-content">
       <span class="close" onclick="closePopUp()">&times;</span>
@@ -1536,15 +1526,18 @@ window.onload = initNotes;
     const taskTime = document.getElementById('taskTime').value;
     
     if (taskName) {
-      //Get today's date in YYYY-MM-DD format
-        const today = new Date();
-        const todayString = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+      // Get today's date and time in YYYY-MM-DD HH:mm format
+      const now = new Date();
+        const nowString = now.toISOString().slice(0, 16); // Format as YYYY-MM-DDTHH:mm
 
-        // Check if the taskDate is in the past
-        if (taskDate < todayString) {
-            alert('You cannot add a task with a past due date. Please select a future date.');
-            return; // Exit the function if the date is invalid
-        }
+        // Create a combined date and time string for comparison
+        const taskDateTime = `${taskDate}T${taskTime}`;
+
+        // Check if the taskDateTime is in the past
+        if (taskDateTime < nowString) { 
+            alert('You cannot add a task with a past due date and time. Please select a future date and time.'); 
+            return; // Exit the function if the date and time are invalid 
+        } 
       
     const task = {
         name: taskName,
