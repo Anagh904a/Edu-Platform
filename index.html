@@ -478,11 +478,11 @@ form .policy{
 
 /* Change the color of headings and paragraphs in sections */
 h1, h2, h3, h4, h5, h6 {
-    color: white; /* Change heading colors to white */
+    color: rgb(0, 0, 0); /* Change heading colors to white */
 }
 
 p {
-    color: white; /* Change paragraph text color to white */
+    color: rgb(0, 0, 0); /* Change paragraph text color to white */
 }
 
 /* Define theme styles */
@@ -619,7 +619,7 @@ body {
 }
 
 .modal-content {
-    
+    color: #000000;
     padding: 20px;
     border-radius: 8px;
     width: 300px;
@@ -628,7 +628,7 @@ body {
 }
 
 .close {
-    color: #aaa;
+    color: #000000;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -726,6 +726,12 @@ body {
                 return;
             }
 
+            // Confirm password validation
+if (password !== confirmPassword) {
+        alert('Passwords do not match. Please try again.');
+        return;
+    }
+            
             loadingIndicator.style.display = 'block'; // Show loading indicator
 
             // Determine whether to log in or register
@@ -801,7 +807,7 @@ body {
             closeButton.style.display = 'none'; // Ensure the close button is hidden
             authForm.addEventListener('submit', (e) => {
                 if (!storedUser) {
-                    alert('Please log in or register to access exclusive features and become a pro user for free and access messenger.');
+                    alert('Please Log in or Register to access the app.');
                 }
             });
         }
@@ -844,10 +850,10 @@ body {
             <a class="nav-link" href="#worksheet-creation" onclick="showSection('worksheet-creation')">Custom Worksheet Generator</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#tic-tac-toe" onclick="showSection('tic-tac-toe')">Tic Tac Toe</a>
+            <a class="nav-link" href="#game-hub" onclick="showSection('game-hub')">Game Hub </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#theme-section" onclick="showSection('theme-section')">Themes</a>
+          <a class="nav-link" href="#settings-section" onclick="showSection('settings-section')">Settings</a>
       </li>  
       <li class="nav-item">
         <a class="nav-link" href="#membership-section" onclick="showSection('membership-section')">Membership Plans</a>
@@ -911,6 +917,8 @@ function showAuthForm() {
         <option value="medium">Medium Priority</option>
         <option value="high">High Priority</option>
       </select>
+      <input type="date" id="taskDate">
+      <input type="time" id="taskTime">
       <button onclick="addTask()">Add Task</button>
     </div>
 
@@ -1020,9 +1028,9 @@ function showAuthForm() {
 
 
 
-<!-- Theme Section -->
-<div id="theme-section" class="feature-section" style="margin: 20px; padding: 10px;">
-  <h2>Select a Theme</h2>
+<!-- Settings Section -->
+<div id="settings-section" class="feature-section" style="display: none;">
+<h2>Select a Theme</h2>
   <label for="theme-select">Choose a theme:</label>
       <select id="theme-select">
           <option value="default">Default (Blue-Purple)</option>
@@ -1032,10 +1040,11 @@ function showAuthForm() {
           <option value="purple">Purple Dream</option>
           <option value="coral">Coral</option>
           <option value="forest">Forest</option>
-          <option value="dark">Dark Theme(NOT RECOMMED)</option>
-          <option value="light">Light Theme(NOT RECOMMED)</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark (NOT RECOMMED)</option>
       </select>
   </div>
+</div>
 
 <script>
 
@@ -1171,21 +1180,42 @@ function setTheme(gradient) {
 </div>
 </div>
 
-<!--Tic Tac Toe-->
+<!-- Game Hub Section -->
+<div id="game-hub" class="feature-section">
+  <h2>Game Hub</h2>
+  <p>Enjoy our collection of games!</p>
+  <p>Get a break from your studies!</p>
+  <p>More games Coming soon...</p>
+  <button class="btn btn-primary" onclick="showSection('tic-tac-toe')">Play Tic Tac Toe</button>
+  <!-- Add more games here -->
+</div>
+
+<!-- Tic Tac Toe Section -->
 <div id="tic-tac-toe" class="feature-section">
-    <h2>Tic Tac Toe</h2>
-    <div id="ticTacToeBoard" class="board">
-        <div class="cell" onclick="makeMove(0)"></div>
-        <div class="cell" onclick="makeMove(1)"></div>
-        <div class="cell" onclick="makeMove(2)"></div>
-        <div class="cell" onclick="makeMove(3)"></div>
-        <div class="cell" onclick="makeMove(4)"></div>
-        <div class="cell" onclick="makeMove(5)"></div>
-        <div class="cell" onclick="makeMove(6)"></div>
-        <div class="cell" onclick="makeMove(7)"></div>
-        <div class="cell" onclick="makeMove(8)"></div>
-    </div>
-   <!-- Result Modal -->
+  <h2>Tic Tac Toe</h2>
+  <div id="ticTacToeBoard" class="board">
+    <div class="cell" onclick="makeMove(0)"></div>
+    <div class="cell" onclick="makeMove(1)"></div>
+    <div class="cell" onclick="makeMove(2)"></div>
+    <div class="cell" onclick="makeMove(3)"></div>
+    <div class="cell" onclick="makeMove(4)"></div>
+    <div class="cell" onclick="makeMove(5)"></div>
+    <div class="cell" onclick="makeMove(6)"></div>
+    <div class="cell" onclick="makeMove(7)"></div>
+    <div class="cell" onclick="makeMove(8)"></div>
+</div>
+
+<!-- 2048 Game Section -->
+<div id="2048-game" class="feature-section" style="display:none;">
+  <h2>2048 Game</h2>
+  <div id="game-container">
+      <div id="grid-container"></div>
+      <div id="score-container">Score: <span id="score">0</span></div>
+  </div>
+  <button onclick="startGame()">New Game</button>
+</div>
+
+ <!-- Result Modal -->
 <div id="resultModal" class="modal" style="display: none;">
   <div class="modal-content">
       <span class="close" onclick="closePopUp()">&times;</span>
@@ -1207,8 +1237,6 @@ function setTheme(gradient) {
 </div>
 
 <div class="divider"></div>  
-
-
 
 <!-- Footer -->
 <footer class="text-center mt-5">
@@ -1340,64 +1368,7 @@ function resetGame() {
 
   }
 
-  // Assuming you have a form with id 'authForm'
-const authForm = document.getElementById('authForm');
-
-authForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Prevent form submission
-
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const confirmPassword = document.getElementById('confirmPassword').value.trim();
-
-    // Input validation
-    if (!isValidEmail(email)) {
-        alert('Please enter a valid email.');
-        return;
-    }
-
-    if (password.length < 6) {
-        alert('Password must be at least 6 characters long.');
-        return;
-    }
-
-    if (password !== confirmPassword) {
-        alert('Passwords do not match. Please try again.');
-        return;
-    }
-
-    // Proceed with authentication (login/register)
-    loadingIndicator.style.display = 'block'; // Show loading indicator
-
-    const authAction = isLogin ? signInWithEmailAndPassword(auth, email, password) : createUser WithEmailAndPassword(auth, email, password);
-
-    authAction
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log('User :', user);
-            if (isLogin) {
-                localStorage.setItem('user', JSON.stringify({ uid: user.uid, email: user.email }));
-                alert('Logged in successfully!');
-                authContainer.style.display = 'none'; // Hide the auth container
-                closeButton.style.display = 'block'; // Show close button
-            } else {
-                alert('Registration successful! You can now log in.');
-                toggleLink.click(); // Switch to login mode
-            }
-        })
-        .catch((error) => {
-            handleAuthError(error); // Enhanced error handling
-        })
-        .finally(() => {
-            loadingIndicator.style.display = 'none'; // Hide loading indicator
-        });
-});
-
-// Function to validate email format
-function isValidEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple regex for email validation
-    return re.test(String(email).toLowerCase());
-}
+  
  
 
 //MemberShip Section
@@ -1561,12 +1532,26 @@ window.onload = initNotes;
     const taskName = document.getElementById('taskName').value.trim();
     const taskDesc = document.getElementById('taskDesc').value.trim();
     const taskPriority = document.getElementById('taskPriority').value;
-
+    const taskDate = document.getElementById('taskDate').value;
+    const taskTime = document.getElementById('taskTime').value;
+    
     if (taskName) {
-      const task = {
+      //Get today's date in YYYY-MM-DD format
+        const today = new Date();
+        const todayString = today.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+
+        // Check if the taskDate is in the past
+        if (taskDate < todayString) {
+            alert('You cannot add a task with a past due date. Please select a future date.');
+            return; // Exit the function if the date is invalid
+        }
+      
+    const task = {
         name: taskName,
         desc: taskDesc,
         priority: taskPriority,
+        dueDate: taskDate,
+        dueTime: taskTime,
         completed: false
       };
       tasks.push(task);
@@ -1574,6 +1559,8 @@ window.onload = initNotes;
       renderTasks();
       document.getElementById('taskName').value = '';
       document.getElementById('taskDesc').value = '';
+      document.getElementById('taskDate').value = '';
+      document.getElementById('taskTime').value = '';
     } else {
       alert('Task name is required.');
     }
@@ -1581,37 +1568,41 @@ window.onload = initNotes;
 
   function renderTasks() {
     const taskList = document.getElementById('taskList');
-    taskList.innerHTML = '';
+    taskList.innerHTML = ''; // Clear existing tasks
 
     const filterStatus = document.getElementById('filterStatus').value;
     const filterPriority = document.getElementById('filterPriority').value;
 
+    // Filter tasks based on status and priority
     const filteredTasks = tasks.filter(task => {
-      const statusMatch = filterStatus === 'all' ||
-        (filterStatus === 'completed' && task.completed) ||
-        (filterStatus === 'incomplete' && !task.completed);
-      const priorityMatch = filterPriority === 'all' || task.priority === filterPriority;
-      return statusMatch && priorityMatch;
+        const statusMatch = filterStatus === 'all' ||
+            (filterStatus === 'completed' && task.completed) ||
+            (filterStatus === 'incomplete' && !task.completed);
+        const priorityMatch = filterPriority === 'all' || task.priority === filterPriority;
+        return statusMatch && priorityMatch;
     });
 
+    // Render filtered tasks
     filteredTasks.forEach((task, index) => {
-      const taskItem = document.createElement('li');
-      taskItem.classList.add('task-item');
-      if (task.completed) {
-        taskItem.classList.add('completed');
-      }
-      taskItem.innerHTML = `
-        <div>
-          <strong>${sanitize(task.name)}</strong> - ${sanitize(task.desc)} - <em>${sanitize(task.priority)}</em>
-        </div>
-        <div>
-          <button class="complete-btn" onclick="toggleTaskComplete(${index})">${task.completed ? 'Undo' : 'Complete'}</button>
-          <button class="delete-btn" onclick="deleteTask(${index})">Delete</button>
-        </div>
-      `;
-      taskList.appendChild(taskItem);
+        const taskItem = document.createElement('li'); // Use <li> for a list item
+        taskItem.classList.add('task-item'); // Add a class for styling
+
+        // Display task details including scheduled date and time
+        taskItem.innerHTML = `
+            <div>
+                <strong>${sanitize(task.name)}</strong> - ${sanitize(task.desc)}<br>
+                <em>Priority: ${sanitize(task.priority)}</em><br>
+                <span>Due Date: ${sanitize(task.dueDate)}</span><br>
+                <span>Due Time: ${sanitize(task.dueTime)}</span>
+            </div>
+            <div>
+                <button class="complete-btn" onclick="toggleTaskComplete(${tasks.indexOf(task)})">${task.completed ? 'Undo' : 'Complete'}</button>
+                <button class="delete-btn" onclick="deleteTask(${tasks.indexOf(task)})">Delete</button>
+            </div>
+        `;
+        taskList.appendChild(taskItem);
     });
-  }
+}
 
   function toggleTaskComplete(index) {
     tasks[index].completed = !tasks[index].completed;
