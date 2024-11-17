@@ -568,38 +568,45 @@ body {
 }
 
 .membership-options {
-    display: flex;
-    justify-content: space-around; /* Space between the boxes */
-    margin-top: 20px;
-}
-
-.membership-option {
-    
-    border-radius: 15px; /* Rounded corners */
-    padding: 20px;
-    margin: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 45%; /* Set width for each box */
-    transition: transform 0.3s; /* Add transition for hover effect */
-}
-
-.membership-option:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
-.membership-option h3 {
-    color: #ffffff;
-}
-
-.membership-option button {
-    background-color: #2575fc;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        margin-top: 20px;
+    }
+    .membership-option {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+    .membership-option:hover {
+        transform: scale(1.05);
+    }
+    .membership-benefits {
+        list-style: none;
+        padding: 0;
+    }
+    .membership-benefits li {
+        margin: 10px 0;
+        font-size: 16px;
+        position: relative;
+        padding-left: 30px; /* Space for the icon */
+    }
+    .check-icon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 20px;
+        background-color: #28a745; /* Green border */
+        border-radius: 50%; /* Circle */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .check-icon:after {
+        content: '✔'; /* Checkmark */
+        color: #ffffff; /* Green color */
+        font-size: 16px;
+        line-height: 0; /* Center the checkmark */
+    }
 
 
 
@@ -726,11 +733,7 @@ body {
                 return;
             }
 
-            // Confirm password validation
-if (password !== confirmPassword) {
-        alert('Passwords do not match. Please try again.');
-        return;
-    }
+           
             
             loadingIndicator.style.display = 'block'; // Show loading indicator
 
@@ -890,11 +893,12 @@ function showAuthForm() {
   <input type="email" id="email" placeholder="Email" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
   <input type="password" id="password" placeholder="Password" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
   <input type="password" id="confirmPassword" placeholder="Confirm password" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
-  
-  <div class="policy" style="display: flex; align-items: center;">
-      <input type="checkbox" required>
-      <h3 style="margin-left: 5px;">I accept all terms & conditions</h3>
-  </div>
+  <label>
+<input type="checkbox" id="terms">
+I accept Terms and Conditions
+  </label>
+  <div class="link" id="terms-and-conditions" required style="color: #007BFF;">See Terms and Conditions</div>
+ 
         <button type="submit" id="auth-button">Login</button>
       <button type="button" id="close-button" style="display:none;">Close</button>
   </form>
@@ -956,7 +960,7 @@ function showAuthForm() {
       <option value="science">Science</option>
     </select>
     
-    <label for="numQuestions">Number of Questions:</label>
+    <label for="numQuestions">Number of Questions: (Max 5)</label>
     <input type="number" id="numQuestions" name="numQuestions" min="5" max="50" required>
     
     <label for="difficulty">Difficulty Level:</label>
@@ -968,10 +972,8 @@ function showAuthForm() {
 
     <label for="questionType">Question Type:</label>
     <select id="questionType" name="questionType" required>
-      <option value="mcq">Multiple Choice</option>
       <option value="shortAnswer">Short Answer</option>
-      <option value="longAnswer">Long Answer</option>
-    </select>
+      </select>
     
     <button type="button" onclick="generateWorksheet()">Generate Worksheet</button>
   </form>
@@ -983,35 +985,49 @@ function showAuthForm() {
 <!-- Membership Section -->
 <div id="membership-section" class="feature-section">
     <h2>Membership Plans</h2>
+    <p>Choose a plan that suits you best</p>
     <div id="membership-info" class="membership-info">
         <h3>Current Membership</h3>
-        <p id="membership-type">Membership Type: <strong>None</strong></p>
+        <p id="membership-type">Membership Plan Type: <strong>Free</strong></p>
         <p id="membership-date">Membership Purchased On: <strong>N/A</strong></p>
     </div>
-    <div id="membership-options" class="membership-options">
-        <div class="membership-option pro">
-            <h3>Pro Plan</h3>
-            <p>Price: <strong>FREE!(0 Rupees)</strong></p>
-            <ul>
-                <li>✔️ All themes unlocked</li>
-                <li>✔️ Custom worksheet generator templates unlocked</li>
-                <li>✔️ Messages limit: 210 messages per week</li>
-                <li>✔️ Messages limit: 30 messages per day</li>
-            </ul>
-            <button onclick="handlePurchase('Pro')">Get Pro Membership</button>
+    <div id="membership-options" class="membership-options row">
+        <div class="membership-option">
+            <h3>Free Plan</h3>
+            <h2>Price: <strong>0 Ruppes</strong></p>
+                <ul class="membership-benefits">
+                    <li><span class="check-icon"></span> All themes unlocked</li>
+                    <li>Custom worksheet generator templates unlocked</li>
+                    <li>Advanced task manager</li>
+                    <li>My Notes unlocked with local storage</li>
+                </ul>
+            <button class="btn btn-primary" onclick="handlePurchase('Free')">Get Started</button>
         </div>
-        <div class="membership-option Luxury">
-            <h3>Luxury Plan</h3>
-            <p>Price: <strong>FREE!(0 Rupees)</strong></p>
-            <ul>
-                <li>✔️ All themes unlocked</li>
-                <li>✔️ Advanced task manager</li>
-                <li>✔️ My Notes unlocked with local storage</li>
-                <li>✔️ Custom worksheet generator templates unlocked</li>
-                <li>✔️ Messages limit: 560 messages per week</li>
-                <li>✔️ Messages limit: 80 messages per day</li>
+        <div class="membership-option">
+            <h3>Pro Plan</h3>
+            <h2>Price: <strong>1 Ruppes</strong></p>
+                <ul class="membership-benefits">
+                    <li><span class="check-icon"></span> All themes unlocked</li>
+                    <li><span class="check-icon"></span> Messages limit: 280 messages per week</li>
+                    <li><span class="check-icon"></span> Messages limit: 40 messages per day</li>
+                    <li>Custom worksheet generator templates unlocked</li>
+                    <li>Advanced task manager</li>
+                    <li>My Notes unlocked with local storage</li>
+                </ul>
+            <button class="btn btn-primary" onclick="handlePurchase('Pro')">Get Pro Membership</button>
+        </div>
+        <div class="membership-option col-md-6">
+            <h3>Pro plus Plan</h3>
+            <p>Price: <strong>2 Ruppes</strong></p>
+            <ul class="membership-benefits">
+                <li><span class="check-icon"></span> All themes unlocked</li>
+                <li><span class="check-icon"></span> Advanced task manager</li>
+                <li><span class="check-icon"></span> My Notes unlocked with local storage</li>
+                <li><span class="check-icon"></span> Custom worksheet generator templates unlocked</li>
+                <li><span class="check-icon"></span> Messages limit: 560 messages per week</li>
+                <li><span class="check-icon"></span> Messages limit: 80 messages per day</li>
             </ul>
-            <button onclick="handlePurchase('Ultra Pro')">Get Ultra Pro Membership</button>
+            <button class="btn btn-primary" onclick="handlePurchase('Pro+')">Get Pro+ Membership</button>
         </div>
     </div>
 </div>
@@ -1043,9 +1059,17 @@ function showAuthForm() {
           <option value="light">Light</option>
           <option value="dark">Dark (NOT RECOMMED)</option>
       </select>
-  </div>
-</div>
+  <h2>Set Your Profile</h2>
+<input type="text" id="username" placeholder="Change your Name"></input>
+<input type="email" id="email" placeholder="Change your Email"></input>
+<input type="password" id="password" placeholder="Change Your Password"></input>
+<button class="btn-secondary" onclick="saveSettings()">Save Changes</button>
+<h2>Local storage settings</h2>
+<label>
+<input type="checkbox" id="local-storage" checked="checked" placeholder="Local Stoarge Enabled">
+Local storage enabled</label>
 
+</div>
 <script>
 
  //Themes Functionallity
@@ -1145,12 +1169,6 @@ function setTheme(gradient) {
       <option value="science">Science</option>
     </select>
     <label for="quizTimerSelect">Select Timer For The Quiz</label>
-    <select id="quizTimerSelect">
-        <option value="30">30 seconds</option>
-        <option value="60">1 minute</option>
-        <option value="300">5 minutes</option>
-    </select>
-    
     <label for="quizNumQuestions">Number of Questions:</label>
     <input type="number" id="quizNumQuestions" name="quizNumQuestions" min="5" max="20" required>
 
@@ -1186,9 +1204,11 @@ function setTheme(gradient) {
   <p>Enjoy our collection of games!</p>
   <p>Get a break from your studies!</p>
   <p>More games Coming soon...</p>
-  <button class="btn btn-primary" onclick="showSection('tic-tac-toe')">Play Tic Tac Toe</button>
+  <button class="btn btn-primary" onclick="showSection('tic-tac-toe')">Play Tic Tac Toe Locally</button>
   <!-- Add more games here -->
 </div>
+
+
 
 <!-- Tic Tac Toe Section -->
 <div id="tic-tac-toe" class="feature-section">
@@ -1204,8 +1224,12 @@ function setTheme(gradient) {
     <div class="cell" onclick="makeMove(7)"></div>
     <div class="cell" onclick="makeMove(8)"></div>
 </div>
+</div>
 
-<!-- Result Modal -->
+
+
+
+ <!-- Result Modal -->
 <div id="resultModal" class="modal" style="display: none;">
   <div class="modal-content">
       <span class="close" onclick="closePopUp()">&times;</span>
@@ -1296,7 +1320,7 @@ function closePopUp() {
     document.getElementById('resultModal').style.display = 'none'; // Hide the modal
 }
 
-//Tic Tac Toe
+//Tic Tac Toe With Player    
 let currentPlayer = 'X'; // Start with player X
 let board = ['', '', '', '', '', '', '', '', '']; // Initialize the board
 let gameActive = true; // To check if the game is still ongoing
@@ -1358,10 +1382,10 @@ function resetGame() {
 
   }
 
-  
- 
+  </script>
+  <script>
 
-//MemberShip Section
+
 // Initialize current membership from local storage
 let currentMembership = {
     type: localStorage.getItem('membershipType') || null,
@@ -1371,8 +1395,8 @@ let currentMembership = {
 // Function to handle membership purchase
 function handlePurchase(plan) {
     if (currentMembership.type) {
-        if (plan === 'Ultra Pro' && currentMembership.type === 'Pro') {
-            document.getElementById('upgrade-message').innerText = 'Do you want to upgrade your membership plan to Luxury?';
+        if (plan === 'Pro+' && currentMembership.type === 'Pro') {
+            document.getElementById('upgrade-message').innerText = 'Do you want to upgrade your membership plan to Pro+?';
             document.getElementById('upgrade-popup').style.display = 'flex';
         } else {
             alert(`You are already a ${currentMembership.type} user.`);
@@ -1408,7 +1432,7 @@ function confirmUpgrade(isConfirmed) {
         localStorage.setItem('membershipPurchaseDate', currentMembership.purchaseDate);
         
         updateMembershipInfo();
-        alert('Membership upgraded to Luxury Plan successfully!');
+        alert('Membership upgraded to Pro+ Plan successfully!');
     }
     closePopup();
 }
