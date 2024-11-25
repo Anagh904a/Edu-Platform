@@ -1,684 +1,809 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edu Platform</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap" rel="stylesheet"> <!-- Add this line -->
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Add this line -->
     <style>
         body {
-            font-family: 'Mulish', sans-serif; /* Apply the Mulish font */
+            font-family: 'Mulish', sans-serif;
+            /* Apply the Mulish font */
         }
     </style>
 </head>
+
 <body>
-<style>
+    <style>
+        /* Task Manager Styles */
+        .task-manager {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .task-form {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .task-form input,
+        .task-form select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+            flex: 1 1 200px;
+            margin-bottom: 10px;
+        }
+
+        .task-form button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1 1 100px;
+            transition: background-color 0.3s;
+        }
+
+        .task-form button:hover {
+            background-color: #218838;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            transition: background-color 0.3s;
+        }
+
+        .task-item:hover {
+            background-color: #e9ecef;
+            /* Light gray on hover */
+        }
+
+        .task-item.completed {
+            text-decoration: line-through;
+
+        }
+
+        .task-item button {
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 5px;
+            margin-top: 5px;
+        }
+
+        .complete-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        /* Filter Bar Styles */
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex: 1 1 200px;
+            margin-bottom: 10px;
+        }
+
+        #about-website {
+            padding: 20px;
+
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-info {
+            background-color: #a0b8d3;
+            /* Bubble background color */
+            color: white;
+            /* Text color */
+            padding: 15px;
+            margin: 10px 0;
+            /* Space between bubbles */
+            border-radius: 20px;
+            /* Rounded corners */
+            position: relative;
+            /* Positioning for the pseudo-element */
+            transition: transform 0.3s;
+            /* Animation for hover effect */
+        }
+
+        .about-info:hover {
+            transform: scale(1.05);
+            /* Slightly enlarge the bubble on hover */
+        }
+
+        .about-info::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            /* Adjust for position */
+            width: 10px;
+            height: 10px;
+            background-color: #007BFF;
+            /* Bubble color */
+            border-radius: 50%;
+            /* Circle */
+            transform: translateY(-50%);
+            /* Center vertically */
+        }
+
+        .about-info h3 {
+            margin: 0 0 5px;
+            /* Margin for heading */
+        }
+
+        .about-info p {
+            margin: 0;
+            /* Remove default margin */
+        }
+
+        /* Worksheet, Quiz Generator, and Tech Updates Styles */
+        .feature-section {
+            display: none;
+            margin-top: 50px;
+            padding: 20px;
+            color: #aaa;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-section form label {
+            margin: 10px 0 5px;
+        }
+
+        .feature-section form input,
+        .feature-section form select,
+        .feature-section form button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .feature-section form button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .feature-section form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Quiz Styles */
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+
+        .quiz-options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .quiz-submit {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .quiz-submit:hover {
+            background-color: #218838;
+        }
+
+        /* Generated Content Styles */
+        #generatedWorksheet,
+        #quizArea,
+        #updateMessage {
+            margin-top: 20px;
+            padding: 20px;
+
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Login/Register Styles */
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 8px;
+            /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        .auth-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            /* Adjust font size as needed */
+        }
+
+        .auth-container form {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+            /* Added margin */
+        }
 
 
-/* Task Manager Styles */
-.task-manager {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
+        .auth-container form input[type="password"],
+        .auth-container form input[type="email"],
+        .auth-container form input[type="text"] {
+            padding: 10px;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            /* Font size adjustment */
+        }
 
-.task-form {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
+        .auth-container form button {
 
-.task-form input, .task-form select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-right: 10px;
-    flex: 1 1 200px;
-    margin-bottom: 10px;
-}
+            padding: 10px;
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            /* Transition effect */
+        }
 
-.task-form button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    flex: 1 1 100px;
-    transition: background-color 0.3s;
-}
+        .auth-container form button:hover {
+            background-color: rgb(0, 0, 236)
+                /* Use the specified variable */
+        }
 
-.task-form button:hover {
-    background-color: #218838;
-}
+        .register-prompt {
+            text-align: center;
+            margin-top: 20px;
+        }
 
-.task-list {
-    list-style: none;
-    padding: 0;
-}
+        .register-link {
+            color: rgb(67, 67, 245);
+            text-decoration: none;
+        }
 
-.task-item {
-    
-    padding: 15px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    transition: background-color 0.3s;
-}
+        .register-link:hover {
+            text-decoration: underline;
+        }
 
-.task-item:hover {
-    background-color: #e9ecef; /* Light gray on hover */
-}
+        .error-message {
+            color: black;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
 
-.task-item.completed {
-    text-decoration: line-through;
-    
-}
+        form .policy {
+            display: flex;
+            align-items: center;
 
-.task-item button {
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-left: 5px;
-    margin-top: 5px;
-}
+        }
 
-.complete-btn {
-    background-color: #007bff;
-    color: white;
-}
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1px 1px;
+        }
 
-.delete-btn {
-    background-color: #dc3545;
-    color: white;
-}
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: #007bff;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
 
-/* Filter Bar Styles */
-.filter-bar {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
+        .cell:hover {
+            background-color: #d1e7dd;
+            transform: scale(1.05);
+        }
 
-.filter-bar select {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    flex: 1 1 200px;
-    margin-bottom: 10px;
-}
+        .cell.taken {
+            pointer-events: none;
+            /* Prevent clicking on already taken cells */
+            background-color: #f8d7da;
+            /* Light red for taken cells */
+        }
 
-#about-website {
-    padding: 20px;
-    
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+        .reset-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
 
-.about-info {
-    background-color: #a0b8d3; /* Bubble background color */
-    color: white; /* Text color */
-    padding: 15px;
-    margin: 10px 0; /* Space between bubbles */
-    border-radius: 20px; /* Rounded corners */
-    position: relative; /* Positioning for the pseudo-element */
-    transition: transform 0.3s; /* Animation for hover effect */
-}
+        .reset-button:hover {
+            background-color: #0056b3;
+        }
 
-.about-info:hover {
-    transform: scale(1.05); /* Slightly enlarge the bubble on hover */
-}
+        .game-status {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+            /* Green color for status */
+        }
 
-.about-info::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: -10px; /* Adjust for position */
-    width: 10px;
-    height: 10px;
-    background-color: #007BFF; /* Bubble color */
-    border-radius: 50%; /* Circle */
-    transform: translateY(-50%); /* Center vertically */
-}
+        .resultModal {
+            display: flex;
+            /* Use flexbox for centering */
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            /* Black background with transparency */
+        }
 
-.about-info h3 {
-    margin: 0 0 5px; /* Margin for heading */
-}
+        .modal-content {
 
-.about-info p {
-    margin: 0; /* Remove default margin */
-}
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            /* Width of the modal */
+            text-align: center;
+            /* Center text */
+        }
 
-/* Worksheet, Quiz Generator, and Tech Updates Styles */
-.feature-section {
-    display: none;
-    margin-top: 50px;
-    padding: 20px;
-    color: #aaa;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-.feature-section form {
-    display: flex;
-    flex-direction: column;
-}
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-.feature-section form label {
-    margin: 10px 0 5px;
-}
+        .toggle-link {
+            text-align: center;
+            margin-top: 10px;
+            color: #007BFF;
+            /* Original link color */
+            cursor: pointer;
+        }
 
-.feature-section form input, 
-.feature-section form select, 
-.feature-section form button {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 15px;
-}
+        .toggle-link:hover {
+            text-decoration: underline;
+        }
 
-.feature-section form button {
-    background-color: #007BFF;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        .home-section {
 
-.feature-section form button:hover {
-    background-color: #0056b3;
-}
-
-/* Quiz Styles */
-.quiz-question {
-    margin-bottom: 20px;
-}
-
-.quiz-options label {
-    display: block;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.quiz-submit {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.quiz-submit:hover {
-    background-color: #218838;
-}
-
-/* Generated Content Styles */
-#generatedWorksheet, 
-#quizArea, 
-#updateMessage {
-    margin-top: 20px;
-    padding: 20px;
-   
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
- 
-/* Login/Register Styles */
-.auth-container {
-    max-width: 400px;
-    margin: 100px auto;
-    padding: 30px;
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.auth-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px; /* Adjust font size as needed */
-}
-
-.auth-container form {
-    display: flex;
-    flex-direction: column;
-    margin: 20px 0; /* Added margin */
-}
-
-
-.auth-container form input[type="password"],
-.auth-container form input[type="email"],
- .auth-container form input[type="text"] {
-    padding: 10px;
-    border: 1px solid #000000;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    font-size: 14px; /* Font size adjustment */
-}
-
-.auth-container form button {
-  
-  padding: 10px;
-    color: rgb(255, 255, 255);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s; /* Transition effect */
-}
-
-.auth-container form button:hover {
-    background-color: rgb(0, 0, 236) /* Use the specified variable */
-}
-
-.register-prompt {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.register-link {
-    color: rgb(67, 67, 245);
-    text-decoration: none;
-}
-
-.register-link:hover {
-    text-decoration: underline;
-}
-
-.error-message {
-    color:black;
-    font-size: 12px;
-    margin-top: -5px;
-    margin-bottom: 10px;
-}
-
-form .policy{
-  display: flex;
-  align-items: center;
-  
-}
-
-.board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 1px 1px;
-}
-
-.cell {
-    width: 100px;
-    height: 100px;
-    background-color: #e9ecef;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    font-weight: bold;
-    color: #007bff;
-    border: 2px solid #007bff;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.cell:hover {
-    background-color: #d1e7dd;
-    transform: scale(1.05);
-}
-
-.cell.taken {
-    pointer-events: none; /* Prevent clicking on already taken cells */
-    background-color: #f8d7da; /* Light red for taken cells */
-}
-
-.reset-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.reset-button:hover {
-    background-color: #0056b3;
-}
-
-.game-status {
-    margin-top: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #28a745; /* Green color for status */
-}
-
-.resultModal {
-    display: flex; /* Use flexbox for centering */
-    justify-content: center;
-    align-items: center;
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    /* Black background with transparency */
-}
-
-.modal-content {
-    
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 300px; /* Width of the modal */
-    text-align: center; /* Center text */
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.toggle-link {
-    text-align: center;
-    margin-top: 10px;
-    color: #007BFF; /* Original link color */
-    cursor: pointer;
-}
-
-.toggle-link:hover {
-    text-decoration: underline;
-}
-
-.home-section {
-            
-            height: 100vh; /* Full viewport height */
-            display: flex; /* Use Flexbox */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            color: white; /* Text color */
-            text-align: center; /* Center text */
-            margin: 0; /* Remove default margin */
+            height: 100vh;
+            /* Full viewport height */
+            display: flex;
+            /* Use Flexbox */
+            justify-content: center;
+            /* Center horizontally */
+            align-items: center;
+            /* Center vertically */
+            color: white;
+            /* Text color */
+            text-align: center;
+            /* Center text */
+            margin: 0;
+            /* Remove default margin */
         }
 
         .content {
-            padding: 20px; /* Add some padding */
-            background: linear-gradient(to right, #7700ff, #a79ac4); /* Gradient background */
-            border-radius: 10px; /* Optional: rounded corners */
+            padding: 20px;
+            /* Add some padding */
+            background: linear-gradient(to right, #7700ff, #a79ac4);
+            /* Gradient background */
+            border-radius: 10px;
+            /* Optional: rounded corners */
         }
-/* Basic styles for the navbar */
-.navbar {
-  
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    color: #d1e7dd;
-  }
 
-/* Styles for nav links */
-.navbar-nav .nav-link {
-    position: relative; /* Position relative for the pseudo-element */
-    color: #007bff; /* Default link color */
-    padding: 10px 15px; /* Padding for links */
-    transition: color 0.3s ease; /* Transition for color */
-}
+        /* Basic styles for the navbar */
+        .navbar {
 
-.navbar a {
-  color: #ffffff;
-}
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            color: #d1e7dd;
+        }
 
-/* Pseudo-element for underline effect */
-.navbar-nav .nav-link::after {
-    content: ''; /* Empty content for the pseudo-element */
-    position: absolute; /* Position it absolutely */
-    left: 50%; /* Center it horizontally */
-    bottom: 0; /* Position it at the bottom */
-    width: 0; /* Initial width */
-    height: 2px; /* Height of the underline */
-    background-color: #007bff; /* Color of the underline */
-    transition: width 0.3s ease, left 0.3s ease; /* Transition for width and position */
-}
+        /* Styles for nav links */
+        .navbar-nav .nav-link {
+            position: relative;
+            /* Position relative for the pseudo-element */
+            color: #007bff;
+            /* Default link color */
+            padding: 10px 15px;
+            /* Padding for links */
+            transition: color 0.3s ease;
+            /* Transition for color */
+        }
 
-/* Hover effect for nav links */
-.navbar-nav .nav-link:hover {
-    color: #0056b3; /* Darker color on hover */
-}
+        .navbar a {
+            color: #ffffff;
+        }
 
-/* On hover, expand the underline */
-.navbar-nav .nav-link:hover::after {
-    width: 100%; /* Expand to full width */
-    left: 0; /* Align to the left */
-}
+        /* Pseudo-element for underline effect */
+        .navbar-nav .nav-link::after {
+            content: '';
+            /* Empty content for the pseudo-element */
+            position: absolute;
+            /* Position it absolutely */
+            left: 50%;
+            /* Center it horizontally */
+            bottom: 0;
+            /* Position it at the bottom */
+            width: 0;
+            /* Initial width */
+            height: 2px;
+            /* Height of the underline */
+            background-color: #007bff;
+            /* Color of the underline */
+            transition: width 0.3s ease, left 0.3s ease;
+            /* Transition for width and position */
+        }
 
-/* Current section effect */
-.navbar-nav .nav-link.active {
-    color: #007bff; /* Active link color */
-    width: 100%; /* Full width for active underline */
-    left: 0; /* Align to the left */
-    background-color: #007bff; /* Underline color for active link */
-}
+        /* Hover effect for nav links */
+        .navbar-nav .nav-link:hover {
+            color: #0056b3;
+            /* Darker color on hover */
+        }
 
-/* Change the color of headings and paragraphs in sections */
-h1, h2, h3, h4, h5, h6 {
-    color: rgb(0, 0, 0); /* Change heading colors to white */
-}
+        /* On hover, expand the underline */
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+            /* Expand to full width */
+            left: 0;
+            /* Align to the left */
+        }
 
-p {
-    color: rgb(0, 0, 0); /* Change paragraph text color to white */
-}
+        /* Current section effect */
+        .navbar-nav .nav-link.active {
+            color: #007bff;
+            /* Active link color */
+            width: 100%;
+            /* Full width for active underline */
+            left: 0;
+            /* Align to the left */
+            background-color: #007bff;
+            /* Underline color for active link */
+        }
 
-/* Define theme styles */
-body {
-    transition: background 0.5s, color 0.5s; /* Smooth transition for background and text color */
-}
+        /* Change the color of headings and paragraphs in sections */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: rgb(0, 0, 0);
+            /* Change heading colors to white */
+        }
 
-.default-theme {
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    color: black; /* Default text color */
-}
+        p {
+            color: rgb(0, 0, 0);
+            /* Change paragraph text color to white */
+        }
 
-.ocean-theme {
-    background: linear-gradient(to right, #00c6ff, #0072ff);
-    color: black; /* Text color for ocean theme */
-}
+        /* Define theme styles */
+        body {
+            transition: background 0.5s, color 0.5s;
+            /* Smooth transition for background and text color */
+        }
 
-.sunset-theme {
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: black; /* Text color for sunset theme */
-}
+        .default-theme {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: black;
+            /* Default text color */
+        }
 
-.teal-theme {
-    background: linear-gradient(to right, #008080, #004d4d);
-    color: white; /* Text color for teal theme */
-}
+        .ocean-theme {
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: black;
+            /* Text color for ocean theme */
+        }
 
-.purple-theme {
-    background: linear-gradient(to right, #a06ab6, #f5a623);
-    color: black; /* Text color for purple theme */
-}
+        .sunset-theme {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: black;
+            /* Text color for sunset theme */
+        }
 
-.coral-theme {
-    background: linear-gradient(to right, #ff6a6a, #ffb6b6);
-    color: black; /* Text color for coral theme */
-}
+        .teal-theme {
+            background: linear-gradient(to right, #008080, #004d4d);
+            color: white;
+            /* Text color for teal theme */
+        }
 
-.forest-theme {
-    background: linear-gradient(to right, #3a6073, #3a3d3d);
-    color: white; /* Text color for forest theme */
-}
+        .purple-theme {
+            background: linear-gradient(to right, #a06ab6, #f5a623);
+            color: black;
+            /* Text color for purple theme */
+        }
 
-.dark-theme {
-    background: linear-gradient(to right, #1a1a1a, #2c3e50);
-    color: white; /* Text color for dark theme */
+        .coral-theme {
+            background: linear-gradient(to right, #ff6a6a, #ffb6b6);
+            color: black;
+            /* Text color for coral theme */
+        }
 
-  }
+        .forest-theme {
+            background: linear-gradient(to right, #3a6073, #3a3d3d);
+            color: white;
+            /* Text color for forest theme */
+        }
 
- /* Add this to your CSS */
-.dark-theme #navbarNav {
-    
-    color: white; /* White text color for better contrast */
-}
+        .dark-theme {
+            background: linear-gradient(to right, #1a1a1a, #2c3e50);
+            color: white;
+            /* Text color for dark theme */
 
-.dark-theme #navbarNav a {
-    color: white; /* White text color for links in dark theme */
-}
+        }
 
-.dark-theme #navbarNav a:hover {
-    color: #cccccc; /* Lighter color for links on hover */
-}
+        /* Add this to your CSS */
+        .dark-theme #navbarNav {
 
-.light-theme {
-    background: linear-gradient(to right, #f0f8ff, #e6f7ff);
-    color: black; /* Text color for light theme */
-}
+            color: white;
+            /* White text color for better contrast */
+        }
 
-#theme-section {
-    display: block; /* Show it in the desired area */
-    margin: 20px; /* Space around the theme switcher */
-    padding: 10px; /* Padding inside the theme section */
-    background-color: rgba(255, 255, 255, 0.1); /* Light background for the theme section */
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-}
+        .dark-theme #navbarNav a {
+            color: white;
+            /* White text color for links in dark theme */
+        }
 
-.membership-info {
-   
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+        .dark-theme #navbarNav a:hover {
+            color: #cccccc;
+            /* Lighter color for links on hover */
+        }
 
-.membership-options {
-        margin-top: 20px;
-    }
-    .membership-option {
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s;
-    }
-    .membership-option:hover {
-        transform: scale(1.05);
-    }
-    .membership-benefits {
-        list-style: none;
-        padding: 0;
-    }
-    .membership-benefits li {
-        margin: 10px 0;
-        font-size: 16px;
-        position: relative;
-        padding-left: 30px; /* Space for the icon */
-    }
-    .check-icon {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 20px;
-        height: 20px;
-        background-color: #28a745; /* Green border */
-        border-radius: 50%; /* Circle */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .check-icon:after {
-        content: '✔'; /* Checkmark */
-        color: #ffffff; /* Green color */
-        font-size: 16px;
-        line-height: 0; /* Center the checkmark */
-    }
+        .light-theme {
+            background: linear-gradient(to right, #f0f8ff, #e6f7ff);
+            color: black;
+            /* Text color for light theme */
+        }
+
+        #theme-section {
+            display: block;
+            /* Show it in the desired area */
+            margin: 20px;
+            /* Space around the theme switcher */
+            padding: 10px;
+            /* Padding inside the theme section */
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Light background for the theme section */
+            border-radius: 5px;
+            /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow for depth */
+        }
+
+        .membership-info {
+
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .membership-options {
+            margin-top: 20px;
+        }
+
+        .membership-option {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .membership-option:hover {
+            transform: scale(1.05);
+        }
+
+        .membership-benefits {
+            list-style: none;
+            padding: 0;
+        }
+
+        .membership-benefits li {
+            margin: 10px 0;
+            font-size: 16px;
+            position: relative;
+            padding-left: 30px;
+            /* Space for the icon */
+        }
+
+        .check-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background-color: #28a745;
+            /* Green border */
+            border-radius: 50%;
+            /* Circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-icon:after {
+            content: '✔';
+            /* Checkmark */
+            color: #ffffff;
+            /* Green color */
+            font-size: 16px;
+            line-height: 0;
+            /* Center the checkmark */
+        }
+
+        .quiz-question {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .quiz-options {
+            margin-bottom: 20px;
+        }
+
+        .quiz-submit {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quiz-submit:hover {
+            background-color: #0056b3;
+        }
 
 
+        /* Modal Styles */
+        .modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
 
+        }
 
-/* Modal Styles */
-.modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    
-}
+        .modal-content {
+            color: #000000;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
 
-.modal-content {
-    color: #000000;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
+        .close {
+            color: #000000;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-.close {
-    color: #000000;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
 
-.close:hover, .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
 
-</style>
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-  
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBnxKoEbh-xOHn_ogIHAt68HSTR5EOcSuU",
+            authDomain: "listvista-5ce07.firebaseapp.com",
+            projectId: "listvista-5ce07",
+            storageBucket: "listvista-5ce07.firebasestorage.app",
+            messagingSenderId: "516531579392",
+            appId: "1:516531579392:web:e9bbc06c93072808ae86e5",
+            measurementId: "G-Q36NJ1B4G0"
+        };
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBnxKoEbh-xOHn_ogIHAt68HSTR5EOcSuU",
-    authDomain: "listvista-5ce07.firebaseapp.com",
-    projectId: "listvista-5ce07",
-    storageBucket: "listvista-5ce07.firebasestorage.app",
-    messagingSenderId: "516531579392",
-    appId: "1:516531579392:web:e9bbc06c93072808ae86e5",
-    measurementId: "G-Q36NJ1B4G0"
-  };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        const user = auth.currentuser;
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
-  const user = auth.currentuser;
-  
-  // Authentication Functions
-  const authContainer = document.getElementById('auth-container');
+        // Authentication Functions
+        const authContainer = document.getElementById('auth-container');
         const authForm = document.getElementById('auth-form');
         const authTitle = document.getElementById('auth-title');
         const authButton = document.getElementById('auth-button');
@@ -733,8 +858,8 @@ body {
                 return;
             }
 
-           
-            
+
+
             loadingIndicator.style.display = 'block'; // Show loading indicator
 
             // Determine whether to log in or register
@@ -784,10 +909,10 @@ body {
                 case 'auth/invalid-email':
                     alert('Please enter a valid email address.');
                     break;
-                    case 'auth/invalid-credential':
-                      alert('Invalid Email or Password else this account doest not exist')
-                      break;
-                      default:
+                case 'auth/invalid-credential':
+                    alert('Invalid Email or Password else this account doest not exist')
+                    break;
+                default:
                     alert('Error: ' + error.message);
             }
         }
@@ -817,795 +942,793 @@ body {
 
         //Show Auth Form Funtion
         // Define the showAuthForm function
-    function showAuthForm() {
-        const authContainer = document.getElementById('auth-container');
-        authContainer.style.display = 'block'; // Show the auth container
-    }
-        </script>
+        function showAuthForm() {
+            const authContainer = document.getElementById('auth-container');
+            authContainer.style.display = 'block'; // Show the auth container
+        }
+    </script>
 
- <!-- Top Navigation Bar -->
-<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">EduPlatform</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-          <li class="nav-item">
-              <a class="nav-link" href="#home-section" onclick="showSection('home-section')">Home</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#quiz" onclick="showSection('quiz-generator')">Quiz</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#worksheet" onclick="showSection('worksheet-generator')">Worksheet Generator</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#notes" onclick="showSection('my-notes')">My Notes</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#about" onclick="showSection('about-website')">About Website</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#task-manager" onclick="showSection('task-manager')">Task Manager</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#worksheet-creation" onclick="showSection('worksheet-creation')">Custom Worksheet Generator</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#game-hub" onclick="showSection('game-hub')">Game Hub </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#settings-section" onclick="showSection('settings-section')">Settings</a>
-      </li>  
-      <li class="nav-item">
-        <a class="nav-link" href="#membership-section" onclick="showSection('membership-section')">Membership Plans</a>
-    </li>  
-      </ul>
-  </div>
-</nav>
-
-<script>
-
-function winload() {
-function showAuthForm() {
-    const authContainer = document.getElementById('auth-container');
-    authContainer.style.display = 'block'; // Show the auth container
-}
-}
-</script>
-
-<!-- Homepage Section -->
-<div id="home-section" class="container mt-5 feature-section">
-  <h1>Welcome to EduPlatform</h1>
-  <p>Your one-stop solution for quizzes, worksheets, notes, and so on!</p>
-  <button class="btn btn-primary" onclick="showSection('quiz-generator')">Start Quiz</button>
-  <button class="btn btn-secondary" onclick="showSection('worksheet-generator')">Generate Worksheet</button>
-  <button class="btn btn-info" onclick="showSection('my-notes')">View My Notes</button>
-  <button class="btn btn-primary" onclick="showAuthForm()">Login</button>
-  </div>
-    
-    <!-- Authentication Container -->
-<div id="auth-container" class="auth-container">
-  <h2 id="auth-title">Login</h2>
-  <form id="auth-form">
-  <input type="text" id="name" placeholder="Enter Your Name" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
-  <input type="email" id="email" placeholder="Email" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
-  <input type="password" id="password" placeholder="Password" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
-  <input type="password" id="confirmPassword" placeholder="Confirm password" required style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);"> 
-  <label>
-<input type="checkbox" id="terms">
-I accept Terms and Conditions
-  </label>
-  <div class="link" id="terms-and-conditions" required style="color: #007BFF;">See Terms and Conditions</div>
- 
-        <button type="submit" id="auth-button">Login</button>
-      <button type="button" id="close-button" style="display:none;">Close</button>
-  </form>
-  <div class="toggle-link" id="toggle-link">Don't have an account? Register here.</div>
-  <div id="loading-indicator" style="display:none;">Loading...</div>
-</div>
-
-
-<!-- Task Manager Feature -->
-<div id="task-manager" class="feature-section">
-  <h2>Task Manager</h2>
-  <div class="task-manager">
-    <h3>Manage Your Tasks</h3>
-    <!-- Task Form -->
-    <div class="task-form">
-      <input type="text" id="taskName" placeholder="Task Name" required>
-      <input type="text" id="taskDesc" placeholder="Task Description">
-      <select id="taskPriority">
-        <option value="low">Low Priority</option>
-        <option value="medium">Medium Priority</option>
-        <option value="high">High Priority</option>
-      </select>
-      <input type="date" id="taskDate">
-      <input type="time" id="taskTime">
-      <button onclick="addTask()">Add Task</button>
-    </div>
-
-    <!-- Filter Bar -->
-    <div class="filter-bar">
-      <select id="filterStatus" onchange="filterTasks()">
-        <option value="all">All Tasks</option>
-        <option value="completed">Completed Tasks</option>
-        <option value="incomplete">Incomplete Tasks</option>
-      </select>
-      <select id="filterPriority" onchange="filterTasks()">
-        <option value="all">All Priorities</option>
-        <option value="low">Low Priority</option>
-        <option value="medium">Medium Priority</option>
-        <option value="high">High Priority</option>
-      </select>
-    </div>
-
-    <!-- Task List -->
-    <ul id="taskList" class="task-list">
-      <!-- Task Items will appear here -->
-    </ul>
-  </div>
-</div>
-
-<!-- Worksheet Generator Section -->
-<div id="worksheet-generator" class="feature-section">
-  <h2>Worksheet Generator</h2>
-  <p>Select your preferences and generate a worksheet with random questions:</p>
-  
-  <form id="worksheetForm">
-    <label for="subject">Choose Subject:</label>
-    <select id="subject" name="subject" required>
-      <option value="math">Math</option>
-      <option value="science">Science</option>
-    </select>
-    
-    <label for="numQuestions">Number of Questions: (Max 5)</label>
-    <input type="number" id="numQuestions" name="numQuestions" min="5" max="50" required>
-    
-    <label for="difficulty">Difficulty Level:</label>
-    <select id="difficulty" name="difficulty" required>
-      <option value="easy">Easy</option>
-      <option value="medium">Medium</option>
-      <option value="hard">Hard</option>
-    </select>
-
-    <label for="questionType">Question Type:</label>
-    <select id="questionType" name="questionType" required>
-      <option value="shortAnswer">Short Answer</option>
-      </select>
-    
-    <button type="button" onclick="generateWorksheet()">Generate Worksheet</button>
-  </form>
-
-  <div id="generatedWorksheet"></div>
-</div>
-
-
-<!-- Membership Section -->
-<div id="membership-section" class="feature-section">
-    <h2>Membership Plans</h2>
-    <p>Choose a plan that suits you best</p>
-    <div id="membership-info" class="membership-info">
-        <h3>Current Membership</h3>
-        <p id="membership-type">Membership Plan Type: <strong>Free</strong></p>
-        <p id="membership-date">Membership Purchased On: <strong>N/A</strong></p>
-    </div>
-    <div id="membership-options" class="membership-options row">
-        <div class="membership-option">
-            <h3>Free Plan</h3>
-            <h2>Price: <strong>0 Ruppes</strong></p>
-                <ul class="membership-benefits">
-                    <li><span class="check-icon"></span> All themes unlocked</li>
-                    <li>Custom worksheet generator templates unlocked</li>
-                    <li>Advanced task manager</li>
-                    <li>My Notes unlocked with local storage</li>
-                </ul>
-            <button class="btn btn-primary" onclick="handlePurchase('Free')">Get Started</button>
-        </div>
-        <div class="membership-option">
-            <h3>Pro Plan</h3>
-            <h2>Price: <strong>1 Ruppes</strong></p>
-                <ul class="membership-benefits">
-                    <li><span class="check-icon"></span> All themes unlocked</li>
-                    <li><span class="check-icon"></span> Messages limit: 280 messages per week</li>
-                    <li><span class="check-icon"></span> Messages limit: 40 messages per day</li>
-                    <li>Custom worksheet generator templates unlocked</li>
-                    <li>Advanced task manager</li>
-                    <li>My Notes unlocked with local storage</li>
-                </ul>
-            <button class="btn btn-primary" onclick="handlePurchase('Pro')">Get Pro Membership</button>
-        </div>
-        <div class="membership-option col-md-6">
-            <h3>Pro plus Plan</h3>
-            <p>Price: <strong>2 Ruppes</strong></p>
-            <ul class="membership-benefits">
-                <li><span class="check-icon"></span> All themes unlocked</li>
-                <li><span class="check-icon"></span> Advanced task manager</li>
-                <li><span class="check-icon"></span> My Notes unlocked with local storage</li>
-                <li><span class="check-icon"></span> Custom worksheet generator templates unlocked</li>
-                <li><span class="check-icon"></span> Messages limit: 560 messages per week</li>
-                <li><span class="check-icon"></span> Messages limit: 80 messages per day</li>
+    <!-- Top Navigation Bar -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">EduPlatform</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#home-section" onclick="showSection('home-section')">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#quiz" onclick="showSection('quiz-generator')">Quiz</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#worksheet" onclick="showSection('worksheet-generator')">Worksheet
+                        Generator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#notes" onclick="showSection('my-notes')">My Notes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about" onclick="showSection('about-website')">About Website</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#task-manager" onclick="showSection('task-manager')">Task Manager</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#worksheet-creation" onclick="showSection('worksheet-creation')">Custom
+                        Worksheet Generator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#game-hub" onclick="showSection('game-hub')">Game Hub </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#settings-section" onclick="showSection('settings-section')">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#membership-section"
+                        onclick="showSection('membership-section')">Membership Plans</a>
+                </li>
             </ul>
-            <button class="btn btn-primary" onclick="handlePurchase('Pro+')">Get Pro+ Membership</button>
+        </div>
+    </nav>
+
+    <script>
+
+        function winload() {
+            function showAuthForm() {
+                const authContainer = document.getElementById('auth-container');
+                authContainer.style.display = 'block'; // Show the auth container
+            }
+        }
+    </script>
+
+    <!-- Homepage Section -->
+    <div id="home-section" class="container mt-5 feature-section">
+        <h1>Welcome to EduPlatform</h1>
+        <p>Your one-stop solution for quizzes, worksheets, notes, and so on!</p>
+        <button class="btn btn-primary" onclick="showSection('quiz-generator')">Start Quiz</button>
+        <button class="btn btn-secondary" onclick="showSection('worksheet-generator')">Generate Worksheet</button>
+        <button class="btn btn-info" onclick="showSection('my-notes')">View My Notes</button>
+        <button class="btn btn-primary" onclick="showAuthForm()">Login</button>
+    </div>
+
+    <!-- Authentication Container -->
+    <div id="auth-container" class="auth-container">
+        <h2 id="auth-title">Login</h2>
+        <form id="auth-form">
+            <input type="text" id="name" placeholder="Enter Your Name" required
+                style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);">
+            <input type="email" id="email" placeholder="Email" required
+                style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);">
+            <input type="password" id="password" placeholder="Password" required
+                style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);">
+            <input type="password" id="confirmPassword" placeholder="Confirm password" required
+                style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);">
+            <label>
+                <input type="checkbox" id="terms">
+                I accept Terms and Conditions
+            </label>
+            <div class="link" id="terms-and-conditions" required style="color: #007BFF;">See Terms and Conditions</div>
+
+            <button type="submit" id="auth-button">Login</button>
+            <button type="button" id="close-button" style="display:none;">Close</button>
+        </form>
+        <div class="toggle-link" id="toggle-link">Don't have an account? Register here.</div>
+        <div id="loading-indicator" style="display:none;">Loading...</div>
+    </div>
+
+
+    <!-- Task Manager Feature -->
+    <div id="task-manager" class="feature-section">
+        <h2>Task Manager</h2>
+        <div class="task-manager">
+            <h3>Manage Your Tasks</h3>
+            <!-- Task Form -->
+            <div class="task-form">
+                <input type="text" id="taskName" placeholder="Task Name" required>
+                <input type="text" id="taskDesc" placeholder="Task Description">
+                <select id="taskPriority">
+                    <option value="low">Low Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="high">High Priority</option>
+                </select>
+                <input type="date" id="taskDate">
+                <input type="time" id="taskTime">
+                <button onclick="addTask()">Add Task</button>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <select id="filterStatus" onchange="filterTasks()">
+                    <option value="all">All Tasks</option>
+                    <option value="completed">Completed Tasks</option>
+                    <option value="incomplete">Incomplete Tasks</option>
+                </select>
+                <select id="filterPriority" onchange="filterTasks()">
+                    <option value="all">All Priorities</option>
+                    <option value="low">Low Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="high">High Priority</option>
+                </select>
+            </div>
+
+            <!-- Task List -->
+            <ul id="taskList" class="task-list">
+                <!-- Task Items will appear here -->
+            </ul>
         </div>
     </div>
-</div>
 
-<!-- Confirmation Popup -->
-<div id="upgrade-popup" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span class="close" onclick="closePopup()">&times;</span>
-        <p id="upgrade-message"></p>
-        <button onclick="confirmUpgrade(true)">Yes</button>
-        <button onclick="confirmUpgrade(false)">No</button>
-    </div>
-</div>
+    <!-- Worksheet Generator Section -->
+    <div id="worksheet-generator" class="feature-section">
+        <h2>Worksheet Generator</h2>
+        <p>Select your preferences and generate a worksheet with random questions:</p>
 
-
-
-<!-- Settings Section -->
-<div id="settings-section" class="feature-section" style="display: none;">
-<h2>Select a Theme</h2>
-  <label for="theme-select">Choose a theme:</label>
-      <select id="theme-select">
-          <option value="default">Default (Blue-Purple)</option>
-          <option value="ocean">Ocean Blue</option>
-          <option value="sunset">Sunset</option>
-          <option value="teal">Teal Blue</option>
-          <option value="purple">Purple Dream</option>
-          <option value="coral">Coral</option>
-          <option value="forest">Forest</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark (NOT RECOMMED)</option>
-      </select>
-  <h2>Set Your Profile</h2>
-<input type="text" id="username" placeholder="Change your Name"></input>
-<input type="email" id="email" placeholder="Change your Email"></input>
-<input type="password" id="password" placeholder="Change Your Password"></input>
-<button class="btn-secondary" onclick="saveSettings()">Save Changes</button>
-<h2>Local storage settings</h2>
-<label>
-<input type="checkbox" id="local-storage" checked="checked" placeholder="Local Stoarge Enabled">
-Local storage enabled</label>
-
-</div>
-<script>
-
- //Themes Functionallity
- const themeSelect = document.getElementById('theme-select');
-
-themeSelect.addEventListener('change', (event) => {
-    switch (event.target.value) {
-        case 'default':
-            setTheme('linear-gradient(to right, #6a11cb, #2575fc)');
-            break;
-        case 'ocean':
-            setTheme('linear-gradient(to right, #00c6ff, #0072ff)');
-            break;
-        case 'sunset':
-            setTheme('linear-gradient(to right, #ff7e5f, #feb47b)');
-            break;
-        case 'teal':
-            setTheme('linear-gradient(to right, #008080, #004d4d)');
-            break;
-        case 'purple':
-            setTheme('linear-gradient(to right, #a06ab6, #f5a623)');
-            break;
-        case 'coral':
-            setTheme('linear-gradient(to right, #ff6a6a, #ffb6b6)');
-            break;
-        case 'forest':
-            setTheme('linear-gradient(to right, #3a6073, #3a3d3d)');
-            break;
-        case 'dark':
-            setTheme('linear-gradient(to right, #1a1a1a, #2c3e50)');
-            break;
-        case 'light':
-            setTheme('linear-gradient(to right, #f0f8ff, #e6f7ff)'); // Customize this as needed
-            break;
-    }
-});
-
-function setTheme(gradient) { 
-    document.body.style.background = gradient; 
-    document.querySelector('.navbar').style.background = gradient; 
-    const body = document.body;
-
-    // Set text color based on theme
-    if (gradient.includes('#1a1a1a') || gradient.includes('#2c3e50')) { // Dark theme colors
-        document.body.style.color = 'white'; // Change body text color to white
-        document.querySelector('.navbar').style.color = 'white'; // Change navbar text color to white
-    } else if (gradient.includes('#f0f8ff') || gradient.includes('#e6f7ff')) { // Light theme colors
-        document.body.style.color = 'black'; // Change body text color to black
-    } else {
-        document.body.style.color = ''; // Reset to default for other themes
-        document.querySelector('.navbar').style.color = ''; // Reset to default for navbar
-    }
-
-    
-
-    const authContainer = document.getElementById('auth-container'); 
-    authContainer.style.background = 'rgba(0, 0, 0, 0.5)'; // Optional: Keep auth container dark for readability 
-    const closeButton = document.getElementById('close-button'); 
-    closeButton.style.background = gradient; // Change close button background if needed 
-    const authButton = document.getElementById('auth-button'); 
-    authButton.style.background = gradient;
-  }
-
-</script>
-
-<!--Custom Worksheet Generator-->
-<div id="worksheet-creation" class="feature-section">
-    <h2>Create Your Own Worksheet</h2>
-    <form id="worksheetCreationForm">
-      <form id="worksheetCreationForm">
-        <label for="questionType">Choose Question Type:</label>
-        <select id="questionType" onchange="updateQuestionFields()">
-            <option value="shortAnswer">Short Answer</option>
+        <form id="worksheetForm">
+            <label for="subject">Choose Subject:</label>
+            <select id="subject" name="subject" required>
+                <option value="math">Math</option>
+                <option value="science">Science</option>
             </select>
-    
-        <div id="questionFields">
-            <input type="text" id="worksheetQuestion" placeholder="Enter your question" required>
-            
-          
-         
-            <button type="button" onclick="addWorksheetQuestion()">Add Question</button>
-        <button type="button" onclick="downloadWorksheet()">Dowload Worksheet (.txt)</button>
-          </div>
-    </form>
-    <ul id="worksheetQuestionsList"></ul>
-</div>
 
-<!-- Quiz Generator Section -->
-<div id="quiz-generator" class="feature-section">
-  <h2>Quiz Generator</h2>
-  <p>Select your preferences and take a quiz:</p>
-  
-  <form id="quizForm">
-    <label for="quizSubject">Choose Subject:</label>
-    <select id="quizSubject" name="quizSubject" required>
-      <option value="math">Math</option>
-      <option value="science">Science</option>
-    </select>
-    <label for="quizTimerSelect">Select Timer For The Quiz</label>
-    <label for="quizNumQuestions">Number of Questions:</label>
-    <input type="number" id="quizNumQuestions" name="quizNumQuestions" min="5" max="20" required>
+            <label for="numQuestions">Number of Questions: (Max 5)</label>
+            <input type="number" id="numQuestions" name="numQuestions" min="1" max="5" required>
 
-    <button type="button" onclick="startQuiz()">Start Quiz</button>
-  </form>
+            <label for="difficulty">Difficulty Level:</label>
+            <select id="difficulty" name="difficulty" required>
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
 
-  <div id="quizArea"></div>
-</div>
+            <label for="questionType">Question Type:</label>
+            <select id="questionType" name="questionType" required>
+                <option value="shortAnswer">Short Answer</option>
+            </select>
 
-<!-- About Website Section -->
-<div id="about-website" class="feature-section">
-  <h2>About This Website</h2>
-  <div class="about-info">
-    <strong>Developer:</strong> Anagh Manglick
-</div>
-<div class="about-info">
-    <strong>Class:</strong> 7
-</div>
-<div class="about-info">
-    <strong>Website Server:</strong> Yes
-</div>
-<div class="about-info">
-    <strong>Version:</strong> 1.2.1(public-release3)patch-nov24
-</div>
-<div class="about-info">
-  <strong>Listvista Account Link:</strong> Yes
-</div>
-</div>
+            <button type="button" onclick="generateWorksheet()">Generate Worksheet</button>
+        </form>
 
-<!-- Game Hub Section -->
-<div id="game-hub" class="feature-section">
-  <h2>Game Hub</h2>
-  <p>Enjoy our collection of games!</p>
-  <p>Get a break from your studies!</p>
-  <p>More games Coming soon...</p>
-  <button class="btn btn-primary" onclick="showSection('tic-tac-toe')">Play Tic Tac Toe Locally</button>
-  <!-- Add more games here -->
-</div>
+        <div id="generatedWorksheet"></div>
+    </div>
 
 
+    <!-- Membership Section -->
+    <div id="membership-section" class="feature-section">
+        <h2>Membership Plans</h2>
+        <p>Choose a plan that suits you best</p>
+        <div id="membership-info" class="membership-info">
+            <h3>Current Membership</h3>
+            <p id="membership-type">Membership Plan Type: <strong>Free</strong></p>
+            <p id="membership-date">Membership Purchased On: <strong>N/A</strong></p>
+        </div>
+        <div id="membership-options" class="membership-options row">
+            <div class="membership-option">
+                <h3>Free Plan</h3>
+                <h2>Price: <strong>0 Ruppes</strong></p>
+                    <ul class="membership-benefits">
+                        <li><span class="check-icon"></span> All themes unlocked</li>
+                        <li>Custom worksheet generator templates unlocked</li>
+                        <li>Advanced task manager</li>
+                        <li>My Notes unlocked with local storage</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="handlePurchase('Free')">Get Started</button>
+            </div>
+            <div class="membership-option">
+                <h3>Pro Plan</h3>
+                <h2>Price: <strong>1 Ruppes</strong></p>
+                    <ul class="membership-benefits">
+                        <li><span class="check-icon"></span> All themes unlocked</li>
+                        <li><span class="check-icon"></span> Messages limit: 280 messages per week</li>
+                        <li><span class="check-icon"></span> Messages limit: 40 messages per day</li>
+                        <li>Custom worksheet generator templates unlocked</li>
+                        <li>Advanced task manager</li>
+                        <li>My Notes unlocked with local storage</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="handlePurchase('Pro')">Get Pro Membership</button>
+            </div>
+            <div class="membership-option col-md-6">
+                <h3>Pro plus Plan</h3>
+                <p>Price: <strong>2 Ruppes</strong></p>
+                <ul class="membership-benefits">
+                    <li><span class="check-icon"></span> All themes unlocked</li>
+                    <li><span class="check-icon"></span> Advanced task manager</li>
+                    <li><span class="check-icon"></span> My Notes unlocked with local storage</li>
+                    <li><span class="check-icon"></span> Custom worksheet generator templates unlocked</li>
+                    <li><span class="check-icon"></span> Messages limit: 560 messages per week</li>
+                    <li><span class="check-icon"></span> Messages limit: 80 messages per day</li>
+                </ul>
+                <button class="btn btn-primary" onclick="handlePurchase('Pro+')">Get Pro+ Membership</button>
+            </div>
+        </div>
+    </div>
 
-<!-- Tic Tac Toe Section -->
-<div id="tic-tac-toe" class="feature-section">
-  <h2>Tic Tac Toe</h2>
-  <div id="ticTacToeBoard" class="board">
-    <div class="cell" onclick="makeMove(0)"></div>
-    <div class="cell" onclick="makeMove(1)"></div>
-    <div class="cell" onclick="makeMove(2)"></div>
-    <div class="cell" onclick="makeMove(3)"></div>
-    <div class="cell" onclick="makeMove(4)"></div>
-    <div class="cell" onclick="makeMove(5)"></div>
-    <div class="cell" onclick="makeMove(6)"></div>
-    <div class="cell" onclick="makeMove(7)"></div>
-    <div class="cell" onclick="makeMove(8)"></div>
-</div>
-</div>
+    <!-- Confirmation Popup -->
+    <div id="upgrade-popup" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <p id="upgrade-message"></p>
+            <button onclick="confirmUpgrade(true)">Yes</button>
+            <button onclick="confirmUpgrade(false)">No</button>
+        </div>
+    </div>
+
+
+
+    <!-- Settings Section -->
+    <div id="settings-section" class="feature-section" style="display: none;">
+        <h2>Select a Theme</h2>
+        <label for="theme-select">Choose a theme:</label>
+        <select id="theme-select">
+            <option value="default">Default (Blue-Purple)</option>
+            <option value="ocean">Ocean Blue</option>
+            <option value="sunset">Sunset</option>
+            <option value="teal">Teal Blue</option>
+            <option value="purple">Purple Dream</option>
+            <option value="coral">Coral</option>
+            <option value="forest">Forest</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark (NOT RECOMMED)</option>
+        </select>
+        <h2>Local storage settings</h2>
+        <label>
+            <input type="checkbox" id="local-storage" checked="checked" placeholder="Local Stoarge Enabled">
+            Local storage enabled</label>
+    </div>
+    <script>
+
+        //Themes Functionallity
+        const themeSelect = document.getElementById('theme-select');
+
+        themeSelect.addEventListener('change', (event) => {
+            switch (event.target.value) {
+                case 'default':
+                    setTheme('linear-gradient(to right, #6a11cb, #2575fc)');
+                    break;
+                case 'ocean':
+                    setTheme('linear-gradient(to right, #00c6ff, #0072ff)');
+                    break;
+                case 'sunset':
+                    setTheme('linear-gradient(to right, #ff7e5f, #feb47b)');
+                    break;
+                case 'teal':
+                    setTheme('linear-gradient(to right, #008080, #004d4d)');
+                    break;
+                case 'purple':
+                    setTheme('linear-gradient(to right, #a06ab6, #f5a623)');
+                    break;
+                case 'coral':
+                    setTheme('linear-gradient(to right, #ff6a6a, #ffb6b6)');
+                    break;
+                case 'forest':
+                    setTheme('linear-gradient(to right, #3a6073, #3a3d3d)');
+                    break;
+                case 'dark':
+                    setTheme('linear-gradient(to right, #1a1a1a, #2c3e50)');
+                    break;
+                case 'light':
+                    setTheme('linear-gradient(to right, #f0f8ff, #e6f7ff)'); // Customize this as needed
+                    break;
+            }
+        });
+
+        function setTheme(gradient) {
+            document.body.style.background = gradient;
+            document.querySelector('.navbar').style.background = gradient;
+            const body = document.body;
+
+            // Set text color based on theme
+            if (gradient.includes('#1a1a1a') || gradient.includes('#2c3e50')) { // Dark theme colors
+                document.body.style.color = 'white'; // Change body text color to white
+                document.querySelector('.navbar').style.color = 'white'; // Change navbar text color to white
+            } else if (gradient.includes('#f0f8ff') || gradient.includes('#e6f7ff')) { // Light theme colors
+                document.body.style.color = 'black'; // Change body text color to black
+            } else {
+                document.body.style.color = ''; // Reset to default for other themes
+                document.querySelector('.navbar').style.color = ''; // Reset to default for navbar
+            }
+
+
+
+            const authContainer = document.getElementById('auth-container');
+            authContainer.style.background = 'rgba(0, 0, 0, 0.5)'; // Optional: Keep auth container dark for readability 
+            const closeButton = document.getElementById('close-button');
+            closeButton.style.background = gradient; // Change close button background if needed 
+            const authButton = document.getElementById('auth-button');
+            authButton.style.background = gradient;
+        }
+
+    </script>
+
+    <!--Custom Worksheet Generator-->
+    <div id="worksheet-creation" class="feature-section">
+        <h2>Create Your Own Worksheet</h2>
+        <form id="worksheetCreationForm">
+            <form id="worksheetCreationForm">
+                <label for="questionType">Choose Question Type:</label>
+                <select id="questionType" onchange="updateQuestionFields()">
+                    <option value="shortAnswer">Short Answer</option>
+                </select>
+
+                <div id="questionFields">
+                    <input type="text" id="worksheetQuestion" placeholder="Enter your question" required>
+
+
+
+                    <button type="button" onclick="addWorksheetQuestion()">Add Question</button>
+                    <button type="button" onclick="downloadWorksheet()">Dowload Worksheet (.txt)</button>
+                </div>
+            </form>
+            <ul id="worksheetQuestionsList"></ul>
+    </div>
+
+    <!-- Quiz Generator Section -->
+    <div id="quiz-generator" class="feature-section">
+        <h2>Quiz Generator</h2>
+        <p>Select your preferences and take a quiz:</p>
+        <form id="quizForm">
+            <label for="quizNumQuestions">Number of Questions:</label>
+            <input type="number" id="quizNumQuestions" name="quizNumQuestions" min="5" max="20" required>
+            <button type="button" onclick="startQuiz()">Start Quiz</button>
+        </form>
+
+        <div id="quizArea"></div>
+    </div>
+
+    <!-- About Website Section -->
+    <div id="about-website" class="feature-section">
+        <h2>About This Website</h2>
+        <div class="about-info">
+            <strong>Developer:</strong> Anagh Manglick
+        </div>
+        <div class="about-info">
+            <strong>Class:</strong> 7
+        </div>
+        <div class="about-info">
+            <strong>Website Server:</strong> Yes
+        </div>
+        <div class="about-info">
+            <strong>Version:</strong> 1.2.1(public-release3)patch-nov24
+        </div>
+        <div class="about-info">
+            <strong>Listvista Account Link:</strong> Yes
+        </div>
+    </div>
+
+    <!-- Game Hub Section -->
+    <div id="game-hub" class="feature-section">
+        <h2>Game Hub</h2>
+        <p>Enjoy our collection of games!</p>
+        <p>Get a break from your studies!</p>
+        <p>More games Coming soon...</p>
+        <button class="btn btn-primary" onclick="showSection('tic-tac-toe')">Play Tic Tac Toe Locally</button>
+        <!-- Add more games here -->
+    </div>
+
+
+
+    <!-- Tic Tac Toe Section -->
+    <div id="tic-tac-toe" class="feature-section">
+        <h2>Tic Tac Toe</h2>
+        <div id="ticTacToeBoard" class="board">
+            <div class="cell" onclick="makeMove(0)"></div>
+            <div class="cell" onclick="makeMove(1)"></div>
+            <div class="cell" onclick="makeMove(2)"></div>
+            <div class="cell" onclick="makeMove(3)"></div>
+            <div class="cell" onclick="makeMove(4)"></div>
+            <div class="cell" onclick="makeMove(5)"></div>
+            <div class="cell" onclick="makeMove(6)"></div>
+            <div class="cell" onclick="makeMove(7)"></div>
+            <div class="cell" onclick="makeMove(8)"></div>
+        </div>
+    </div>
 
 
 
 
- <!-- Result Modal -->
-<div id="resultModal" class="modal" style="display: none;">
-  <div class="modal-content">
-      <span class="close" onclick="closePopUp()">&times;</span>
-      <p id="resultMessage"></p>
-      <button onclick="resetGame()">Play Again</button>
-  </div>
-</div>
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closePopUp()">&times;</span>
+            <p id="resultMessage"></p>
+            <button onclick="resetGame()">Play Again</button>
+        </div>
+    </div>
     <div id="gameStatus"></div>
-</div>
-</div>
+    </div>
+    </div>
 
-<!-- My Notes Section --> 
-<div id="my-notes" class="feature-section">
-  <h2>My Notes</h2>
-  <input type="text" id="noteName" placeholder="Note Title" style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: calc(100% - 22px); margin-bottom: 10px;">
-  <textarea id="noteContent" placeholder="Write your note here..." style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: calc(100% - 22px); height: 100px;"></textarea>
-  <button onclick="addNote()" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Save Note</button>
-  <ul id="notesList" style="margin-top: 20px; list-style-type: none;"></ul>
-</div>
+    <!-- My Notes Section -->
+    <div id="my-notes" class="feature-section">
+        <h2>My Notes</h2>
+        <input type="text" id="noteName" placeholder="Note Title"
+            style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: calc(100% - 22px); margin-bottom: 10px;">
+        <textarea id="noteContent" placeholder="Write your note here..."
+            style="padding: 10px; border: 1px solid #ddd; border-radius: 4px; width: calc(100% - 22px); height: 100px;"></textarea>
+        <button onclick="addNote()"
+            style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Save
+            Note</button>
+        <ul id="notesList" style="margin-top: 20px; list-style-type: none;"></ul>
+    </div>
 
-<div class="divider"></div>  
+    <div class="divider"></div>
 
-<!-- Footer -->
-<footer class="text-center mt-5">
-    <p>&copy; 2024 EduPlatform. All rights reserved.</p>
-</footer>
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 EduPlatform. All rights reserved.</p>
+    </footer>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
 
-//Custom Worksheet Generator
-let worksheetQuestions = [];
+        //Custom Worksheet Generator
+        let worksheetQuestions = [];
 
-function addWorksheetQuestion() {
-    const question = document.getElementById('worksheetQuestion').value.trim();
-    
-    if (question) {
-        worksheetQuestions.push(question);
-        document.getElementById('worksheetQuestionsList').innerHTML += `<li>${question}</li>`;
-        document.getElementById('worksheetQuestion').value = '';
-    } else {
-        alert('Question field is required.');
-    }
-}
+        function addWorksheetQuestion() {
+            const question = document.getElementById('worksheetQuestion').value.trim();
 
-function downloadWorksheet() {
-    if (worksheetQuestions.length === 0) {
-        alert('No questions to download.');
-        return;
-    }
-
-    let worksheetContent = worksheetQuestions.join('\n');
-    const blob = new Blob([worksheetContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'worksheet.txt';
-    a.click();
-    URL.revokeObjectURL(url);
-}
-
-function updateQuestionFields() {
-    const questionType = document.getElementById('questionType').value;
-    const mcqOptions = document.getElementById('mcqOptions');
-    const trueFalseOptions = document.getElementById('trueFalseOptions');
-    const fillInTheBlankOptions = document.getElementById('fillInTheBlankOptions');
-
-    // Hide all options initially
-    mcqOptions.style.display = 'none';
-    trueFalseOptions.style.display = 'none';
-    fillInTheBlankOptions.style.display = 'none';
-
-    // Show fields based on selected question type
-    if (questionType === 'multipleChoice') {
-        mcqOptions.style.display = 'block';
-    } else if (questionType === 'trueFalse') {
-        trueFalseOptions.style.display = 'block';
-    } else if (questionType === 'fillInTheBlank') {
-        fillInTheBlankOptions.style.display = 'block';
-    }
-}
-
-//Close Pop Up
-function closePopUp() {
-    document.getElementById('resultModal').style.display = 'none'; // Hide the modal
-}
-
-//Tic Tac Toe With Player    
-let currentPlayer = 'X'; // Start with player X
-let board = ['', '', '', '', '', '', '', '', '']; // Initialize the board
-let gameActive = true; // To check if the game is still ongoing
-
-function makeMove(index) {
-    if (board[index] !== '' || !gameActive) return; // Ignore if cell is taken or game is over
-
-    board[index] = currentPlayer; // Mark the cell
-    document.getElementById('ticTacToeBoard').children[index].innerText = currentPlayer; // Update UI
-    document.getElementById('ticTacToeBoard').children[index].classList.add('taken'); // Add taken class
-    checkWinner(); // Check for a winner
-}
-
-function checkWinner() {
-    const winningConditions = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-    ];
-
-    for (let condition of winningConditions) {
-        const [a, b, c] = condition;
-        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-          const winnerMessage = `Player ${currentPlayer} wins!`;
-            document.getElementById('resultMessage').innerText = winnerMessage;
-            document.getElementById('resultModal').style.display = 'flex'; // Show modal
-            gameActive = false; // End the game
-            return;
+            if (question) {
+                worksheetQuestions.push(question);
+                document.getElementById('worksheetQuestionsList').innerHTML += `<li>${question}</li>`;
+                document.getElementById('worksheetQuestion').value = '';
+            } else {
+                alert('Question field is required.');
+            }
         }
-    }
 
-    if (!board.includes('')) {
-        document.getElementById('resultMessage').innerText = "It's a draw!";
-        document.getElementById('resultModal').style.display = 'flex'; // Show modal
-        gameActive = false; // End the game
-    }
+        function downloadWorksheet() {
+            if (worksheetQuestions.length === 0) {
+                alert('No questions to download.');
+                return;
+            }
 
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; // Switch player
-}
+            let worksheetContent = worksheetQuestions.join('\n');
+            const blob = new Blob([worksheetContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
 
-function resetGame() {
-    board = ['', '', '', '', '', '', '', '', '']; // Reset the board
-    gameActive = true; // Reset game status
-    currentPlayer = 'X'; // Reset to player X
-    document.getElementById('gameStatus').innerText = ''; // Clear the status message
-
-    const cells = document.getElementById('ticTacToeBoard').children;
-    for (let cell of cells) {
-        cell.innerText = ''; // Clear the UI
-        cell.classList.remove('taken'); // Remove taken class
-    }
-
-    closePopUp();
-
-  }
-
-  </script>
-  <script>
-
-
-// Initialize current membership from local storage
-let currentMembership = {
-    type: localStorage.getItem('membershipType') || null,
-    purchaseDate: localStorage.getItem('membershipPurchaseDate') || null
-};
-
-// Function to handle membership purchase
-function handlePurchase(plan) {
-    if (currentMembership.type) {
-        if (plan === 'Pro+' && currentMembership.type === 'Pro') {
-            document.getElementById('upgrade-message').innerText = 'Do you want to upgrade your membership plan to Pro+?';
-            document.getElementById('upgrade-popup').style.display = 'flex';
-        } else {
-            alert(`You are already a ${currentMembership.type} user.`);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'worksheet.txt';
+            a.click();
+            URL.revokeObjectURL(url);
         }
-    } else {
-        // Set the membership type and purchase date
-        currentMembership.type = plan;
-        currentMembership.purchaseDate = new Date().toLocaleDateString();
-        
-        // Save to local storage
-        localStorage.setItem('membershipType', currentMembership.type);
-        localStorage.setItem('membershipPurchaseDate', currentMembership.purchaseDate);
-        
-        updateMembershipInfo();
-        alert(`${plan} membership purchased successfully!`);
-    }
-}
 
-// Function to update membership info display
-function updateMembershipInfo() {
-    document.getElementById('membership-type').innerHTML = `Membership Type: <strong>${currentMembership.type}</strong>`;
-    document.getElementById('membership-date').innerHTML = `Membership Purchased On: <strong>${currentMembership.purchaseDate}</strong>`;
-}
+        function updateQuestionFields() {
+            const questionType = document.getElementById('questionType').value;
+            const mcqOptions = document.getElementById('mcqOptions');
+            const trueFalseOptions = document.getElementById('trueFalseOptions');
+            const fillInTheBlankOptions = document.getElementById('fillInTheBlankOptions');
 
-// Function to confirm membership upgrade
-function confirmUpgrade(isConfirmed) {
-    if (isConfirmed) {
-        currentMembership.type = 'Luxury';
-        currentMembership.purchaseDate = new Date().toLocaleDateString();
-        
-        // Update local storage
-        localStorage.setItem('membershipType', currentMembership.type);
-        localStorage.setItem('membershipPurchaseDate', currentMembership.purchaseDate);
-        
-        updateMembershipInfo();
-        alert('Membership upgraded to Pro+ Plan successfully!');
-    }
-    closePopup();
-}
+            // Hide all options initially
+            mcqOptions.style.display = 'none';
+            trueFalseOptions.style.display = 'none';
+            fillInTheBlankOptions.style.display = 'none';
 
-// Function to close the upgrade confirmation popup
-function closePopup() {
-    document.getElementById('upgrade-popup').style.display = 'none';
-}
+            // Show fields based on selected question type
+            if (questionType === 'multipleChoice') {
+                mcqOptions.style.display = 'block';
+            } else if (questionType === 'trueFalse') {
+                trueFalseOptions.style.display = 'block';
+            } else if (questionType === 'fillInTheBlank') {
+                fillInTheBlankOptions.style.display = 'block';
+            }
+        }
 
-// Function to initialize membership info on page load
-function initMembership() {
-    if (currentMembership.type) {
-        updateMembershipInfo();
-    }
-}
+        //Close Pop Up
+        function closePopUp() {
+            document.getElementById('resultModal').style.display = 'none'; // Hide the modal
+        }
 
-// Call initMembership on page load
-window.onload = initMembership;
+        //Tic Tac Toe With Player    
+        let currentPlayer = 'X'; // Start with player X
+        let board = ['', '', '', '', '', '', '', '', '']; // Initialize the board
+        let gameActive = true; // To check if the game is still ongoing
 
-</script>
-<script>
-    function showSection(sectionId) {
-        const sections = document.querySelectorAll('.feature-section');
-        sections.forEach(section => section.style.display = 'none');
-        document.getElementById(sectionId).style.display = 'block';
-    }
+        function makeMove(index) {
+            if (board[index] !== '' || !gameActive) return; // Ignore if cell is taken or game is over
 
-    
-  
-    // Notes Functionality
-let notes = [];
+            board[index] = currentPlayer; // Mark the cell
+            document.getElementById('ticTacToeBoard').children[index].innerText = currentPlayer; // Update UI
+            document.getElementById('ticTacToeBoard').children[index].classList.add('taken'); // Add taken class
+            checkWinner(); // Check for a winner
+        }
 
-// Load notes from localStorage
-function loadNotes() {
-    const loggedInUser  = JSON.parse(localStorage.getItem('loggedInUser '));
-    if (loggedInUser ) {
-        notes = JSON.parse(localStorage.getItem(`${loggedInUser .username}_notes`)) || [];
-    }
-}
+        function checkWinner() {
+            const winningConditions = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
 
-// Save notes to localStorage
-function saveNotes() {
-    const loggedInUser  = JSON.parse(localStorage.getItem('loggedInUser '));
-    if (loggedInUser ) {
-        localStorage.setItem(`${loggedInUser .username}_notes`, JSON.stringify(notes));
-    }
-}
+            for (let condition of winningConditions) {
+                const [a, b, c] = condition;
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    const winnerMessage = `Player ${currentPlayer} wins!`;
+                    document.getElementById('resultMessage').innerText = winnerMessage;
+                    document.getElementById('resultModal').style.display = 'flex'; // Show modal
+                    gameActive = false; // End the game
+                    return;
+                }
+            }
 
-// Add Note
-function addNote() {
-    const noteName = document.getElementById('noteName').value.trim();
-    const noteContent = document.getElementById('noteContent').value.trim();
+            if (!board.includes('')) {
+                document.getElementById('resultMessage').innerText = "It's a draw!";
+                document.getElementById('resultModal').style.display = 'flex'; // Show modal
+                gameActive = false; // End the game
+            }
 
-    if (noteName && noteContent) {
-        const note = { name: noteName, content: noteContent };
-        notes.push(note);
-        saveNotes();
-        renderNotes();
-        document.getElementById('noteName').value = '';
-        document.getElementById('noteContent').value = '';
-    } else {
-        alert('Both fields are required.');
-    }
-}
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; // Switch player
+        }
 
-// Render Notes
-function renderNotes() {
-    const notesList = document.getElementById('notesList');
-    notesList.innerHTML = '';
+        function resetGame() {
+            board = ['', '', '', '', '', '', '', '', '']; // Reset the board
+            gameActive = true; // Reset game status
+            currentPlayer = 'X'; // Reset to player X
+            document.getElementById('gameStatus').innerText = ''; // Clear the status message
 
-    notes.forEach(note => {
-        const noteItem = document.createElement('li');
-        noteItem.innerHTML = `<strong>${sanitize(note.name)}</strong>: ${sanitize(note.content)}`;
-        notesList.appendChild(noteItem);
-    });
-}
+            const cells = document.getElementById('ticTacToeBoard').children;
+            for (let cell of cells) {
+                cell.innerText = ''; // Clear the UI
+                cell.classList.remove('taken'); // Remove taken class
+            }
 
-// Show Notes on Load
-function initNotes() {
-    loadNotes();
-    renderNotes();
-}
+            closePopUp();
 
-// Initialize notes on page load
-window.onload = initNotes;
- 
+        }
 
-  
+    </script>
+    <script>
 
-  // =======================
-  // Task Manager Functions
-  // =======================
-  let tasks = [];
 
-  // Load tasks from localStorage
-  function loadTasks() {
-    const storedTasks = localStorage.getItem('tasks');
-    if (storedTasks) {
-        tasks = JSON.parse(storedTasks);
-    }
-}
-  
+        // Initialize current membership from local storage
+        let currentMembership = {
+            type: localStorage.getItem('membershipType') || null,
+            purchaseDate: localStorage.getItem('membershipPurchaseDate') || null
+        };
 
-  // Save tasks to localStorage
-  function saveTasks() {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-}
-  
+        // Function to handle membership purchase
+        function handlePurchase(plan) {
+            if (currentMembership.type) {
+                if (plan === 'Pro+' && currentMembership.type === 'Pro') {
+                    document.getElementById('upgrade-message').innerText = 'Do you want to upgrade your membership plan to Pro+?';
+                    document.getElementById('upgrade-popup').style.display = 'flex';
+                } else {
+                    alert(`You are already a ${currentMembership.type} user.`);
+                }
+            } else {
+                // Set the membership type and purchase date
+                currentMembership.type = plan;
+                currentMembership.purchaseDate = new Date().toLocaleDateString();
 
-  function addTask() {
-    const taskName = document.getElementById('taskName').value.trim();
-    const taskDesc = document.getElementById('taskDesc').value.trim();
-    const taskPriority = document.getElementById('taskPriority').value;
-    const taskDate = document.getElementById('taskDate').value;
-    const taskTime = document.getElementById('taskTime').value;
-    
-    if (taskName) {
-      // Get today's date and time in YYYY-MM-DD HH:mm format
-      const now = new Date();
-        const nowString = now.toISOString().slice(0, 16); // Format as YYYY-MM-DDTHH:mm
+                // Save to local storage
+                localStorage.setItem('membershipType', currentMembership.type);
+                localStorage.setItem('membershipPurchaseDate', currentMembership.purchaseDate);
 
-        // Create a combined date and time string for comparison
-        const taskDateTime = `${taskDate}T${taskTime}`;
+                updateMembershipInfo();
+                alert(`${plan} membership purchased successfully!`);
+            }
+        }
 
-        // Check if the taskDateTime is in the past
-        if (taskDateTime < nowString) { 
-            alert('You cannot add a task with a past due date and time. Please select a future date and time.'); 
-            return; // Exit the function if the date and time are invalid 
-        } 
-      
-    const task = {
-        name: taskName,
-        desc: taskDesc,
-        priority: taskPriority,
-        dueDate: taskDate,
-        dueTime: taskTime,
-        completed: false
-      };
-      tasks.push(task);
-      saveTasks();
-      renderTasks();
-      document.getElementById('taskName').value = '';
-      document.getElementById('taskDesc').value = '';
-      document.getElementById('taskDate').value = '';
-      document.getElementById('taskTime').value = '';
-    } else {
-      alert('Task name is required.');
-    }
-  }
+        // Function to update membership info display
+        function updateMembershipInfo() {
+            document.getElementById('membership-type').innerHTML = `Membership Type: <strong>${currentMembership.type}</strong>`;
+            document.getElementById('membership-date').innerHTML = `Membership Purchased On: <strong>${currentMembership.purchaseDate}</strong>`;
+        }
 
-  function renderTasks() {
-    const taskList = document.getElementById('taskList');
-    taskList.innerHTML = ''; // Clear existing tasks
+        // Function to confirm membership upgrade
+        function confirmUpgrade(isConfirmed) {
+            if (isConfirmed) {
+                currentMembership.type = 'Luxury';
+                currentMembership.purchaseDate = new Date().toLocaleDateString();
 
-    const filterStatus = document.getElementById('filterStatus').value;
-    const filterPriority = document.getElementById('filterPriority').value;
+                // Update local storage
+                localStorage.setItem('membershipType', currentMembership.type);
+                localStorage.setItem('membershipPurchaseDate', currentMembership.purchaseDate);
 
-    // Filter tasks based on status and priority
-    const filteredTasks = tasks.filter(task => {
-        const statusMatch = filterStatus === 'all' ||
-            (filterStatus === 'completed' && task.completed) ||
-            (filterStatus === 'incomplete' && !task.completed);
-        const priorityMatch = filterPriority === 'all' || task.priority === filterPriority;
-        return statusMatch && priorityMatch;
-    });
+                updateMembershipInfo();
+                alert('Membership upgraded to Pro+ Plan successfully!');
+            }
+            closePopup();
+        }
 
-    // Render filtered tasks
-    filteredTasks.forEach((task, index) => {
-        const taskItem = document.createElement('li'); // Use <li> for a list item
-        taskItem.classList.add('task-item'); // Add a class for styling
+        // Function to close the upgrade confirmation popup
+        function closePopup() {
+            document.getElementById('upgrade-popup').style.display = 'none';
+        }
 
-        // Display task details including scheduled date and time
-        taskItem.innerHTML = `
+        // Function to initialize membership info on page load
+        function initMembership() {
+            if (currentMembership.type) {
+                updateMembershipInfo();
+            }
+        }
+
+        // Call initMembership on page load
+        window.onload = initMembership;
+
+    </script>
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.feature-section');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+
+
+        // Notes Functionality
+        let notes = [];
+
+        // Load notes from localStorage
+        function loadNotes() {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser '));
+            if (loggedInUser) {
+                notes = JSON.parse(localStorage.getItem(`${loggedInUser.username}_notes`)) || [];
+            }
+        }
+
+        // Save notes to localStorage
+        function saveNotes() {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser '));
+            if (loggedInUser) {
+                localStorage.setItem(`${loggedInUser.username}_notes`, JSON.stringify(notes));
+            }
+        }
+
+        // Add Note
+        function addNote() {
+            const noteName = document.getElementById('noteName').value.trim();
+            const noteContent = document.getElementById('noteContent').value.trim();
+
+            if (noteName && noteContent) {
+                const note = { name: noteName, content: noteContent };
+                notes.push(note);
+                saveNotes();
+                renderNotes();
+                document.getElementById('noteName').value = '';
+                document.getElementById('noteContent').value = '';
+            } else {
+                alert('Both fields are required.');
+            }
+        }
+
+        // Render Notes
+        function renderNotes() {
+            const notesList = document.getElementById('notesList');
+            notesList.innerHTML = '';
+
+            notes.forEach(note => {
+                const noteItem = document.createElement('li');
+                noteItem.innerHTML = `<strong>${sanitize(note.name)}</strong>: ${sanitize(note.content)}`;
+                notesList.appendChild(noteItem);
+            });
+        }
+
+        // Show Notes on Load
+        function initNotes() {
+            loadNotes();
+            renderNotes();
+        }
+
+        // Initialize notes on page load
+        window.onload = initNotes;
+
+
+
+
+        // =======================
+        // Task Manager Functions
+        // =======================
+        let tasks = [];
+
+        // Load tasks from localStorage
+        function loadTasks() {
+            const storedTasks = localStorage.getItem('tasks');
+            if (storedTasks) {
+                tasks = JSON.parse(storedTasks);
+            }
+        }
+
+
+        // Save tasks to localStorage
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+
+        function addTask() {
+            const taskName = document.getElementById('taskName').value.trim();
+            const taskDesc = document.getElementById('taskDesc').value.trim();
+            const taskPriority = document.getElementById('taskPriority').value;
+            const taskDate = document.getElementById('taskDate').value;
+            const taskTime = document.getElementById('taskTime').value;
+
+            if (taskName) {
+                // Get today's date and time in YYYY-MM-DD HH:mm format
+                const now = new Date();
+                const nowString = now.toISOString().slice(0, 16); // Format as YYYY-MM-DDTHH:mm
+
+                // Create a combined date and time string for comparison
+                const taskDateTime = `${taskDate}T${taskTime}`;
+
+                // Check if the taskDateTime is in the past
+                if (taskDateTime < nowString) {
+                    alert('You cannot add a task with a past due date and time. Please select a future date and time.');
+                    return; // Exit the function if the date and time are invalid 
+                }
+
+                const task = {
+                    name: taskName,
+                    desc: taskDesc,
+                    priority: taskPriority,
+                    dueDate: taskDate,
+                    dueTime: taskTime,
+                    completed: false
+                };
+                tasks.push(task);
+                saveTasks();
+                renderTasks();
+                document.getElementById('taskName').value = '';
+                document.getElementById('taskDesc').value = '';
+                document.getElementById('taskDate').value = '';
+                document.getElementById('taskTime').value = '';
+            } else {
+                alert('Task name is required.');
+            }
+        }
+
+        function renderTasks() {
+            const taskList = document.getElementById('taskList');
+            taskList.innerHTML = ''; // Clear existing tasks
+
+            const filterStatus = document.getElementById('filterStatus').value;
+            const filterPriority = document.getElementById('filterPriority').value;
+
+            // Filter tasks based on status and priority
+            const filteredTasks = tasks.filter(task => {
+                const statusMatch = filterStatus === 'all' ||
+                    (filterStatus === 'completed' && task.completed) ||
+                    (filterStatus === 'incomplete' && !task.completed);
+                const priorityMatch = filterPriority === 'all' || task.priority === filterPriority;
+                return statusMatch && priorityMatch;
+            });
+
+            // Render filtered tasks
+            filteredTasks.forEach((task, index) => {
+                const taskItem = document.createElement('li'); // Use <li> for a list item
+                taskItem.classList.add('task-item'); // Add a class for styling
+
+                // Display task details including scheduled date and time
+                taskItem.innerHTML = `
             <div>
                 <strong>${sanitize(task.name)}</strong> - ${sanitize(task.desc)}<br>
                 <em>Priority: ${sanitize(task.priority)}</em><br>
@@ -1617,361 +1740,289 @@ window.onload = initNotes;
                 <button class="delete-btn" onclick="deleteTask(${tasks.indexOf(task)})">Delete</button>
             </div>
         `;
-        taskList.appendChild(taskItem);
-    });
-}
+                taskList.appendChild(taskItem);
+            });
+        }
 
-  function toggleTaskComplete(index) {
-    tasks[index].completed = !tasks[index].completed;
-    saveTasks();
-    renderTasks();
-  }
+        function toggleTaskComplete(index) {
+            tasks[index].completed = !tasks[index].completed;
+            saveTasks();
+            renderTasks();
+        }
 
-  function deleteTask(index) {
-    if (confirm('Are you sure you want to delete this task?')) {
-      tasks.splice(index, 1);
-      saveTasks();
-      renderTasks();
-    }
-  }
+        function deleteTask(index) {
+            if (confirm('Are you sure you want to delete this task?')) {
+                tasks.splice(index, 1);
+                saveTasks();
+                renderTasks();
+            }
+        }
 
-  function filterTasks() {
-    renderTasks();
-  }
+        function filterTasks() {
+            renderTasks();
+        }
 
-  function sanitize(input) {
-    const div = document.createElement('div');
-    div.textContent = input;
-    return div.innerHTML;
-  }
+        function sanitize(input) {
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
 
-  // Initialize Task Manager
-  function initTaskManager() {
-    loadTasks();
-    renderTasks();
-  }
+        // Initialize Task Manager
+        function initTaskManager() {
+            loadTasks();
+            renderTasks();
+        }
 
-  // ================================
-  // Worksheet Generator Functions
-  // ================================
-  const questionBank = {
-    math: {
-      easy: [
-        "What is 2 + 2?",
-        "What is 5 - 3?",
-        "What is 3 × 4?",
-        "What is 10 ÷ 2?",
-        "What is the square of 3?"
-      ],
-      medium: [
-        "Solve for x: 2x + 5 = 13.",
-        "What is the area of a triangle with base 5 and height 10?",
-        "Simplify: (3²) + (4²).",
-        "What is the perimeter of a rectangle with length 8 and width 5?",
-        "Find the value of 15% of 200."
-      ],
-      hard: [
-        "Integrate the function f(x) = 3x².",
-        "Solve the equation: x³ - 6x² + 11x - 6 = 0.",
-        "What is the derivative of sin(x)?",
-        "Calculate the limit: lim(x→0) (sin(x)/x).",
-        "What is the solution to the differential equation dy/dx = 2x?"
-      ]
-    },
-    science: {
-      easy: [
-        "What is the chemical symbol for water?",
-        "What planet is known as the Red Planet?",
-        "What gas do plants absorb from the atmosphere?",
-        "What is H₂O commonly known as?",
-        "What force keeps us grounded on Earth?"
-      ],
-      medium: [
-        "What is the powerhouse of the cell?",
-        "What is the chemical formula for table salt?",
-        "Define Newton's Second Law of Motion.",
-        "What is the process by which plants make their food?",
-        "Name the three states of matter."
-      ],
-      hard: [
-        "Explain the theory of relativity.",
-        "What is the Heisenberg Uncertainty Principle?",
-        "Describe the process of nuclear fusion.",
-        "What is the significance of the Pauli Exclusion Principle?",
-        "Define Schrödinger's Cat paradox."
-      ]
-    }
-  };
+        // ================================
+        // Worksheet Generator Functions
+        // ================================
+        const questionBank = {
+            math: {
+                easy: [
+                    "What is 2 + 2?",
+                    "What is 5 - 3?",
+                    "What is 3 × 4?",
+                    "What is 10 ÷ 2?",
+                    "What is the square of 3?"
+                ],
+                medium: [
+                    "Solve for x: 2x + 5 = 13.",
+                    "What is the area of a triangle with base 5 and height 10?",
+                    "Simplify: (3²) + (4²).",
+                    "What is the perimeter of a rectangle with length 8 and width 5?",
+                    "Find the value of 15% of 200."
+                ],
+                hard: [
+                    "Integrate the function f(x) = 3x².",
+                    "Solve the equation: x³ - 6x² + 11x - 6 = 0.",
+                    "What is the derivative of sin(x)?",
+                    "Calculate the limit: lim(x→0) (sin(x)/x).",
+                    "What is the solution to the differential equation dy/dx = 2x?"
+                ]
+            },
+            science: {
+                easy: [
+                    "What is the chemical symbol for water?",
+                    "What planet is known as the Red Planet?",
+                    "What gas do plants absorb from the atmosphere?",
+                    "What is H₂O commonly known as?",
+                    "What force keeps us grounded on Earth?"
+                ],
+                medium: [
+                    "What is the powerhouse of the cell?",
+                    "What is the chemical formula for table salt?",
+                    "Define Newton's Second Law of Motion.",
+                    "What is the process by which plants make their food?",
+                    "Name the three states of matter."
+                ],
+                hard: [
+                    "Explain the theory of relativity.",
+                    "What is the Heisenberg Uncertainty Principle?",
+                    "Describe the process of nuclear fusion.",
+                    "What is the significance of the Pauli Exclusion Principle?",
+                    "Define Schrödinger's Cat paradox."
+                ]
+            }
+        };
 
-  function generateWorksheet() {
-    const subject = document.getElementById('subject').value;
-    const numQuestions = parseInt(document.getElementById('numQuestions').value);
-    const difficulty = document.getElementById('difficulty').value;
-    const questionType = document.getElementById('questionType').value;
+        function generateWorksheet() {
+            const subject = document.getElementById('subject').value;
+            const numQuestions = parseInt(document.getElementById('numQuestions').value);
+            const difficulty = document.getElementById('difficulty').value;
+            const questionType = document.getElementById('questionType').value;
 
-    const availableQuestions = questionBank[subject][difficulty];
-    if (!availableQuestions) {
-      alert('No questions available for the selected options.');
-      return;
-    }
+            const availableQuestions = questionBank[subject][difficulty];
+            if (!availableQuestions) {
+                alert('No questions available for the selected options.');
+                return;
+            }
 
-    if (numQuestions > availableQuestions.length) {
-      alert(`Only ${availableQuestions.length} questions available for ${subject} (${difficulty} difficulty).`);
-      return;
-    }
+            if (numQuestions > availableQuestions.length) {
+                alert(`Only ${availableQuestions.length} questions available for ${subject} (${difficulty} difficulty).`);
+                return;
+            }
 
-    const selectedQuestions = shuffleArray(availableQuestions).slice(0, numQuestions);
-    let worksheetContent = `<h3>Generated Worksheet for ${capitalize(subject)}</h3><ol>`;
-    
-    selectedQuestions.forEach((q, index) => {
-      worksheetContent += `<li>${q}</li>`;
-    });
-    worksheetContent += `</ol>`;
+            const selectedQuestions = shuffleArray(availableQuestions).slice(0, numQuestions);
+            let worksheetContent = `<h3>Generated Worksheet for ${capitalize(subject)}</h3><ol>`;
 
-    document.getElementById('generatedWorksheet').innerHTML = worksheetContent;
-  }
+            selectedQuestions.forEach((q, index) => {
+                worksheetContent += `<li>${q}</li>`;
+            });
+            worksheetContent += `</ol>`;
 
-  // Utility function to shuffle an array
-  function shuffleArray(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
+            document.getElementById('generatedWorksheet').innerHTML = worksheetContent;
+        }
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
+        // Utility function to shuffle an array
+        function shuffleArray(array) {
+            let currentIndex = array.length, temporaryValue, randomIndex;
 
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
 
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
 
-    return array;
-  }
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
 
-  // Capitalize first letter
-  function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
+            return array;
+        }
 
-  // ==========================
-  // Quiz Generator Functions
-  // ==========================
-  let currentQuiz = [];
-  let currentQuestionIndex = 0;
-  let score = 0;
-  let userAnswers = [];
+        // Capitalize first letter
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
 
-  // Define correct answers for each question
-  const correctAnswers = {
-    math: {
-      easy: {
-        "What is 2 + 2?": "4",
-        "What is 5 - 3?": "2",
-        "What is 3 × 4?": "12",
-        "What is 10 ÷ 2?": "5",
-        "What is the square of 3?": "9"
-      },
-      medium: {
-        "Solve for x: 2x + 5 = 13.": "4",
-        "What is the area of a triangle with base 5 and height 10?": "25",
-        "Simplify: (3²) + (4²).": "25",
-        "What is the perimeter of a rectangle with length 8 and width 5?": "26",
-        "Find the value of 15% of 200.": "30"
-      },
-      hard: {
-        "Integrate the function f(x) = 3x².": "x³ + C",
-        "Solve the equation: x³ - 6x² + 11x - 6 = 0.": "1, 2, 3",
-        "What is the derivative of sin(x)?": "cos(x)",
-        "Calculate the limit: lim(x→0) (sin(x)/x).": "1",
-        "What is the solution to the differential equation dy/dx = 2x?": "y = x² + C"
-      }
-    },
-    science: {
-      easy: {
-        "What is the chemical symbol for water?": "H₂O",
-        "What planet is known as the Red Planet?": "Mars",
-        "What gas do plants absorb from the atmosphere?": "Carbon Dioxide",
-        "What is H₂O commonly known as?": "Water",
-        "What force keeps us grounded on Earth?": "Gravity"
-      },
-      medium: {
-        "What is the powerhouse of the cell?": "Mitochondria",
-        "What is the chemical formula for table salt?": "NaCl",
-        "Define Newton's Second Law of Motion.": "Force equals mass times acceleration (F=ma)",
-        "What is the process by which plants make their food?": "Photosynthesis",
-        "Name the three states of matter.": "Solid, Liquid, Gas"
-      },
-      hard: {
-        "Explain the theory of relativity.": "A theory by Einstein that describes the laws of physics in the presence of gravitational fields and high velocities.",
-        "What is the Heisenberg Uncertainty Principle?": "It states that the position and momentum of a particle cannot both be precisely determined simultaneously.",
-        "Describe the process of nuclear fusion.": "Combining two light atomic nuclei to form a heavier nucleus, releasing energy.",
-        "What is the significance of the Pauli Exclusion Principle?": "No two fermions can occupy the same quantum state simultaneously.",
-        "Define Schrödinger's Cat paradox.": "A thought experiment that illustrates the concept of superposition in quantum mechanics."
-      }
-    }
-  };
+        // ==========================
+        // Quiz Generator Functions
+        // ==========================
+        let currentQuiz = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+        let correctAnswers = [];
 
-  function startQuiz() {
-    const subject = document.getElementById('quizSubject').value;
-    const numQuestions = parseInt(document.getElementById('quizNumQuestions').value);
+        async function startQuiz() {
+            const numQuestions = parseInt(document.getElementById('quizNumQuestions').value);
 
-    const difficulty = 'medium'; // Fixed difficulty for quizzes; can be made dynamic if desired
-    const availableQuestions = Object.keys(correctAnswers[subject][difficulty]);
-    if (!availableQuestions) {
-      alert('No questions available for the selected options.');
-      return;
-    }
+            // Fetch questions from the Open Trivia Database
+            try {
+                const response = await fetch(`https://opentdb.com/api.php?amount=${numQuestions}&type=multiple`);
+                const data = await response.json();
+                currentQuiz = data.results; // Set the current quiz to the fetched questions
+                currentQuestionIndex = 0;
+                correctAnswers = [];
+                score = 0;
+                userAnswers = [];
+                document.getElementById('quizArea').innerHTML = '';
+                displayQuizQuestion();
+            } catch (error) {
+                alert('Error fetching quizy questions: ' + error.message);
+            }
+        }
 
-    if (numQuestions > availableQuestions.length) {
-      alert(`Only ${availableQuestions.length} questions available for ${subject}`);
-      return;
-    }
+        function displayQuizQuestion() {
+            if (currentQuestionIndex < currentQuiz.length) {
+                const questionData = currentQuiz[currentQuestionIndex];
+                const quizArea = document.getElementById('quizArea');
+                const question = decodeHtmlEntities(questionData.question); // Decode the question
+                const correctAnswers = decodeHtmlEntities(questionData.correct_answer); // Decode the correct answer
+                const options = [...questionData.incorrect_answers.map(decodeHtmlEntities), correctAnswers]; // Decode all options
+                const shuffledOptions = shuffleArray(options); // Shuffle the options
 
-    currentQuiz = shuffleArray(availableQuestions).slice(0, numQuestions);
-    currentQuestionIndex = 0;
-    score = 0;
-    userAnswers = [];
-    document.getElementById('quizArea').innerHTML = '';
-    displayQuizQuestion();
-  }
-
-  function displayQuizQuestion() {
-    if (currentQuestionIndex < currentQuiz.length) {
-      const question = currentQuiz[currentQuestionIndex];
-      const quizArea = document.getElementById('quizArea');
-
-      // Generate multiple choice options if question type is MCQ
-      const isMCQ = question.includes("What") || question.includes("Define") || question.includes("Explain");
-      let optionsHTML = '';
-      let correctAnswer = correctAnswers[getCurrentQuizSubject()][getCurrentQuizDifficulty()][question];
-      let options = [];
-
-      if (isMCQ) {
-        // Generate random options
-        options = generateMCQOptions(correctAnswer);
-        optionsHTML = options.map((opt, idx) => `
-          <input type="radio" id="option${idx+1}" name="answer" value="${opt}">
-          <label for="option${idx+1}">${opt}</label>
+                // Generate HTML for the question and options
+                let optionsHTML = shuffledOptions.map((opt, idx) => `
+            <input type="radio" id="option${idx + 1}" name="answer" value="${sanitize(opt)}">
+            <label for="option${idx + 1}">${sanitize(opt)}</label>
         `).join('');
-      } else {
-        // Short or long answer
-        optionsHTML = `<input type="text" id="answerInput" placeholder="Type your answer here">`;
-      }
 
-      quizArea.innerHTML = `
-        <div class="quiz-question">
-          <strong>Question ${currentQuestionIndex + 1}:</strong> ${sanitize(question)}
-        </div>
-        <div class="quiz-options">
-          ${optionsHTML}
-        </div>
-        <button class="quiz-submit" onclick="submitQuizAnswer()">Submit Answer</button>
-      `;
-    } else {
-      displayQuizResult();
-    }
-  }
+                quizArea.innerHTML = `
+            <div class="quiz-question">
+                <strong>Question ${currentQuestionIndex + 1}:</strong> ${sanitize(question)}
+            </div>
+            <div class="quiz-options">
+                ${optionsHTML}
+            </div>
+            <button class="quiz-submit" onclick="submitQuizAnswer()">Submit Answer</button>
+        `;
+            } else {
+                displayQuizResult();
+            }
+        }
 
-  function generateMCQOptions(correctAnswer) {
-    const dummyOptions = generateDummyOptions(correctAnswer);
-    dummyOptions.push(correctAnswer);
-    return shuffleArray(dummyOptions).slice(0, 4);
-  }
+        function decodeHtmlEntities(str) {
+            const textarea = document.createElement('textarea');
+            textarea.innerHTML = str;
+            return textarea.value;
+        }
 
-  function generateDummyOptions(correctAnswer) {
-    let options = [];
-    for (let i = 0; i < 3; i++) {
-      let option;
-      do {
-        option = generateRandomOption(correctAnswer);
-      } while (options.includes(option) || option === correctAnswer);
-      options.push(option);
-    }
-    return options;
-  }
+        async function fetchTriviaQuestions(numQuestions) {
+            try {
+                const response = await fetch(`https://opentdb.com/api.php?amount=${numQuestions}&type=multiple`);
+                const data = await response.json();
 
-  function generateRandomOption(correctAnswer) {
-    // Simple random option generator; can be improved based on subject and type
-    const randomNumber = Math.floor(Math.random() * 100) + 1;
-    return randomNumber.toString();
-  }
+                if (data.response_code === 0) { // Check for successful response
+                    currentQuiz = data.results; // Store questions
+                    correctAnswers = currentQuiz.map(q => decodeHtmlEntities(q.correct_answer)); // Store correct answers
+                } else {
+                    console.error('Failed to fetch questions:', data.response_code);
+                }
+            } catch (error) {
+                console.error('Error fetching trivia questions:', error);
+            }
+        }
 
-  function submitQuizAnswer() {
-    const subject = getCurrentQuizSubject();
-    const difficulty = getCurrentQuizDifficulty();
-    const question = currentQuiz[currentQuestionIndex];
-    const correctAnswer = correctAnswers[subject][difficulty][question];
+        function submitQuizAnswer() {
+            const questionData = currentQuiz[currentQuestionIndex]; // Get current question
+            const correctAnswer = correctAnswers[currentQuestionIndex]; // Get the correct answer from the array
 
-    let userAnswer = '';
-    const selectedOption = document.querySelector('input[name="answer"]:checked');
-    if (selectedOption) {
-      userAnswer = selectedOption.value.trim();
-    } else {
-      const textInput = document.getElementById('answerInput');
-      if (textInput) {
-        userAnswer = textInput.value.trim();
-      }
-    }
+            const selectedOption = document.querySelector('input[name="answer"]:checked'); // Get selected option
 
-    if (userAnswer === '') {
-      alert('Please provide an answer.');
-      return;
-    }
+            if (!selectedOption) {
+                alert('Please select an answer before submitting.');
+                return;
+            }
 
-    userAnswers.push(userAnswer);
+            const userAnswer = selectedOption.value; // Get the value of the selected answer
 
-    // Normalize answers for comparison
-    const normalizedUserAnswer = userAnswer.toLowerCase();
-    const normalizedCorrectAnswer = correctAnswer.toLowerCase();
+            // Check if the user's answer is correct
+            if (userAnswers === sanitize(correctAnswers)) {
+                score++; // Increment score if correct
+                alert('Correct!');
+            } else {
+                alert(`Incorrect! The correct answer was:${correctAnswers}`);
+            }
 
-    if (normalizedUserAnswer === normalizedCorrectAnswer) {
-      score += 1;
-    }
+            userAnswers.push(userAnswer); // Store user's answer
+            currentQuestionIndex++; // Move to next question
 
-    currentQuestionIndex += 1;
-    displayQuizQuestion();
-  }
+            // Check if there are more questions
+            if (currentQuestionIndex < currentQuiz.length) {
+                displayQuizQuestion(); // Show next question
+            } else {
+                displayQuizResult(); // Show final results
+            }
+        }
 
-  function displayQuizResult() {
-    const quizArea = document.getElementById('quizArea');
-    quizArea.innerHTML = `
+
+        function displayQuizResult() {
+            const quizArea = document.getElementById('quizArea');
+            quizArea.innerHTML = `
       <h3>Quiz Completed!</h3>
       <p>Your Score: ${score} out of ${currentQuiz.length}</p>
       <button onclick="reviewQuiz()">Review Answers</button>
     `;
-  }
+        }
 
-  function reviewQuiz() {
-    const quizArea = document.getElementById('quizArea');
-    let reviewContent = `<h3>Quiz Review</h3><ol>`;
-    for (let i = 0; i < currentQuiz.length; i++) {
-      const question = currentQuiz[i];
-      const userAnswer = userAnswers[i];
-      const correctAnswer = correctAnswers[getCurrentQuizSubject()][getCurrentQuizDifficulty()][question];
-      reviewContent += `
+        function reviewQuiz() {
+            const quizArea = document.getElementById('quizArea');
+            let reviewContent = `<h3>Quiz Review</h3><ol>`;
+            for (let i = 0; i < currentQuiz.length; i++) {
+                const question = currentQuiz[i];
+                const userAnswers = userAnswers[i];
+                const correctAnswers = correctAnswers[question];
+                reviewContent += `
         <li>
           <strong>${sanitize(question)}</strong><br>
-          Your Answer: ${sanitize(userAnswer)}<br>
-          Correct Answer: ${sanitize(correctAnswer)}<br>
-          ${userAnswer.toLowerCase() === correctAnswer.toLowerCase() ? '<span style="color:green;">Correct</span>' : '<span style="color:red;">Incorrect</span>'}
+          Your Answer: ${sanitize(userAnswers)}<br>
+          Correct Answer: ${sanitize(correctAnswers)}<br>
+          ${userAnswer.toLowerCase() === correctAnswers.toLowerCase() ? '<span style="color:green;">Correct</span>' : '<span style="color:red;">Incorrect</span>'}
         </li>
       `;
-    }
-    reviewContent += `</ol>`;
-    quizArea.innerHTML = reviewContent;
-  }
+            }
+            reviewContent += `</ol>`;
+            quizArea.innerHTML = reviewContent;
+        }
 
-  function getCurrentQuizSubject() {
-    return document.getElementById('quizSubject').value;
-  }
 
-  function getCurrentQuizDifficulty() {
-    return 'medium'; // Fixed difficulty; modify if needed
-  }
-</script>
+    </script>
 
 </body>
+
 </html>
