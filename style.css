@@ -1,0 +1,817 @@
+
+        /* Task Manager Styles */
+        body {
+            font-family: 'Mulish', sans-serif;
+            /* Apply the Mulish font */
+        }
+        
+      
+
+        #about-website {
+            padding: 20px;
+
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-info {
+            background-color: #a0b8d3;
+            /* Bubble background color */
+            color: white;
+            /* Text color */
+            padding: 15px;
+            margin: 10px 0;
+            /* Space between bubbles */
+            border-radius: 20px;
+            /* Rounded corners */
+            position: relative;
+            /* Positioning for the pseudo-element */
+            transition: transform 0.3s;
+            /* Animation for hover effect */
+        }
+
+        .about-info:hover {
+            transform: scale(1.05);
+            /* Slightly enlarge the bubble on hover */
+        }
+
+        .about-info::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            /* Adjust for position */
+            width: 10px;
+            height: 10px;
+            background-color: #007BFF;
+            /* Bubble color */
+            border-radius: 50%;
+            /* Circle */
+            transform: translateY(-50%);
+            /* Center vertically */
+        }
+
+        .about-info h3 {
+            margin: 0 0 5px;
+            /* Margin for heading */
+        }
+
+        .about-info p {
+            margin: 0;
+            /* Remove default margin */
+        }
+
+        /* Worksheet, Quiz Generator, and Tech Updates Styles */
+        .feature-section {
+            display: none;
+            background: #ffffff;
+  backdrop-filter: blur(12px);
+  
+  padding: 30px;
+  
+  margin: 40px auto;
+  border-radius: 18px;
+ 
+  
+  font-family: 'Poppins', sans-serif;
+  
+        }
+
+      
+
+        .feature-section form {
+            display: flex;
+            flex-direction: column;
+        }
+ .feature-section form input,
+        .feature-section form select,
+        .feature-section form button {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .feature-section form label {
+            margin: 10px 0 5px;
+        }
+
+    
+
+        .feature-section form button {
+            background-color: #ffc107;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+        }
+
+        .feature-section form button:hover {
+            background-color: #0056b3;
+        }
+
+h1,h2,h3,h4,h5,h6,p {
+    color: #000000;
+}
+
+.question-card {
+  background: #000;
+  color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  max-width: 800px;
+  margin: auto;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: white;
+}
+
+
+
+/* Option Grid */
+.quiz-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+/* Hide native radio */
+.quiz-options input[type="radio"] {
+  display: none;
+}
+
+/* Option Cards */
+.option-card {
+  display: block;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 15px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* On select */
+.quiz-options input[type="radio"]:checked + .option-card {
+  border: 3px solid #fff;
+  opacity: 0.95;
+}
+
+/* Random background colors */
+.bg-blue    { background-color: #007bff; }
+.bg-orange  { background-color: #fd7e14; }
+.bg-green   { background-color: #28a745; }
+.bg-pink    { background-color: #e83e8c; }
+
+/* Submit Button */
+.quiz-submit {
+  background: #ffcb05;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 30px auto;
+}
+
+.quiz-submit:hover {
+  background: #ffd94a;
+}
+
+/* Results */
+.quiz-result {
+  background: #3d157b;
+  padding: 30px;
+  border-radius: 16px;
+  color: #fff;
+  text-align: center;
+}
+
+/* Review list */
+.quiz-review-list li {
+  margin-bottom: 20px;
+  background: #5e27ba;
+  border-radius: 12px;
+  padding: 15px;
+  color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .quiz-overlay {
+    padding: 20px 15px;
+  }
+
+  .quiz-question, .quiz-result {
+    padding: 20px;
+  }
+}
+
+      
+
+        #quizArea {
+            position: fixed;
+            display: none;
+  top: 0px; /* leave space for navbar height */
+  left: 0;
+  width: 100%;
+  height: 100%;
+   background: #21024c;
+  overflow-y: auto;
+  z-index: 9999;
+    padding: 40px 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  
+ font-family: 'Poppins', sans-serif;
+        }
+
+        /* Generated Content Styles */
+        #generatedWorksheet,
+       
+        #updateMessage {
+            margin-top: 20px;
+            padding: 20px;
+
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Login/Register Styles */
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 8px;
+            /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        .auth-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            /* Adjust font size as needed */
+        }
+
+        .auth-container form {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+            /* Added margin */
+        }
+
+
+        .auth-container form input[type="password"],
+        .auth-container form input[type="email"],
+        .auth-container form input[type="text"] {
+            padding: 10px;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            /* Font size adjustment */
+        }
+
+        .auth-container form button {
+
+            padding: 10px;
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            /* Transition effect */
+        }
+
+        .auth-container form button:hover {
+            background-color: rgb(0, 0, 236)
+                /* Use the specified variable */
+        }
+
+        .register-prompt {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .register-link {
+            color: rgb(67, 67, 245);
+            text-decoration: none;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: black;
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 10px;
+        }
+
+        form .policy {
+            display: flex;
+            align-items: center;
+
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 1px 1px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: #007bff;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .cell:hover {
+            background-color: #d1e7dd;
+            transform: scale(1.05);
+        }
+
+        .cell.taken {
+            pointer-events: none;
+            /* Prevent clicking on already taken cells */
+            background-color: #f8d7da;
+            /* Light red for taken cells */
+        }
+
+        .reset-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .reset-button:hover {
+            background-color: #0056b3;
+        }
+
+        .game-status {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+            /* Green color for status */
+        }
+
+        .resultModal {
+            display: flex;
+            /* Use flexbox for centering */
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            /* Black background with transparency */
+        }
+
+        .modal-content {
+
+            margin: 15% auto;
+            /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            /* Width of the modal */
+            text-align: center;
+            /* Center text */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 10px;
+            color: #007BFF;
+            /* Original link color */
+            cursor: pointer;
+        }
+
+        .toggle-link:hover {
+            text-decoration: underline;
+        }
+
+        .home-section {
+
+            height: 100vh;
+            /* Full viewport height */
+            display: flex;
+            /* Use Flexbox */
+            justify-content: center;
+            /* Center horizontally */
+            align-items: center;
+            /* Center vertically */
+            color: white;
+            /* Text color */
+            text-align: center;
+            /* Center text */
+            margin: 0;
+            /* Remove default margin */
+        }
+
+        .content {
+            padding: 20px;
+            /* Add some padding */
+            background: linear-gradient(to right, #7700ff, #a79ac4);
+            /* Gradient background */
+            border-radius: 10px;
+            /* Optional: rounded corners */
+        }
+
+        /* Basic styles for the navbar */
+        .navbar {
+
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            color: #d1e7dd;
+        }
+
+        label {
+            color : #000000;
+        }
+
+        /* Styles for nav links */
+        .navbar-nav .nav-link {
+            position: relative;
+            /* Position relative for the pseudo-element */
+            color: #007bff;
+            /* Default link color */
+            padding: 10px 15px;
+            /* Padding for links */
+            transition: color 0.3s ease;
+            /* Transition for color */
+        }
+
+        .navbar a {
+            color: #ffffff;
+        }
+
+        /* Pseudo-element for underline effect */
+        .navbar-nav .nav-link::after {
+            content: '';
+            /* Empty content for the pseudo-element */
+            position: absolute;
+            /* Position it absolutely */
+            left: 50%;
+            /* Center it horizontally */
+            bottom: 0;
+            /* Position it at the bottom */
+            width: 0;
+            /* Initial width */
+            height: 2px;
+            /* Height of the underline */
+            background-color: #007bff;
+            /* Color of the underline */
+            transition: width 0.3s ease, left 0.3s ease;
+            /* Transition for width and position */
+        }
+
+        /* Hover effect for nav links */
+      .navbar .navbar-nav .nav-link:hover {
+    color: #60e7ca !important; /* Force blue instead of black */
+}
+
+
+        /* On hover, expand the underline */
+     /* Active state underline */
+.navbar-nav .nav-link.active::after {
+    width: 100%;
+    left: 0;
+    background-color: #3b82f6; /* Blue underline */
+}
+
+
+        /* Current section effect */
+        .navbar-nav .nav-link.active {
+            color: #3b82f6;
+            border-color: #3b82f6;
+            
+        }
+
+        /* Change the color of headings and paragraphs in sections */
+      
+
+        /* Define theme styles */
+        body {
+            transition: background 0.5s, color 0.5s;
+            /* Smooth transition for background and text color */
+        }
+
+        .default-theme {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: black;
+            /* Default text color */
+        }
+
+        .ocean-theme {
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: black;
+            /* Text color for ocean theme */
+        }
+
+        .sunset-theme {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: black;
+            /* Text color for sunset theme */
+        }
+
+        .teal-theme {
+            background: linear-gradient(to right, #008080, #004d4d);
+            color: white;
+            /* Text color for teal theme */
+        }
+
+        .purple-theme {
+            background: linear-gradient(to right, #a06ab6, #f5a623);
+            color: black;
+            /* Text color for purple theme */
+        }
+
+        .coral-theme {
+            background: linear-gradient(to right, #ff6a6a, #ffb6b6);
+            color: black;
+            /* Text color for coral theme */
+        }
+
+        .forest-theme {
+            background: linear-gradient(to right, #3a6073, #3a3d3d);
+            color: white;
+            /* Text color for forest theme */
+        }
+
+        .dark-theme {
+            background: linear-gradient(to right, #1a1a1a, #2c3e50);
+            color: white;
+            /* Text color for dark theme */
+
+        }
+
+        #quiz-generator {
+  background: #ffffff10;
+  backdrop-filter: blur(12px);
+  
+  padding: 30px;
+  
+  margin: 40px auto;
+  border-radius: 18px;
+ 
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+}
+
+#quiz-generator h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+#quiz-generator p {
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+#quiz-generator .form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+#quiz-generator label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+#quiz-generator input[type="number"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: #f0f0f0;
+}
+
+#quiz-generator button {
+  background-color: #ffc107;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#quiz-generator button:hover {
+  background-color: #ffdd57;
+}
+
+        /* Add this to your CSS */
+        .dark-theme #navbarNav {
+
+            color: white;
+            /* White text color for better contrast */
+        }
+
+        .dark-theme #navbarNav a {
+            color: white;
+            /* White text color for links in dark theme */
+        }
+
+        .dark-theme #navbarNav a:hover {
+            color: #cccccc;
+            /* Lighter color for links on hover */
+        }
+
+        .light-theme {
+            background: linear-gradient(to right, #f0f8ff, #e6f7ff);
+            color: black;
+            /* Text color for light theme */
+        }
+
+        #theme-section {
+            display: block;
+            /* Show it in the desired area */
+            margin: 20px;
+            /* Space around the theme switcher */
+            padding: 10px;
+            /* Padding inside the theme section */
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Light background for the theme section */
+            border-radius: 5px;
+            /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow for depth */
+        }
+
+        .membership-info {
+
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .membership-options {
+            margin-top: 20px;
+        }
+
+        .membership-option {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .membership-option:hover {
+            transform: scale(1.05);
+        }
+
+        .membership-benefits {
+            list-style: none;
+            padding: 0;
+        }
+
+        .membership-benefits li {
+            margin: 10px 0;
+            font-size: 16px;
+            position: relative;
+            padding-left: 30px;
+            /* Space for the icon */
+        }
+
+        .check-icon {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background-color: #28a745;
+            /* Green border */
+            border-radius: 50%;
+            /* Circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .check-icon:after {
+            content: '✔';
+            /* Checkmark */
+            color: #ffffff;
+            /* Green color */
+            font-size: 16px;
+            line-height: 0;
+            /* Center the checkmark */
+        }
+
+        .quiz-question {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .quiz-options {
+            margin-bottom: 20px;
+        }
+
+        .quiz-submit {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quiz-submit:hover {
+            background-color: #0056b3;
+        }
+
+
+        /* Modal Styles */
+        .modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .modal-content {
+            color: #000000;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .close {
+            color: #000000;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }

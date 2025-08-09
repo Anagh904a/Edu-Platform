@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edu Platform</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+
+<body>
+    
+   <!-- <script type="module">
+        
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBnxKoEbh-xOHn_ogIHAt68HSTR5EOcSuU",
+            authDomain: "listvista-5ce07.firebaseapp.com",
+            projectId: "listvista-5ce07",
+            storageBucket: "listvista-5ce07.firebasestorage.app",
+            messagingSenderId: "516531579392",
+            appId: "1:516531579392:web:e9bbc06c93072808ae86e5",
+            measurementId: "G-Q36NJ1B4G0"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        const user = auth.currentuser;
+
+        // Authentication Functions
+        const authContainer = document.getElementById('auth-container');
+        const authForm = document.getElementById('auth-form');
+        const authTitle = document.getElementById('auth-title');
+        const authButton = document.getElementById('auth-button');
+        const toggleLink = document.getElementById('toggle-link');
+        const closeButton = document.getElementById('close-button');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        let isLogin = true; // Track whether the user is logging in or registering
+
+        // Check if there's a logged-in user in local storage
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser) {
+            closeButton.style.display = 'block'; // Show the close button if a user is stored
+        }
+
+        // Check for the current user and update UI
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // User is logged in
+                localStorage.setItem('user', JSON.stringify({ uid: user.uid, email: user.email }));
+                closeButton.style.display = 'block'; // Show the close button if a user is store
+            } else {
+                // User is logged out
+                localStorage.removeItem('user');
+                authContainer.style.display = 'block'; // Show the auth container
+                closeButton.style.display = 'none'; // Hide the close button
+            }
+        });
+
+        // Toggle between Login and Register modes
+        toggleLink.addEventListener('click', () => {
+            isLogin = !isLogin;
+            authTitle.textContent = isLogin ? 'Login' : 'Register';
+            authButton.textContent = isLogin ? 'Login' : 'Register';
+            toggleLink.textContent = isLogin ? "Don't have an account? Register here." : "Already have an account? Login here.";
+        });
+
+        // Validate email format
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Handle form submission for login or registration
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            // Input validation
+            if (!isValidEmail(email) || password.length < 6) {
+                alert('Please enter a valid email and ensure the password is at least 6 characters long.');
+                return;
+            }
+
+
+
+            loadingIndicator.style.display = 'block'; // Show loading indicator
+
+            // Determine whether to log in or register
+            const authAction = isLogin ? signInWithEmailAndPassword(auth, email, password) : createUserWithEmailAndPassword(auth, email, password);
+
+            authAction
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log('User:', user);
+                    if (isLogin) {
+                        // Store user in local storage
+                        localStorage.setItem('user', JSON.stringify({ uid: user.uid, email: user.email }));
+                        alert('Logged in successfully!'); // Alert for successful login
+                        authContainer.style.display = 'none'; // Hide the auth container
+                        closeButton.style.display = 'block'; // Show close button
+                    } else {
+                        alert('Registration successful! You can now log in.');
+                        toggleLink.click(); // Switch to login mode
+                    }
+                })
+                .catch((error) => {
+                    handleAuthError(error); // Enhanced error handling
+                })
+                .finally(() => {
+                    loadingIndicator.style.display = 'none'; // Hide loading indicator
+                });
+        });
+
+        // Close button functionality
+        closeButton.addEventListener('click', () => {
+            // Hide the auth container
+            authContainer.style.display = 'none';
+        });
+
+        // Error handling function
+        function handleAuthError(error) {
+            switch (error.code) {
+                case 'auth/user-not-found':
+                    alert('No user found with this email.');
+                    break;
+                case 'auth/wrong-password':
+                    alert('Incorrect password. Please try again.');
+                    break;
+                case 'auth/email-already-in-use':
+                    alert('This email is already registered.');
+                    break;
+                case 'auth/invalid-email':
+                    alert('Please enter a valid email address.');
+                    break;
+                case 'auth/invalid-credential':
+                    alert('Invalid Email or Password else this account doest not exist')
+                    break;
+                default:
+                    alert('Error: ' + error.message);
+            }
+        }
+
+        // Show the main app after login
+        function showApp() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('main-content');
+
+            if (sidebar && mainContent) {
+                sidebar.style.display = 'block'; // Show sidebar
+                mainContent.style.display = 'block'; // Show main content
+            } else {
+                console.error('Sidebar or main content elements not found.');
+            }
+        }
+
+        // Handle click event for the close button when no user is stored
+        if (!storedUser) {
+            closeButton.style.display = 'none'; // Ensure the close button is hidden
+            authForm.addEventListener('submit', (e) => {
+                if (!storedUser) {
+                    alert('Please sign in/up first.');
+                }
+            });
+        }
+
+        //Show Auth Form Funtion
+        // Define the showAuthForm function
+        function showAuthForm() {
+            const authContainer = document.getElementById('auth-container');
+            authContainer.style.display = 'block'; // Show the auth container
+        }
+    </script> -->
+
+    <!-- Top Navigation Bar -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#"><i class="fa-solid fa-graduation-cap"></i> EduPlatform</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                  <a class="nav-link" href="#home-section" onclick="showSection('home-section')">
+                      <i class="fa-solid fa-house"></i> Home
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#quiz" onclick="showSection('quiz-generator')">
+                      <i class="fa-solid fa-list-check"></i> Learning Tools kit
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#school" onclick="showSection('school')">
+                      <i class="fa-solid fa-file-lines"></i> My school
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#about" onclick="showSection('about-website')">
+                      <i class="fa-solid fa-circle-info"></i> About Website
+                  </a>
+              </li>
+             
+              <li class="nav-item">
+                  <a class="nav-link" href="#settings-section" onclick="showSection('settings-section')">
+                      <i class="fa-solid fa-gear"></i> Settings
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#notes" onclick="showSection('my-notes')">
+                      <i class="fa-solid fa-user"></i> Account
+                  </a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+
+<!-- Homepage Section -->
+<div id="home-section" class="feature-section">
+ 
+  <h1>Welcome to EduPlatform</h1>
+  <p>Empowering Teachers & Students with Seamless Learning</p>
+<button class="btn btn-primary" onclick="showSection('my-notes')"> 
+    Login To Get started
+    <i class="fas fa-arrow-right"></i>
+
+</button>
+
+<button class="btn btn-primary" onclick="showSection('game-hub')"> 
+   Play Game 
+    <i class="fas fa-arrow-right"></i>
+
+</button>
+
+
+<div id="quizLoad" style="display: none;">
+    <p>Quiz is currently Loading...</p>
+</div>
+
+</div>
+
+<div id="school" class="feature-section">
+In future, We will add school collabroation , so that teachers can create sessions for students and students can join them.
+but for now this feature is under planning phase.
+Thanks for supoort! Enjoy!
+</div>
+
+
+<!-- Settings Section -->
+<div id="settings-section" class="feature-section" style="display: none;">
+  <p>This section is under developement!</p>
+</div>
+
+
+
+    <!--Custom Worksheet Generator-->
+    <div id="worksheet-creation" class="feature-section">
+        <h2>Create Your Own Worksheet</h2>
+        <form id="worksheetCreationForm">
+            <form id="worksheetCreationForm">
+                <label for="questionType">Choose Question Type:</label>
+                <select id="questionType" onchange="updateQuestionFields()">
+                    <option value="shortAnswer">Short Answer</option>
+                </select>
+
+                <div id="questionFields">
+                    <input type="text" id="worksheetQuestion" placeholder="Enter your question" required>
+
+
+
+                    <button type="button" onclick="addWorksheetQuestion()">Add Question</button>
+                    <button type="button" onclick="downloadWorksheet()">Dowload Worksheet (.txt)</button>
+                </div>
+            </form>
+            <ul id="worksheetQuestionsList"></ul>
+            <p>Sorry for inconvinence caused. An major update is in progres. Its Edu Platfrom 7.0. 
+              Whole UI changed. And more. We are expecting thos update to relase soon. We are doing our best</p>
+    </div>
+<div id="quizArea"></div>
+    <!-- Quiz Generator Section -->
+    <div id="quiz-generator" class="feature-section">
+<h2><i class="fas fa-question-circle"></i> Quiz Generator</h2>
+  <p><i class="fas fa-cogs"></i> Choose your preferences to begin:</p>
+
+  <form id="quizForm">
+    <div class="form-group">
+      <label for="quizNumQuestions"><i class="fas fa-list-ol"></i> Number of Questions:</label>
+      <input type="number" id="quizNumQuestions" name="quizNumQuestions" min="1" max="10" required>
+    </div>
+
+    <button type="button" onclick="startQuiz()">
+      <i class="fas fa-play-circle"></i> Start Quiz
+    </button>
+  </form>
+
+
+        <br>
+        <BR>
+            <hr>
+            <BR>
+                <BR>
+        <div id="worksheet-generator">
+<div id="worksheet-generator">
+    <h2><i class="fas fa-file-alt"></i>  AI Worksheet Generator</h2>
+    <p><i class="fas fa-cogs"></i> Select your preferences and let AI generate a worksheet with random questions:</p>
+
+    <form id="worksheetForm">
+        <label for="subject"><i class="fas fa-book"></i> Choose Subject:</label>
+        <select id="subject" name="subject" required>
+            <option value="math">Math</option>
+            <option value="science">Science</option>
+                <option value="sst">Social Science</option>
+
+        </select>
+
+        <label for="class"><i class="fas fa-book"></i> Choose Standard:</label>
+        <select id="class" name="subject" required>
+            <option value="6">Class 6</option>
+            <option value="7">Class 7</option>
+            <option value="8">Class 8</option>
+            <option value="9">Class 9</option>
+            <option value="10">Class 10</option>
+            <option value="11">Class 11</option>
+            <option value="12">Class 12</option>
+        </select>
+
+        <label for="board"><i class="fas fa-book"></i> Choose Board:</label>
+        <select id="cbse" name="board" required>
+            <option value="CBSE">CBSE</option>
+         <option value="icse">ICSE</option>
+        </select>
+
+        <label for="numQuestions"><i class="fas fa-sort-numeric-up"></i> Number of Questions: </label>
+        <input type="number" id="numQuestions" name="numQuestions" min="1" max="10" required>
+
+        <label for="difficulty"><i class="fas fa-signal"></i> Difficulty Level:</label>
+        <select id="difficulty" name="difficulty" required>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+
+<button type="button" onclick="downloadWorksheet()">
+                <i class="fas fa-download"></i> Download Worksheet (.pdf)
+            </button>
+           
+           </form>
+
+    
+</div>
+
+<br><br><hr><br><br>
+
+<div id="worksheet-creation">
+    <h2><i class="fas fa-pencil-alt"></i> Create Your Own Worksheet</h2>
+   
+        <label for="questionType"><i class="fas fa-question-circle"></i> Choose Question Type:</label>
+    
+
+        <div id="questionFields">
+            <input type="text" id="worksheetQuestion" placeholder="Enter your question" >
+<br>
+            <button type="button" onclick="addWorksheetQuestion(event)">
+                <i class="fas fa-plus-circle"></i> Add Question
+            </button>
+<ul id="worksheetQuestionsList"></ul>
+
+            <button type="button" onclick="downloadCustomWorksheet()">
+                <i class="fas fa-download"></i> Download Worksheet (.txt)
+            </button>
+        </div>
+   
+
+    <ul id="worksheetQuestionsList"></ul>
+    
+
+    </div>
+    </div>
+    </div>
+
+    <!-- About Website Section -->
+    <div id="about-website" class="feature-section">
+        <h2>About This Website</h2>
+        <div class="about-info">
+            <strong>Developer:</strong> Anagh Manglick
+        </div>
+        <div class="about-info">
+            <strong>Class:</strong> 8
+        </div>
+        <div class="about-info">
+            <strong>Website Server:</strong> Yes
+        </div>
+        <div class="about-info">
+            <strong>App ersion:</strong> 1.2.2(public-release4)patch-aug9
+        </div>
+        <div class="about-info">
+            <strong>Listvista Account Link:</strong> Yes
+        </div>
+    </div>
+
+    <!-- Game Hub Section -->
+    <div id="game-hub" class="feature-section">
+        <h2>Game</h2>
+        <p>Tic Tac Toe</p>
+        <p>Vs: Freind</p>
+        
+        <button class="btn btn-primary" onclick="showSection('tic-tac-toe')">Start</button>
+        <!-- Add more games here -->
+    </div>
+
+
+
+  
+    <div id="tic-tac-toe" class="feature-section">
+        <h2>Tic Tac Toe</h2>
+        <div id="ticTacToeBoard" class="board">
+            <div class="cell" onclick="makeMove(0)"></div>
+            <div class="cell" onclick="makeMove(1)"></div>
+            <div class="cell" onclick="makeMove(2)"></div>
+            <div class="cell" onclick="makeMove(3)"></div>
+            <div class="cell" onclick="makeMove(4)"></div>
+            <div class="cell" onclick="makeMove(5)"></div>
+            <div class="cell" onclick="makeMove(6)"></div>
+            <div class="cell" onclick="makeMove(7)"></div>
+            <div class="cell" onclick="makeMove(8)"></div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closePopUp()">&times;</span>
+            <p id="resultMessage"></p>
+            <button onclick="resetGame()">Play Again</button>
+        </div>
+    </div>
+    <div id="gameStatus"></div>
+    </div>
+    </div>
+
+    <!-- My Notes Section -->
+    <div id="my-notes" class="feature-section">
+          <!-- Authentication Container -->
+    <div id="auth-container" class="auth-container">
+      <h2 id="auth-title">Login</h2>
+     
+  <form>
+    
+   
+  
+          <!--<input type="text" id="name" placeholder="Enter Your Name" required
+              style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);">
+          <input type="email" id="email" placeholder="Email" required
+              style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);">
+          <input type="password" id="password" placeholder="Password" required
+              style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);">
+          <input type="password" id="confirmPassword" placeholder="Confirm password" required
+              style="padding: 10px; border: 1px solid #000000; border-radius: 4px; margin-bottom: 16px; font-size: 14px; width: calc(100% - 22px);">
+          <label>
+              <input type="checkbox" id="terms">
+              I accept Terms and Conditions
+          </label>
+          <div class="link" id="terms-and-conditions" required style="color: #007BFF;">See Terms and Conditions</div>
+
+          <button type="submit" id="auth-button">Login</button>
+          <button type="button" id="close-button" style="display:none;">Close</button>-->
+          <P>ERROR 309: Cannot load Authentication
+            <br>Cause: The authentication system is currently down for maintenance. Please try again later.
+            <br>Auth version: <strong>2.1</strong>
+<br>Lib version: 25patch9r4GH4tyrH43SS.1.21.6
+          </P>
+      </form>
+      <!--<div class="toggle-link" id="toggle-link">Don't have an account? Register here.</div>
+      <div id="loading-indicator" style="display:none;">Loading...</div>
+  </div> -->
+    </div>
+
+    <div class="divider"></div>
+  
+
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <p>&copy; 2025 EduPlatform.</p>
+    </footer>
+
+  
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <script src="script.js"></script>
+
+      
+
+</body>
+
+</html>
